@@ -1,54 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Activity | Everwyn Online</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Everwyn Online - Activity</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17142d,
+                    #29204a,
+                    #1b3550
+                );
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+
+        .page {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            padding: 30px 20px 60px;
+
+        }
+
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #d9c7ff;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .card {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.25);
+
+            backdrop-filter:
+                blur(10px);
+
+        }
+
+
+        h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            font-size: 36px;
+
+        }
+
+
+        h2 {
+
+            margin-top: 35px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .description {
+
+            color: #ddd5ed;
+
+            line-height: 1.6;
+
+        }
+
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
+
+            gap: 15px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .info-box {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border-radius: 15px;
+
+            padding: 18px;
+
+        }
+
+
+        .info-label {
+
+            color: #aaa0c5;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .info-value {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+        }
+
+
+        .players {
+
+            margin-top: 20px;
+
+        }
+
+
+        .player {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+        }
+
+
+        .player-name {
+
+            font-weight: bold;
+
+        }
+
+
+        .player-status {
+
+            font-size: 13px;
+
+            color: #aaa0c5;
+
+        }
+
+
+        button {
+
+            border: none;
+
+            border-radius: 12px;
+
+            padding: 14px 22px;
+
+            margin-top: 20px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: #d9b8ff;
+
+            color: #21152f;
+
+            transition:
+                transform 0.15s ease,
+                opacity 0.15s ease;
+
+        }
+
+
+        button:hover {
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        #leave-button {
+
+            background: #f2b8c6;
+
+        }
+
+
+        .status {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            color: #ddd5ed;
+
+            line-height: 1.5;
+
+        }
+
+
+        .loading {
+
+            color: #cfc5df;
+
+        }
+
+
+        .error {
+
+            color: #ffb8c4;
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1 id="activity-name">Loading activity...</h1>
-        <p id="activity-description"></p>
-    </header>
+    <div class="page">
 
-    <main>
-
-        <section>
-
-            <h2>Activity Details</h2>
-
-            <div id="activity-info">
-                <p>Discovering activity information...</p>
-            </div>
-
-        </section>
+        <a
+            class="back-link"
+            href="javascript:history.back()"
+        >
+            ← Back
+        </a>
 
 
-        <section>
+        <div class="card">
 
-            <h2>Players</h2>
+            <div id="activity-content">
 
-            <div id="participants">
-
-                <p>
-                    Checking who is participating...
+                <p class="loading">
+                    Loading activity...
                 </p>
 
             </div>
 
-        </section>
 
-
-        <section>
-
-            <h2>Activity Status</h2>
-
-            <div id="activity-status">
+            <div
+                id="activity-status"
+                class="status"
+            >
 
                 <p>
                     This activity is available to join.
@@ -56,180 +345,205 @@
 
             </div>
 
+
             <button
                 id="join-button"
                 type="button"
-                onclick="joinActivity()">
+                onclick="joinActivity()"
+            >
 
                 Join Activity
 
             </button>
 
+
             <button
                 id="leave-button"
                 type="button"
                 onclick="leaveActivity()"
-                style="display: none;">
+                style="display: none;"
+            >
 
                 Leave Activity
 
             </button>
 
-        </section>
+        </div>
 
-
-        <section>
-
-            <a id="back-to-location" href="explore.html">
-
-                ← Back to Location
-
-            </a>
-
-        </section>
-
-    </main>
+    </div>
 
 
     <script>
 
+        /*
+            EVERWYN SUPABASE CONNECTION
+        */
+
         const SUPABASE_URL =
             "https://iajvwhrjutqkqqvbknth.supabase.co";
+
 
         const SUPABASE_KEY =
             "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
 
-        const CURRENT_PLAYER_ID = 3;
+        /*
+            CURRENT EVERWYN PLAYER
+
+            Yanola = player ID 3
+        */
+
+        const CURRENT_PLAYER_ID =
+            3;
 
 
-        const activityName =
-            document.getElementById("activity-name");
+        let currentActivity =
+            null;
 
-        const activityDescription =
-            document.getElementById("activity-description");
 
-        const activityInfo =
-            document.getElementById("activity-info");
+        let currentLocation =
+            null;
 
-        const participantsContainer =
-            document.getElementById("participants");
+
+        const activityContent =
+            document.getElementById(
+                "activity-content"
+            );
+
 
         const activityStatus =
-            document.getElementById("activity-status");
+            document.getElementById(
+                "activity-status"
+            );
+
 
         const joinButton =
-            document.getElementById("join-button");
+            document.getElementById(
+                "join-button"
+            );
+
 
         const leaveButton =
-            document.getElementById("leave-button");
+            document.getElementById(
+                "leave-button"
+            );
 
-        const backToLocation =
-            document.getElementById("back-to-location");
 
-
-        let currentActivity = null;
-
+        /*
+            HTML SAFETY HELPER
+        */
 
         function escapeHtml(value) {
 
-            const div =
-                document.createElement("div");
-
-            div.textContent =
-                value ?? "";
-
-            return div.innerHTML;
+            return String(value ?? "")
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
 
 
+        /*
+            GET ACTIVITY ID FROM URL
+        */
+
+        function getActivityId() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            return params.get("id");
+
+        }
+
+
+        /*
+            LOAD ACTIVITY
+        */
+
         async function loadActivity() {
+
+            const activityId =
+                getActivityId();
+
+
+            if (!activityId) {
+
+                activityContent.innerHTML = `
+
+                    <p class="error">
+                        Activity ID is missing.
+                    </p>
+
+                `;
+
+                joinButton.style.display =
+                    "none";
+
+                return;
+
+            }
+
 
             try {
 
-                const urlParams =
-                    new URLSearchParams(
-                        window.location.search
-                    );
-
-
-                const activityId =
-                    urlParams.get("id");
-
-
-                if (!activityId) {
-
-                    activityName.textContent =
-                        "Activity Not Found";
-
-                    activityDescription.textContent =
-                        "No activity was selected.";
-
-                    activityInfo.innerHTML =
-                        "<p>Please return to the previous location and choose an activity.</p>";
-
-                    joinButton.style.display =
-                        "none";
-
-                    leaveButton.style.display =
-                        "none";
-
-                    return;
-
-                }
-
-
-                /*
-                    LOAD ACTIVITY
-                */
-
-                const activityResponse =
+                const response =
                     await fetch(
 
                         SUPABASE_URL +
                         "/rest/v1/world_activities" +
                         "?id=eq." +
-                        encodeURIComponent(activityId) +
-                        "&is_available=eq.true" +
+                        encodeURIComponent(
+                            activityId
+                        ) +
+                        "&select=*" +
                         "&apikey=" +
-                        encodeURIComponent(SUPABASE_KEY)
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        )
 
                     );
 
 
-                if (!activityResponse.ok) {
+                if (!response.ok) {
 
                     throw new Error(
                         "Could not load activity. HTTP " +
-                        activityResponse.status
+                        response.status
                     );
 
                 }
 
 
                 const activities =
-                    await activityResponse.json();
+                    await response.json();
 
 
                 if (!activities.length) {
 
-                    activityName.textContent =
-                        "Activity Not Found";
-
-                    activityDescription.textContent =
-                        "This activity is not currently available.";
-
-                    activityInfo.innerHTML =
-                        "<p>This activity could not be found.</p>";
-
-                    joinButton.style.display =
-                        "none";
-
-                    leaveButton.style.display =
-                        "none";
-
-                    return;
+                    throw new Error(
+                        "Activity not found."
+                    );
 
                 }
 
@@ -238,158 +552,39 @@
                     activities[0];
 
 
-                const activity =
-                    currentActivity;
+                await loadLocation(
+                    currentActivity.location_id
+                );
 
-
-                document.title =
-                    activity.name +
-                    " | Everwyn Online";
-
-
-                activityName.textContent =
-                    activity.name;
-
-
-                activityDescription.textContent =
-                    activity.description ||
-                    "An activity waiting to be discovered.";
-
-
-                activityInfo.innerHTML = `
-
-                    <p>
-                        <strong>Type:</strong>
-                        ${escapeHtml(
-                            activity.activity_type ||
-                            "Unknown"
-                        )}
-                    </p>
-
-                    <p>
-                        <strong>Players:</strong>
-                        ${escapeHtml(
-                            activity.minimum_players ??
-                            1
-                        )}
-                        -
-                        ${escapeHtml(
-                            activity.maximum_players ??
-                            1
-                        )}
-                    </p>
-
-                    <p>
-                        <strong>Reward:</strong>
-                        ${escapeHtml(
-                            activity.reward_amount ??
-                            0
-                        )}
-                        ${escapeHtml(
-                            activity.reward_type ||
-                            ""
-                        )}
-                    </p>
-
-                `;
-
-
-                /*
-                    LOAD LOCATION
-                */
-
-                if (activity.location_id) {
-
-                    const locationResponse =
-                        await fetch(
-
-                            SUPABASE_URL +
-                            "/rest/v1/world_locations" +
-                            "?id=eq." +
-                            encodeURIComponent(
-                                activity.location_id
-                            ) +
-                            "&apikey=" +
-                            encodeURIComponent(
-                                SUPABASE_KEY
-                            )
-
-                        );
-
-
-                    if (locationResponse.ok) {
-
-                        const locations =
-                            await locationResponse.json();
-
-
-                        if (locations.length) {
-
-                            const location =
-                                locations[0];
-
-
-                            backToLocation.href =
-                                "location.html?id=" +
-                                encodeURIComponent(
-                                    location.id
-                                );
-
-                        }
-
-                    }
-
-                }
-
-
-                /*
-                    LOAD PARTICIPANTS
-                */
 
                 await loadParticipants(
-                    activity.id
+                    currentActivity.id
                 );
 
 
             } catch (error) {
 
                 console.error(
-                    "Everwyn activity loading error:",
+                    "Everwyn activity load error:",
                     error
                 );
 
 
-                activityName.textContent =
-                    "Everwyn could not load";
+                activityContent.innerHTML = `
 
+                    <p class="error">
 
-                activityDescription.textContent =
-                    "Something went wrong while loading this activity.";
+                        <strong>
+                            Unable to load activity.
+                        </strong>
 
+                    </p>
 
-                activityInfo.innerHTML = `
-
-                    <div class="error-message">
-
-                        <h3>
-                            Unable to load this activity.
-                        </h3>
-
-                        <p>
-                            ${escapeHtml(
-                                error.message
-                            )}
-                        </p>
-
-                        <button
-                            type="button"
-                            onclick="loadActivity()">
-
-                            Try Again
-
-                        </button>
-
-                    </div>
+                    <p>
+                        ${escapeHtml(
+                            error.message
+                        )}
+                    </p>
 
                 `;
 
@@ -397,8 +592,59 @@
                 joinButton.style.display =
                     "none";
 
-                leaveButton.style.display =
-                    "none";
+            }
+
+        }
+
+
+        /*
+            LOAD LOCATION
+        */
+
+        async function loadLocation(
+            locationId
+        ) {
+
+            if (!locationId) {
+
+                return;
+
+            }
+
+
+            const response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/world_locations" +
+                    "?id=eq." +
+                    encodeURIComponent(
+                        locationId
+                    ) +
+                    "&select=*" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!response.ok) {
+
+                return;
+
+            }
+
+
+            const locations =
+                await response.json();
+
+
+            if (locations.length) {
+
+                currentLocation =
+                    locations[0];
 
             }
 
@@ -409,169 +655,335 @@
             LOAD PARTICIPANTS
         */
 
-        async function loadParticipants(activityId) {
+        async function loadParticipants(
+            activityId
+        ) {
 
-            try {
+            const response =
+                await fetch(
 
-                const response =
-                    await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/activity_participants" +
+                    "?activity_id=eq." +
+                    encodeURIComponent(
+                        activityId
+                    ) +
+                    "&participation_status=eq.active" +
+                    "&select=*" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
 
-                        SUPABASE_URL +
-                        "/rest/v1/activity_participants" +
-                        "?activity_id=eq." +
-                        encodeURIComponent(activityId) +
-                        "&participation_status=eq.active" +
-                        "&order=joined_at.asc" +
-                        "&apikey=" +
-                        encodeURIComponent(SUPABASE_KEY)
-
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Could not load participants. HTTP " +
-                        response.status
-                    );
-
-                }
+                );
 
 
-                const participants =
-                    await response.json();
+            if (!response.ok) {
+
+                throw new Error(
+                    "Could not load participants. HTTP " +
+                    response.status
+                );
+
+            }
 
 
-                if (!participants.length) {
-
-                    participantsContainer.innerHTML = `
-
-                        <p>
-                            No players have joined yet.
-                        </p>
-
-                    `;
-
-                } else {
-
-                    participantsContainer.innerHTML = "";
+            const participants =
+                await response.json();
 
 
-                    participants.forEach(
-                        participant => {
-
-                            const card =
-                                document.createElement(
-                                    "article"
-                                );
+            const maximumPlayers =
+                Number(
+                    currentActivity.maximum_players
+                );
 
 
-                            card.className =
-                                "participant-card";
+            const minimumPlayers =
+                Number(
+                    currentActivity.minimum_players
+                );
 
 
-                            const isCurrentPlayer =
-                                Number(
-                                    participant.player_id
-                                ) ===
-                                CURRENT_PLAYER_ID;
+            activityContent.innerHTML = `
+
+                <h1>
+                    ${escapeHtml(
+                        currentActivity.name
+                    )}
+                </h1>
 
 
-                            card.innerHTML = `
+                <p class="description">
 
-                                <h3>
-                                    ${
-                                        isCurrentPlayer
-                                            ? "Yanola"
-                                            : "Player " +
-                                              escapeHtml(
-                                                  participant.player_id
-                                              )
-                                    }
-                                </h3>
+                    ${escapeHtml(
+                        currentActivity.description
+                    )}
 
-                                <p>
-                                    ${
-                                        escapeHtml(
-                                            participant.role ||
-                                            "Participant"
-                                        )
-                                    }
-                                </p>
-
-                            `;
+                </p>
 
 
-                            participantsContainer
-                                .appendChild(card);
+                <div class="info-grid">
 
-                        }
-                    );
+                    <div class="info-box">
 
-                }
+                        <div class="info-label">
+                            Location
+                        </div>
 
+                        <div class="info-value">
 
-                /*
-                    CHECK CURRENT PLAYER
-                */
+                            ${escapeHtml(
+                                currentLocation
+                                    ? currentLocation.name
+                                    : "Everwyn"
+                            )}
 
-                const currentPlayerResponse =
-                    await fetch(
+                        </div>
 
-                        SUPABASE_URL +
-                        "/rest/v1/activity_participants" +
-                        "?activity_id=eq." +
-                        encodeURIComponent(activityId) +
-                        "&player_id=eq." +
-                        encodeURIComponent(
-                            CURRENT_PLAYER_ID
-                        ) +
-                        "&apikey=" +
-                        encodeURIComponent(
-                            SUPABASE_KEY
-                        )
-
-                    );
+                    </div>
 
 
-                if (!currentPlayerResponse.ok) {
+                    <div class="info-box">
 
-                    throw new Error(
-                        "Could not check your participation. HTTP " +
-                        currentPlayerResponse.status
-                    );
+                        <div class="info-label">
+                            Players
+                        </div>
 
-                }
+                        <div class="info-value">
+
+                            ${participants.length}
+                            /
+                            ${maximumPlayers}
+
+                        </div>
+
+                    </div>
 
 
-                const currentPlayerRecords =
-                    await currentPlayerResponse.json();
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Minimum Players
+                        </div>
+
+                        <div class="info-value">
+
+                            ${minimumPlayers}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Reward
+                        </div>
+
+                        <div class="info-value">
+
+                            ${escapeHtml(
+                                currentActivity.reward_amount
+                            )}
+                            ${escapeHtml(
+                                currentActivity.reward_type
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    Players in Activity
+                </h2>
+
+
+                <div class="players">
+
+                    ${
+                        participants.length
+                        ?
+                        participants.map(
+                            participant => `
+
+                                <div class="player">
+
+                                    <div>
+
+                                        <div class="player-name">
+
+                                            ${
+                                                Number(
+                                                    participant.player_id
+                                                ) ===
+                                                CURRENT_PLAYER_ID
+                                                ?
+                                                "Yanola"
+                                                :
+                                                "Player"
+                                            }
+
+                                        </div>
+
+
+                                        <div class="player-status">
+
+                                            ${
+                                                escapeHtml(
+                                                    participant.role ||
+                                                    "Participant"
+                                                )
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="player-status">
+
+                                        Active
+
+                                    </div>
+
+                                </div>
+
+                            `
+                        ).join("")
+                        :
+                        `
+
+                            <p>
+                                No players have joined yet.
+                            </p>
+
+                        `
+                    }
+
+                </div>
+
+            `;
+
+
+            /*
+                CHECK CURRENT PLAYER'S RECORD
+            */
+
+            const playerResponse =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/activity_participants" +
+                    "?activity_id=eq." +
+                    encodeURIComponent(
+                        activityId
+                    ) +
+                    "&player_id=eq." +
+                    encodeURIComponent(
+                        CURRENT_PLAYER_ID
+                    ) +
+                    "&select=*" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!playerResponse.ok) {
+
+                throw new Error(
+                    "Could not check player participation. HTTP " +
+                    playerResponse.status
+                );
+
+            }
+
+
+            const playerRecords =
+                await playerResponse.json();
+
+
+            const playerRecord =
+                playerRecords.length
+                ?
+                playerRecords[0]
+                :
+                null;
+
+
+            if (
+                playerRecord &&
+                playerRecord.participation_status ===
+                "active"
+            ) {
+
+                joinButton.style.display =
+                    "none";
+
+                leaveButton.style.display =
+                    "inline-block";
+
+
+                activityStatus.innerHTML = `
+
+                    <p>
+
+                        <strong>
+                            Yanola is participating.
+                        </strong>
+
+                    </p>
+
+                    <p>
+                        You are currently in this activity.
+                    </p>
+
+                `;
+
+            } else {
+
+                joinButton.style.display =
+                    "inline-block";
+
+                leaveButton.style.display =
+                    "none";
 
 
                 if (
-                    currentPlayerRecords.length &&
-                    currentPlayerRecords[0]
-                        .participation_status ===
-                        "active"
+                    participants.length >=
+                    maximumPlayers
                 ) {
+
+                    joinButton.disabled =
+                        true;
 
                     activityStatus.innerHTML = `
 
                         <p>
+
                             <strong>
-                                Yanola is participating.
+                                This activity is full.
                             </strong>
+
+                        </p>
+
+                        <p>
+                            ${maximumPlayers}
+                            players are currently allowed.
                         </p>
 
                     `;
 
-                    joinButton.style.display =
-                        "none";
-
-                    leaveButton.style.display =
-                        "inline-block";
-
                 } else {
+
+                    joinButton.disabled =
+                        false;
 
                     activityStatus.innerHTML = `
 
@@ -581,36 +993,7 @@
 
                     `;
 
-                    joinButton.style.display =
-                        "inline-block";
-
-                    joinButton.disabled =
-                        false;
-
-                    joinButton.textContent =
-                        "Join Activity";
-
-                    leaveButton.style.display =
-                        "none";
-
                 }
-
-
-            } catch (error) {
-
-                console.error(
-                    "Everwyn participant loading error:",
-                    error
-                );
-
-
-                participantsContainer.innerHTML = `
-
-                    <p>
-                        Participants could not be loaded.
-                    </p>
-
-                `;
 
             }
 
@@ -641,13 +1024,18 @@
             activityStatus.innerHTML = `
 
                 <p>
-                    Joining the activity...
+                    Checking activity availability...
                 </p>
 
             `;
 
 
             try {
+
+                /*
+                    CHECK WHETHER YANOLA ALREADY
+                    HAS A PARTICIPATION RECORD
+                */
 
                 const checkResponse =
                     await fetch(
@@ -662,6 +1050,7 @@
                         encodeURIComponent(
                             CURRENT_PLAYER_ID
                         ) +
+                        "&select=*" +
                         "&apikey=" +
                         encodeURIComponent(
                             SUPABASE_KEY
@@ -684,26 +1073,116 @@
                     await checkResponse.json();
 
 
-                if (existing.length) {
+                /*
+                    IF YANOLA IS ALREADY ACTIVE,
+                    DO NOT CREATE ANOTHER RECORD
+                */
 
-                    if (
-                        existing[0]
-                            .participation_status ===
-                        "active"
-                    ) {
+                if (
+                    existing.length &&
+                    existing[0]
+                        .participation_status ===
+                    "active"
+                ) {
 
-                        await loadParticipants(
+                    await loadParticipants(
+                        currentActivity.id
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                    CHECK CURRENT ACTIVE PLAYER COUNT
+                */
+
+                const participantsResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants" +
+                        "?activity_id=eq." +
+                        encodeURIComponent(
                             currentActivity.id
-                        );
+                        ) +
+                        "&participation_status=eq.active" +
+                        "&select=id" +
+                        "&apikey=" +
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        )
 
-                        return;
+                    );
 
-                    }
 
-                    /*
-                        REACTIVATE A PREVIOUS
-                        PARTICIPATION RECORD
-                    */
+                if (!participantsResponse.ok) {
+
+                    throw new Error(
+                        "Could not check activity capacity. HTTP " +
+                        participantsResponse.status
+                    );
+
+                }
+
+
+                const activeParticipants =
+                    await participantsResponse.json();
+
+
+                const maximumPlayers =
+                    Number(
+                        currentActivity.maximum_players
+                    );
+
+
+                /*
+                    STOP JOINING IF THE ACTIVITY
+                    IS ALREADY FULL
+                */
+
+                if (
+                    activeParticipants.length >=
+                    maximumPlayers
+                ) {
+
+                    activityStatus.innerHTML = `
+
+                        <p>
+
+                            <strong>
+                                This activity is full.
+                            </strong>
+
+                        </p>
+
+                        <p>
+                            ${maximumPlayers}
+                            players are currently allowed.
+                        </p>
+
+                    `;
+
+
+                    joinButton.disabled =
+                        false;
+
+                    joinButton.textContent =
+                        "Join Activity";
+
+
+                    return;
+
+                }
+
+
+                /*
+                    REACTIVATE A PREVIOUS
+                    PARTICIPATION RECORD
+                */
+
+                if (existing.length) {
 
                     const updateResponse =
                         await fetch(
@@ -729,15 +1208,16 @@
 
                                 },
 
-                                body: JSON.stringify({
+                                body:
+                                    JSON.stringify({
 
-                                    participation_status:
-                                        "active",
+                                        participation_status:
+                                            "active",
 
-                                    left_at:
-                                        null
+                                        left_at:
+                                            null
 
-                                })
+                                    })
 
                             }
 
@@ -748,6 +1228,7 @@
 
                         const errorText =
                             await updateResponse.text();
+
 
                         throw new Error(
                             "Could not rejoin activity. HTTP " +
@@ -824,6 +1305,7 @@
                         const errorText =
                             await insertResponse.text();
 
+
                         throw new Error(
                             "Could not join activity. HTTP " +
                             insertResponse.status +
@@ -852,15 +1334,20 @@
                 activityStatus.innerHTML = `
 
                     <p>
+
                         <strong>
                             Unable to join the activity.
                         </strong>
+
                     </p>
 
+
                     <p>
+
                         ${escapeHtml(
                             error.message
                         )}
+
                     </p>
 
                 `;
@@ -868,6 +1355,7 @@
 
                 joinButton.disabled =
                     false;
+
 
                 joinButton.textContent =
                     "Join Activity";
@@ -937,15 +1425,17 @@
 
                             },
 
-                            body: JSON.stringify({
+                            body:
+                                JSON.stringify({
 
-                                participation_status:
-                                    "left",
+                                    participation_status:
+                                        "left",
 
-                                left_at:
-                                    new Date().toISOString()
+                                    left_at:
+                                        new Date()
+                                            .toISOString()
 
-                            })
+                                })
 
                         }
 
@@ -956,6 +1446,7 @@
 
                     const errorText =
                         await response.text();
+
 
                     throw new Error(
                         "Could not leave activity. HTTP " +
@@ -970,11 +1461,16 @@
                 activityStatus.innerHTML = `
 
                     <p>
+
                         <strong>
-                            Yanola left ${escapeHtml(
+
+                            Yanola left
+                            ${escapeHtml(
                                 currentActivity.name
                             )}.
+
                         </strong>
+
                     </p>
 
                 `;
@@ -996,15 +1492,20 @@
                 activityStatus.innerHTML = `
 
                     <p>
+
                         <strong>
                             Unable to leave the activity.
                         </strong>
+
                     </p>
 
+
                     <p>
+
                         ${escapeHtml(
                             error.message
                         )}
+
                     </p>
 
                 `;
@@ -1015,15 +1516,21 @@
             leaveButton.disabled =
                 false;
 
+
             leaveButton.textContent =
                 "Leave Activity";
 
         }
 
 
+        /*
+            START PAGE
+        */
+
         loadActivity();
 
     </script>
 
 </body>
+
 </html>
