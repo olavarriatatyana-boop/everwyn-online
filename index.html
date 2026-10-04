@@ -1,237 +1,217 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Everwyn Online</title>
+    <title>Explore Everwyn | Everwyn Online</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Georgia, "Times New Roman", serif;
-            background:
-                radial-gradient(circle at top, #30264d 0%, #171421 45%, #0c0b10 100%);
-            color: #f8f1e8;
-        }
-
-        h1 {
-            color: #fff8ef;
-        }
-
-        h2 {
-            color: #c9a7e8;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .content {
-            max-width: 750px;
-        }
-
-        .eyebrow {
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            font-size: 12px;
-            color: #d9b8e8;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: clamp(52px, 12vw, 100px);
-            letter-spacing: 8px;
-            line-height: 0.95;
-        }
-
-        .tagline {
-            margin: 28px auto 40px;
-            max-width: 600px;
-            font-size: clamp(18px, 4vw, 25px);
-            line-height: 1.6;
-            color: #ddd4e4;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            border: none;
-            border-radius: 999px;
-            padding: 15px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .primary {
-            background: #e8b8d8;
-            color: #211725;
-        }
-
-        .secondary {
-            background: transparent;
-            color: #f8f1e8;
-            border: 1px solid #756780;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        .status {
-            margin-top: 55px;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: #91869e;
-            text-transform: uppercase;
-        }
-
-        .extra-content {
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-        }
-
-        .extra-content p,
-        .extra-content li {
-            line-height: 1.7;
-            color: #ddd4e4;
-        }
-
-        .extra-content a {
-            color: #e8b8d8;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="hero">
+    <header>
+        <h1>Explore Everwyn</h1>
+        <p>
+            Discover places, people, activities, and hidden corners of the world.
+        </p>
+    </header>
 
-        <div class="content">
+    <main>
 
-            <div class="eyebrow">
-                A Modern Fantasy World
+        <section>
+            <h2>World Regions</h2>
+
+            <div id="regions">
+                <p>Loading Everwyn...</p>
             </div>
 
-            <h1>
-                EVERWYN
-            </h1>
+        </section>
 
-            <p class="tagline">
-                Your world. Your story. Your Everwyn.
-            </p>
-
-            <div class="buttons">
-
-                <button
-                    class="primary"
-                    id="enterWorld"
-                    type="button">
-                    Enter the World
-                </button>
-
-                <button
-                    class="secondary"
-                    id="discoverWorld"
-                    type="button">
-                    Discover Everwyn
-                </button>
-
-            </div>
-
-            <div class="status">
-                World Status: In Development
-            </div>
-
-        </div>
+        <section>
+            <a href="game.html">← Back to Game</a>
+        </section>
 
     </main>
 
-
-    <section class="extra-content">
-
-        <p>
-            <a
-                href="https://www.pinterest.com/"
-                target="_blank"
-                rel="noopener noreferrer">
-                Find inspiration for Everwyn
-            </a>
-        </p>
-
-        <img
-            src="Neocities.png"
-            alt="The Neocities cat">
-
-        <h2>
-            What You Can Do in Everwyn
-        </h2>
-
-        <ul>
-
-            <li>
-                Explore magical places and discover hidden parts of the world.
-            </li>
-
-            <li>
-                Create your own character and build a life of your own.
-            </li>
-
-            <li>
-                Make friends, form relationships, and meet other players.
-            </li>
-
-            <li>
-                Build homes, businesses, and your own place in Everwyn.
-            </li>
-
-        </ul>
-
-    </section>
-
-
     <script>
 
-        document
-            .getElementById("enterWorld")
-            .addEventListener("click", function () {
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
 
-                window.location.href = "game.html";
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
-            });
+        const regionsContainer =
+            document.getElementById("regions");
 
 
-        document
-            .getElementById("discoverWorld")
-            .addEventListener("click", function () {
+        function escapeHtml(value) {
 
-                window.location.href = "explore.html";
+            const div =
+                document.createElement("div");
 
-            });
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+        }
+
+
+        async function loadRegions() {
+
+            regionsContainer.innerHTML =
+                "<p>Exploring Everwyn...</p>";
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/world_regions" +
+                        "?is_active=eq.true" +
+                        "&is_unlocked=eq.true" +
+                        "&order=id.asc" +
+                        "&apikey=" +
+                        encodeURIComponent(SUPABASE_KEY),
+
+                        {
+                            method: "GET",
+                            mode: "cors"
+                        }
+
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Supabase returned HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                const regions =
+                    await response.json();
+
+
+                if (!regions.length) {
+
+                    regionsContainer.innerHTML =
+                        "<p>No regions are currently available.</p>";
+
+                    return;
+                }
+
+
+                regionsContainer.innerHTML = "";
+
+
+                regions.forEach(region => {
+
+                    const card =
+                        document.createElement("article");
+
+                    card.className =
+                        "region-card";
+
+
+                    card.innerHTML = `
+
+                        <h3>
+                            ${escapeHtml(region.name)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                region.description ||
+                                "A mysterious part of Everwyn waiting to be explored."
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>Type:</strong>
+                            ${escapeHtml(
+                                region.region_type ||
+                                "Unknown"
+                            )}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="enterRegion(${region.id})">
+
+                            Explore ${escapeHtml(region.name)}
+
+                        </button>
+
+                    `;
+
+
+                    regionsContainer.appendChild(card);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn region loading error:",
+                    error
+                );
+
+
+                regionsContainer.innerHTML = `
+
+                    <div class="error-message">
+
+                        <h3>
+                            Everwyn could not load the regions.
+                        </h3>
+
+                        <p>
+                            The world server could not be reached
+                            from this page.
+                        </p>
+
+                        <p>
+                            Error:
+                            ${escapeHtml(error.message)}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="loadRegions()">
+
+                            Try Again
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        function enterRegion(regionId) {
+
+            window.location.href =
+                "region.html?id=" +
+                encodeURIComponent(regionId);
+
+        }
+
+
+        loadRegions();
 
     </script>
 
 </body>
 </html>
-```
