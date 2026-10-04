@@ -7,9 +7,12 @@
 <title>Everwyn Online — Play</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -23,23 +26,39 @@ html, body {
     inset: 0;
 }
 
-/* ---------- HUD ---------- */
+/* =========================
+   HUD
+========================= */
 
 .hud-panel {
     position: fixed;
     z-index: 100;
-    background: rgba(15,17,27,.86);
-    border: 1px solid rgba(213,197,230,.22);
-    box-shadow: 0 10px 35px rgba(0,0,0,.25);
-    backdrop-filter: blur(12px);
+
     color: #f5efe4;
+
+    background:
+        rgba(15, 17, 27, 0.88);
+
+    border:
+        1px solid
+        rgba(213, 197, 230, 0.22);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.28);
+
+    backdrop-filter:
+        blur(12px);
 }
 
 #player-hud {
     top: 18px;
     left: 18px;
+
     width: 210px;
+
     padding: 14px 16px;
+
     border-radius: 16px;
 }
 
@@ -49,7 +68,9 @@ html, body {
 
 .player-level {
     margin-top: 3px;
+
     color: #b7a1d3;
+
     font-size: 11px;
 }
 
@@ -59,105 +80,173 @@ html, body {
 
 .stat-label {
     display: flex;
-    justify-content: space-between;
-    font-size: 10px;
+
+    justify-content:
+        space-between;
+
     color: #c9c3d0;
+
+    font-size: 10px;
 }
 
 .stat-bar {
     height: 5px;
+
     margin-top: 4px;
+
     overflow: hidden;
+
     border-radius: 999px;
-    background: rgba(255,255,255,.09);
+
+    background:
+        rgba(255, 255, 255, 0.09);
 }
 
 .stat-fill {
+    width: 100%;
     height: 100%;
+
     border-radius: inherit;
+
     background: #b7a1d3;
 }
+
+/* =========================
+   LOCATION HUD
+========================= */
 
 #location-hud {
     top: 18px;
     left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 22px;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        10px 22px;
+
     border-radius: 14px;
+
     text-align: center;
 }
 
 #location-name {
     font-size: 15px;
-    letter-spacing: .06em;
+
+    letter-spacing: 0.06em;
 }
 
 #location-subtitle {
     margin-top: 3px;
+
     color: #d6ba7c;
+
     font-size: 9px;
-    letter-spacing: .22em;
+
+    letter-spacing: 0.22em;
 }
 
-/* ---------- MINIMAP ---------- */
+/* =========================
+   MINIMAP
+========================= */
 
 #mini-map {
     top: 18px;
     right: 18px;
+
     width: 170px;
+
     padding: 12px;
+
     border-radius: 16px;
 }
 
 .mini-title {
     margin-bottom: 8px;
+
     color: #d6ba7c;
+
     font-size: 9px;
-    letter-spacing: .14em;
+
+    letter-spacing: 0.14em;
 }
 
 .mini-world {
     position: relative;
+
     height: 90px;
+
     overflow: hidden;
+
     border-radius: 10px;
+
     background:
-        linear-gradient(90deg, transparent 48%, rgba(183,161,211,.16) 49%, rgba(183,161,211,.16) 51%, transparent 52%),
-        linear-gradient(0deg, transparent 48%, rgba(183,161,211,.16) 49%, rgba(183,161,211,.16) 51%, transparent 52%),
+        linear-gradient(
+            90deg,
+            transparent 48%,
+            rgba(183,161,211,.16) 49%,
+            rgba(183,161,211,.16) 51%,
+            transparent 52%
+        ),
+        linear-gradient(
+            0deg,
+            transparent 48%,
+            rgba(183,161,211,.16) 49%,
+            rgba(183,161,211,.16) 51%,
+            transparent 52%
+        ),
         #222536;
 }
 
 .mini-marker {
     position: absolute;
+
     width: 8px;
     height: 8px;
+
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%) rotate(45deg);
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+
     background: #ead9ae;
-    box-shadow: 0 0 10px #ead9ae;
+
+    box-shadow:
+        0 0 10px #ead9ae;
 }
 
-/* ---------- GOALS ---------- */
+/* =========================
+   GOALS
+========================= */
 
 #goals {
     top: 145px;
     right: 18px;
+
     width: 220px;
+
     padding: 14px;
+
     border-radius: 16px;
 }
 
 .goal-title {
     margin-bottom: 9px;
+
     color: #d6ba7c;
+
     font-size: 10px;
-    letter-spacing: .14em;
+
+    letter-spacing: 0.14em;
 }
 
 .goal {
     margin: 7px 0;
+
     color: #c9c3d0;
+
     font-size: 11px;
 }
 
@@ -165,28 +254,44 @@ html, body {
     color: #8fa594;
 }
 
-/* ---------- PROMPT ---------- */
+/* =========================
+   INTERACTION
+========================= */
 
 #interaction-prompt {
     position: fixed;
+
     left: 50%;
     bottom: 82px;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     z-index: 200;
 
     display: none;
+
     align-items: center;
+
     gap: 10px;
 
-    padding: 11px 18px;
+    padding:
+        11px 18px;
 
     color: #f5efe4;
-    background: rgba(15,17,27,.94);
 
-    border: 1px solid rgba(214,186,124,.58);
+    background:
+        rgba(15,17,27,.95);
+
+    border:
+        1px solid
+        rgba(214,186,124,.60);
+
     border-radius: 13px;
 
-    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.35);
 }
 
 .key {
@@ -194,125 +299,184 @@ html, body {
     height: 30px;
 
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
     border-radius: 8px;
 
-    background: #ead9ae;
     color: #252118;
+
+    background: #ead9ae;
 
     font-weight: bold;
 }
 
-/* ---------- NOTIFICATION ---------- */
+/* =========================
+   NOTIFICATION
+========================= */
 
 #notification {
     position: fixed;
+
     z-index: 300;
 
     left: 50%;
     top: 100px;
 
-    transform: translate(-50%, -20px);
+    transform:
+        translate(-50%, -20px);
 
-    max-width: 420px;
+    max-width: 430px;
 
-    padding: 13px 20px;
+    padding:
+        13px 20px;
+
+    color: #f5efe4;
+
+    background:
+        rgba(28,31,45,.97);
+
+    border:
+        1px solid
+        rgba(183,161,211,.35);
 
     border-radius: 13px;
 
-    color: #f5efe4;
-    background: rgba(28,31,45,.96);
-    border: 1px solid rgba(183,161,211,.35);
-
     opacity: 0;
+
     pointer-events: none;
 
-    transition: .25s;
+    transition:
+        opacity .25s,
+        transform .25s;
 }
 
 #notification.show {
     opacity: 1;
-    transform: translate(-50%,0);
+
+    transform:
+        translate(-50%, 0);
 }
 
-/* ---------- BOTTOM MENU ---------- */
+/* =========================
+   BOTTOM MENU
+========================= */
 
 #bottom-menu {
     position: fixed;
+
     z-index: 100;
 
     bottom: 16px;
     left: 50%;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     display: flex;
+
     gap: 5px;
 
     padding: 7px;
 
     border-radius: 16px;
 
-    background: rgba(15,17,27,.88);
-    border: 1px solid rgba(213,197,230,.18);
-    backdrop-filter: blur(12px);
+    background:
+        rgba(15,17,27,.89);
+
+    border:
+        1px solid
+        rgba(213,197,230,.18);
+
+    backdrop-filter:
+        blur(12px);
 }
 
 .menu-button {
     border: 0;
-    padding: 9px 13px;
+
+    padding:
+        9px 13px;
+
     border-radius: 10px;
 
-    background: transparent;
     color: #c9c3d0;
 
+    background: transparent;
+
     font-family: inherit;
+
     font-size: 11px;
 
     cursor: pointer;
 }
 
 .menu-button:hover {
-    background: rgba(183,161,211,.12);
-    color: #fff;
+    color: white;
+
+    background:
+        rgba(183,161,211,.12);
 }
 
-/* ---------- FADE ---------- */
+/* =========================
+   DEVELOPMENT RETURN BUTTON
+========================= */
 
-#fade {
+#emergency-return {
     position: fixed;
-    inset: 0;
-    z-index: 500;
 
-    pointer-events: none;
+    right: 18px;
+    bottom: 18px;
 
-    background: #10121b;
-    opacity: 0;
+    z-index: 250;
 
-    transition: opacity .35s;
+    display: none;
+
+    border:
+        1px solid
+        rgba(214,186,124,.35);
+
+    padding:
+        9px 12px;
+
+    border-radius: 10px;
+
+    color: #d8d1c4;
+
+    background:
+        rgba(15,17,27,.90);
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    cursor: pointer;
 }
 
-#fade.active {
-    opacity: 1;
-}
-
-/* ---------- CONTROLS ---------- */
+/* =========================
+   CONTROLS
+========================= */
 
 #controls {
     position: fixed;
+
     left: 18px;
     bottom: 18px;
+
     z-index: 100;
 
     color: #9e99aa;
+
     font-size: 10px;
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 760px) {
+
     #mini-map,
     #goals {
         display: none;
@@ -324,12 +488,14 @@ html, body {
 
     #bottom-menu {
         max-width: 94%;
+
         overflow-x: auto;
     }
 
     .menu-button {
         white-space: nowrap;
     }
+
 }
 </style>
 </head>
@@ -338,196 +504,358 @@ html, body {
 
 <div id="everwyn-game"></div>
 
-<div id="player-hud" class="hud-panel">
-    <div class="player-name">Yanola</div>
-    <div class="player-level">LEVEL 1 · ONLINE</div>
+<div
+    id="player-hud"
+    class="hud-panel"
+>
+    <div class="player-name">
+        Yanola
+    </div>
+
+    <div class="player-level">
+        LEVEL 1 · ONLINE
+    </div>
 
     <div class="stat">
+
         <div class="stat-label">
             <span>ENERGY</span>
             <span>100 / 100</span>
         </div>
+
         <div class="stat-bar">
-            <div class="stat-fill" style="width:100%"></div>
+            <div class="stat-fill"></div>
         </div>
+
     </div>
 </div>
 
-<div id="location-hud" class="hud-panel">
-    <div id="location-name">Moonlight District</div>
-    <div id="location-subtitle">EVERWYN</div>
+<div
+    id="location-hud"
+    class="hud-panel"
+>
+    <div id="location-name">
+        Moonlight District
+    </div>
+
+    <div id="location-subtitle">
+        EVERWYN
+    </div>
 </div>
 
-<div id="mini-map" class="hud-panel">
-    <div class="mini-title">MOONLIGHT DISTRICT</div>
+<div
+    id="mini-map"
+    class="hud-panel"
+>
+    <div class="mini-title">
+        MOONLIGHT DISTRICT
+    </div>
+
     <div class="mini-world">
         <div class="mini-marker"></div>
     </div>
 </div>
 
-<div id="goals" class="hud-panel">
-    <div class="goal-title">CURRENT GOALS</div>
+<div
+    id="goals"
+    class="hud-panel"
+>
+    <div class="goal-title">
+        CURRENT GOALS
+    </div>
 
-    <div class="goal" id="goal-explore">
+    <div
+        class="goal"
+        id="goal-explore"
+    >
         ◇ Explore Moonlight District
     </div>
 
-    <div class="goal" id="goal-cafe">
+    <div
+        class="goal"
+        id="goal-cafe"
+    >
         ◇ Enter Moonlight Cafe
     </div>
 
-    <div class="goal" id="goal-social">
+    <div
+        class="goal"
+        id="goal-social"
+    >
         ◇ Find Cafe Social Hour
     </div>
 </div>
 
 <div id="interaction-prompt">
-    <span class="key">E</span>
-    <span id="interaction-text">Interact</span>
+
+    <span class="key">
+        E
+    </span>
+
+    <span id="interaction-text">
+        Interact
+    </span>
+
 </div>
 
 <div id="notification"></div>
 
 <div id="controls">
-    WASD / ARROWS · MOVE &nbsp;&nbsp; E · INTERACT
+    WASD / ARROWS · MOVE
+    &nbsp;&nbsp;
+    E · INTERACT
 </div>
 
 <div id="bottom-menu">
 
-    <button class="menu-button" onclick="showMessage('Character panel will connect to Yanola.')">
+    <button
+        class="menu-button"
+        onclick="showMessage('Character panel will connect to Yanola.')"
+    >
         Character
     </button>
 
-    <button class="menu-button" onclick="showMessage('Inventory system coming next.')">
+    <button
+        class="menu-button"
+        onclick="showMessage('Inventory system coming next.')"
+    >
         Inventory
     </button>
 
-    <button class="menu-button" onclick="showMessage('You are in Moonlight District.')">
+    <button
+        class="menu-button"
+        onclick="showMessage('World map panel coming next.')"
+    >
         Map
     </button>
 
-    <button class="menu-button" onclick="showMessage('Relationship system will appear here.')">
+    <button
+        class="menu-button"
+        onclick="showMessage('Relationships will connect to Supabase.')"
+    >
         Relationships
     </button>
 
-    <button class="menu-button" onclick="showMessage('Quest journal coming next.')">
+    <button
+        class="menu-button"
+        onclick="showMessage('Quest journal coming next.')"
+    >
         Quests
     </button>
 
 </div>
 
-<div id="fade"></div>
+<button
+    id="emergency-return"
+    type="button"
+>
+    Return to District
+</button>
 
-<script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"
+></script>
+
 
 <script>
 
 /* ==========================================================
-   EVERWYN SHARED HELPERS
-   ========================================================== */
+   GLOBAL UI
+========================================================== */
 
 const interactionPrompt =
-    document.getElementById("interaction-prompt");
+    document.getElementById(
+        "interaction-prompt"
+    );
 
 const interactionText =
-    document.getElementById("interaction-text");
-
-const fadeElement =
-    document.getElementById("fade");
+    document.getElementById(
+        "interaction-text"
+    );
 
 const locationName =
-    document.getElementById("location-name");
+    document.getElementById(
+        "location-name"
+    );
 
 const locationSubtitle =
-    document.getElementById("location-subtitle");
+    document.getElementById(
+        "location-subtitle"
+    );
+
+const emergencyReturn =
+    document.getElementById(
+        "emergency-return"
+    );
 
 
 let notificationTimer;
+
+let currentScene = null;
+
+let districtSpawn =
+    "default";
 
 
 function showMessage(message) {
 
     const notification =
-        document.getElementById("notification");
+        document.getElementById(
+            "notification"
+        );
 
-    notification.textContent = message;
+    notification.textContent =
+        message;
 
-    notification.classList.add("show");
+    notification.classList.add(
+        "show"
+    );
 
-    clearTimeout(notificationTimer);
+    clearTimeout(
+        notificationTimer
+    );
 
     notificationTimer =
-        setTimeout(() => {
-            notification.classList.remove("show");
-        }, 2600);
+        setTimeout(
+            () => {
+
+                notification
+                    .classList
+                    .remove(
+                        "show"
+                    );
+
+            },
+            2600
+        );
+
 }
 
 
 function showPrompt(text) {
 
-    interactionText.textContent = text;
+    interactionText.textContent =
+        text;
 
-    interactionPrompt.style.display = "flex";
+    interactionPrompt.style.display =
+        "flex";
+
 }
 
 
 function hidePrompt() {
 
-    interactionPrompt.style.display = "none";
+    interactionPrompt.style.display =
+        "none";
+
 }
 
 
-function setLocation(name, subtitle) {
+function setLocation(
+    name,
+    subtitle
+) {
 
-    locationName.textContent = name;
+    locationName.textContent =
+        name;
 
-    locationSubtitle.textContent = subtitle;
+    locationSubtitle.textContent =
+        subtitle;
+
 }
 
 
 function completeGoal(id) {
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
-    if (!element) return;
+    if (!element) {
+        return;
+    }
 
-    element.classList.add("complete");
+    if (
+        element.classList.contains(
+            "complete"
+        )
+    ) {
+        return;
+    }
+
+    element.classList.add(
+        "complete"
+    );
 
     element.textContent =
         "✓ " +
-        element.textContent.replace("◇ ", "");
-}
+        element.textContent.replace(
+            "◇ ",
+            ""
+        );
 
-
-function transition(scene, target) {
-
-    hidePrompt();
-
-    fadeElement.classList.add("active");
-
-    scene.time.delayedCall(
-        350,
-        () => {
-
-            scene.scene.start(target);
-
-            scene.time.delayedCall(
-                150,
-                () => {
-                    fadeElement.classList.remove("active");
-                }
-            );
-        }
-    );
 }
 
 
 /* ==========================================================
-   BASE PLAYER
-   ========================================================== */
+   SAFE SCENE CHANGE
+========================================================== */
 
-function createPlayer(scene, x, y) {
+function changeScene(
+    scene,
+    targetScene,
+    data = {}
+) {
+
+    if (
+        scene.transitioning
+    ) {
+        return;
+    }
+
+    scene.transitioning =
+        true;
+
+    hidePrompt();
+
+    scene.player.body.setVelocity(
+        0,
+        0
+    );
+
+    scene.cameras.main.fadeOut(
+        300,
+        16,
+        18,
+        27
+    );
+
+    scene.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        () => {
+
+            scene.scene.start(
+                targetScene,
+                data
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   PLAYER
+========================================================== */
+
+function createPlayer(
+    scene,
+    x,
+    y
+) {
 
     const player =
         scene.add.circle(
@@ -543,9 +871,14 @@ function createPlayer(scene, x, y) {
         1
     );
 
-    scene.physics.add.existing(player);
+    scene.physics.add.existing(
+        player
+    );
 
-    player.body.setCollideWorldBounds(true);
+    player.body
+        .setCollideWorldBounds(
+            true
+        );
 
     player.nameText =
         scene.add.text(
@@ -553,39 +886,76 @@ function createPlayer(scene, x, y) {
             y + 31,
             "Yanola",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "12px",
-                color: "#f5efe4",
-                backgroundColor: "#11131dcc",
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "12px",
+
+                color:
+                    "#f5efe4",
+
+                backgroundColor:
+                    "#11131dcc",
+
                 padding: {
                     x: 5,
                     y: 2
                 }
             }
         )
-        .setOrigin(.5, 0);
+        .setOrigin(
+            0.5,
+            0
+        );
 
     return player;
+
 }
 
 
 function createControls(scene) {
 
     scene.cursors =
-        scene.input.keyboard.createCursorKeys();
+        scene.input.keyboard
+            .createCursorKeys();
 
     scene.keys =
-        scene.input.keyboard.addKeys({
-            up: "W",
-            down: "S",
-            left: "A",
-            right: "D",
-            interact: "E"
-        });
+        scene.input.keyboard
+            .addKeys({
+                up:
+                    Phaser.Input.Keyboard
+                        .KeyCodes.W,
+
+                down:
+                    Phaser.Input.Keyboard
+                        .KeyCodes.S,
+
+                left:
+                    Phaser.Input.Keyboard
+                        .KeyCodes.A,
+
+                right:
+                    Phaser.Input.Keyboard
+                        .KeyCodes.D,
+
+                interact:
+                    Phaser.Input.Keyboard
+                        .KeyCodes.E
+            });
+
 }
 
 
 function updatePlayer(scene) {
+
+    if (
+        !scene.player ||
+        !scene.player.body ||
+        scene.transitioning
+    ) {
+        return;
+    }
 
     const player =
         scene.player;
@@ -593,20 +963,34 @@ function updatePlayer(scene) {
     const speed =
         220;
 
-    player.body.setVelocity(0);
+    player.body.setVelocity(
+        0,
+        0
+    );
+
 
     if (
         scene.cursors.left.isDown ||
         scene.keys.left.isDown
     ) {
-        player.body.setVelocityX(-speed);
+
+        player.body
+            .setVelocityX(
+                -speed
+            );
+
     }
 
     else if (
         scene.cursors.right.isDown ||
         scene.keys.right.isDown
     ) {
-        player.body.setVelocityX(speed);
+
+        player.body
+            .setVelocityX(
+                speed
+            );
+
     }
 
 
@@ -614,14 +998,24 @@ function updatePlayer(scene) {
         scene.cursors.up.isDown ||
         scene.keys.up.isDown
     ) {
-        player.body.setVelocityY(-speed);
+
+        player.body
+            .setVelocityY(
+                -speed
+            );
+
     }
 
     else if (
         scene.cursors.down.isDown ||
         scene.keys.down.isDown
     ) {
-        player.body.setVelocityY(speed);
+
+        player.body
+            .setVelocityY(
+                speed
+            );
+
     }
 
 
@@ -629,9 +1023,13 @@ function updatePlayer(scene) {
         player.body.velocity.x !== 0 ||
         player.body.velocity.y !== 0
     ) {
+
         player.body.velocity
             .normalize()
-            .scale(speed);
+            .scale(
+                speed
+            );
+
     }
 
 
@@ -639,31 +1037,137 @@ function updatePlayer(scene) {
         player.x,
         player.y + 31
     );
+
+}
+
+
+/* ==========================================================
+   GENERIC INTERACTION CHECK
+========================================================== */
+
+function checkInteractions(scene) {
+
+    if (
+        scene.transitioning
+    ) {
+        return;
+    }
+
+    let nearest =
+        null;
+
+    let nearestDistance =
+        Infinity;
+
+
+    scene.interactions.forEach(
+        interaction => {
+
+            const distance =
+                Phaser.Math.Distance.Between(
+                    scene.player.x,
+                    scene.player.y,
+                    interaction.x,
+                    interaction.y
+                );
+
+
+            if (
+                distance <
+                    interaction.radius &&
+                distance <
+                    nearestDistance
+            ) {
+
+                nearest =
+                    interaction;
+
+                nearestDistance =
+                    distance;
+
+            }
+
+        }
+    );
+
+
+    if (nearest) {
+
+        showPrompt(
+            nearest.text
+        );
+
+
+        if (
+            Phaser.Input.Keyboard
+                .JustDown(
+                    scene.keys.interact
+                )
+        ) {
+
+            nearest.action();
+
+        }
+
+    }
+
+    else {
+
+        hidePrompt();
+
+    }
+
 }
 
 
 /* ==========================================================
    MOONLIGHT DISTRICT
-   ========================================================== */
+========================================================== */
 
 class MoonlightDistrict
 extends Phaser.Scene {
 
     constructor() {
-        super("MoonlightDistrict");
+
+        super(
+            "MoonlightDistrict"
+        );
+
+    }
+
+
+    init(data) {
+
+        this.spawnFromCafe =
+            data &&
+            data.fromCafe === true;
+
     }
 
 
     create() {
+
+        currentScene =
+            this;
+
+        this.transitioning =
+            false;
+
+        emergencyReturn.style.display =
+            "none";
+
+        hidePrompt();
+
 
         setLocation(
             "Moonlight District",
             "EVERWYN"
         );
 
-        hidePrompt();
 
-        completeGoal("goal-explore");
+        completeGoal(
+            "goal-explore"
+        );
 
 
         this.physics.world.setBounds(
@@ -674,12 +1178,15 @@ extends Phaser.Scene {
         );
 
 
-        this.cameras.main.setBackgroundColor(
-            "#171927"
-        );
+        this.cameras.main
+            .setBackgroundColor(
+                "#171927"
+            );
 
 
-        /* WORLD */
+        /* =========================
+           WORLD
+        ========================= */
 
         this.add.rectangle(
             900,
@@ -690,8 +1197,6 @@ extends Phaser.Scene {
         );
 
 
-        /* GRASS / DISTRICT FLOOR */
-
         this.add.rectangle(
             900,
             650,
@@ -701,7 +1206,7 @@ extends Phaser.Scene {
         );
 
 
-        /* MAIN ROADS */
+        /* ROADS */
 
         this.add.rectangle(
             900,
@@ -710,6 +1215,7 @@ extends Phaser.Scene {
             190,
             0x343344
         );
+
 
         this.add.rectangle(
             880,
@@ -732,11 +1238,17 @@ extends Phaser.Scene {
         .setStrokeStyle(
             3,
             0x8066a8,
-            .35
+            0.35
         );
 
 
-        /* BUILDINGS */
+        /* =========================
+           BUILDINGS
+        ========================= */
+
+        this.buildingColliders =
+            [];
+
 
         this.createBuilding(
             1340,
@@ -744,8 +1256,7 @@ extends Phaser.Scene {
             300,
             210,
             0x4e3d59,
-            "Moonlight Cafe",
-            "cafe"
+            "Moonlight Cafe"
         );
 
 
@@ -755,8 +1266,7 @@ extends Phaser.Scene {
             280,
             200,
             0x3e5360,
-            "Moonveil Boutique",
-            "boutique"
+            "Moonveil Boutique"
         );
 
 
@@ -766,8 +1276,7 @@ extends Phaser.Scene {
             320,
             220,
             0x4a485b,
-            "Moonlight Apartments",
-            "apartments"
+            "Moonlight Apartments"
         );
 
 
@@ -777,12 +1286,13 @@ extends Phaser.Scene {
             300,
             220,
             0x465447,
-            "The Atelier",
-            "atelier"
+            "The Atelier"
         );
 
 
-        /* MARKET */
+        /* =========================
+           NIGHT MARKET
+        ========================= */
 
         this.add.rectangle(
             1180,
@@ -794,61 +1304,93 @@ extends Phaser.Scene {
         .setStrokeStyle(
             3,
             0xd6ba7c,
-            .35
+            0.35
         );
+
 
         this.add.text(
             1180,
             680,
             "Night Market",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "19px",
-                color: "#f5efe4"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "19px",
+
+                color:
+                    "#f5efe4"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
-        /* GROVE */
+        /* =========================
+           GROVE
+        ========================= */
 
         this.add.text(
             1520,
             1080,
             "The Grove",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "22px",
-                color: "#d9e4d5"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "22px",
+
+                color:
+                    "#d9e4d5"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
-        for (
-            let i = 0;
-            i < 12;
-            i++
-        ) {
+        const groveTrees = [
 
-            const x =
-                1350 +
-                Math.random() * 350;
+            [1370, 1010],
+            [1440, 1050],
+            [1510, 1000],
+            [1590, 1040],
+            [1660, 1000],
+            [1400, 1120],
+            [1490, 1140],
+            [1580, 1110],
+            [1680, 1130]
 
-            const y =
-                970 +
-                Math.random() * 170;
-
-            this.add.circle(
-                x,
-                y,
-                25 + Math.random() * 15,
-                0x526b5a
-            );
-        }
+        ];
 
 
-        /* FOUNTAIN */
+        groveTrees.forEach(
+            position => {
+
+                this.add.circle(
+                    position[0],
+                    position[1],
+                    32,
+                    0x526b5a
+                );
+
+                this.add.circle(
+                    position[0] - 12,
+                    position[1] - 12,
+                    22,
+                    0x657d69
+                );
+
+            }
+        );
+
+
+        /* =========================
+           FOUNTAIN
+        ========================= */
 
         this.add.circle(
             880,
@@ -859,8 +1401,9 @@ extends Phaser.Scene {
         .setStrokeStyle(
             6,
             0xb7a1d3,
-            .65
+            0.65
         );
+
 
         this.add.circle(
             880,
@@ -878,24 +1421,58 @@ extends Phaser.Scene {
                 160
             );
 
+
         this.physics.add.existing(
             this.fountainCollider,
             true
         );
 
 
-        /* PLAYER */
+        /* =========================
+           PLAYER SPAWN
+        ========================= */
+
+        let spawnX =
+            780;
+
+        let spawnY =
+            850;
+
+
+        if (
+            this.spawnFromCafe
+        ) {
+
+            /*
+                Spawn directly outside
+                Moonlight Cafe.
+            */
+
+            spawnX =
+                1340;
+
+            spawnY =
+                520;
+
+        }
+
 
         this.player =
             createPlayer(
                 this,
-                780,
-                850
+                spawnX,
+                spawnY
             );
 
 
-        createControls(this);
+        createControls(
+            this
+        );
 
+
+        /* =========================
+           COLLISIONS
+        ========================= */
 
         this.physics.add.collider(
             this.player,
@@ -915,7 +1492,9 @@ extends Phaser.Scene {
         );
 
 
-        /* CAMERA */
+        /* =========================
+           CAMERA
+        ========================= */
 
         this.cameras.main.setBounds(
             0,
@@ -924,78 +1503,155 @@ extends Phaser.Scene {
             1200
         );
 
+
         this.cameras.main.startFollow(
             this.player,
             true,
-            .08,
-            .08
+            0.08,
+            0.08
         );
 
 
-        /* INTERACTION POINTS */
+        /* Fade IN every time
+           this scene starts. */
+
+        this.cameras.main.fadeIn(
+            350,
+            16,
+            18,
+            27
+        );
+
+
+        /* =========================
+           INTERACTIONS
+        ========================= */
 
         this.interactions = [
 
             {
-                x: 1340,
-                y: 455,
-                radius: 115,
-                text: "Enter Moonlight Cafe",
-                action: () => {
-                    completeGoal("goal-cafe");
-                    transition(
-                        this,
-                        "MoonlightCafe"
-                    );
-                }
+                x:
+                    1340,
+
+                y:
+                    465,
+
+                radius:
+                    110,
+
+                text:
+                    "Enter Moonlight Cafe",
+
+                action:
+                    () => {
+
+                        completeGoal(
+                            "goal-cafe"
+                        );
+
+
+                        changeScene(
+                            this,
+                            "MoonlightCafe"
+                        );
+
+                    }
             },
 
-            {
-                x: 430,
-                y: 445,
-                radius: 110,
-                text: "Visit Moonveil Boutique",
-                action: () => {
-                    showMessage(
-                        "Moonveil Boutique is being prepared."
-                    );
-                }
-            },
 
             {
-                x: 380,
-                y: 770,
-                radius: 110,
-                text: "Enter Apartments",
-                action: () => {
-                    showMessage(
-                        "Player homes will live here."
-                    );
-                }
+                x:
+                    430,
+
+                y:
+                    440,
+
+                radius:
+                    110,
+
+                text:
+                    "Visit Moonveil Boutique",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "Moonveil Boutique will become an enterable shop."
+                        );
+
+                    }
             },
 
-            {
-                x: 1180,
-                y: 680,
-                radius: 130,
-                text: "Browse Night Market",
-                action: () => {
-                    showMessage(
-                        "Future player shops and merchants will appear here."
-                    );
-                }
-            },
 
             {
-                x: 880,
-                y: 620,
-                radius: 140,
-                text: "Look at Moonlight Fountain",
-                action: () => {
-                    showMessage(
-                        "The fountain glimmers with faint violet light."
-                    );
-                }
+                x:
+                    380,
+
+                y:
+                    770,
+
+                radius:
+                    115,
+
+                text:
+                    "Enter Apartments",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "Player apartments and homes will live here."
+                        );
+
+                    }
+            },
+
+
+            {
+                x:
+                    1180,
+
+                y:
+                    680,
+
+                radius:
+                    145,
+
+                text:
+                    "Browse Night Market",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "The Night Market will eventually contain merchants and player businesses."
+                        );
+
+                    }
+            },
+
+
+            {
+                x:
+                    880,
+
+                y:
+                    620,
+
+                radius:
+                    145,
+
+                text:
+                    "Look at Moonlight Fountain",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "The water glimmers with faint violet light."
+                        );
+
+                    }
             }
 
         ];
@@ -1009,14 +1665,8 @@ extends Phaser.Scene {
         width,
         height,
         color,
-        name,
-        type
+        name
     ) {
-
-        if (!this.buildingColliders) {
-            this.buildingColliders = [];
-        }
-
 
         this.add.rectangle(
             x,
@@ -1028,7 +1678,7 @@ extends Phaser.Scene {
         .setStrokeStyle(
             4,
             0xd6ba7c,
-            .32
+            0.32
         );
 
 
@@ -1037,12 +1687,19 @@ extends Phaser.Scene {
             y,
             name,
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "20px",
-                color: "#f5efe4"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "20px",
+
+                color:
+                    "#f5efe4"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
         const collider =
@@ -1065,13 +1722,16 @@ extends Phaser.Scene {
         );
 
 
-        /* DOOR */
+        /*
+            Door is placed
+            OUTSIDE collision body.
+        */
 
         this.add.rectangle(
             x,
-            y + height / 2 + 9,
-            55,
-            18,
+            y + height / 2 + 10,
+            58,
+            20,
             0xd6ba7c
         );
 
@@ -1080,77 +1740,14 @@ extends Phaser.Scene {
 
     update() {
 
-        updatePlayer(this);
-
-        this.checkInteractions();
-
-    }
-
-
-    checkInteractions() {
-
-        let nearest =
-            null;
-
-        let nearestDistance =
-            Infinity;
-
-
-        this.interactions.forEach(
-            interaction => {
-
-                const distance =
-                    Phaser.Math.Distance.Between(
-                        this.player.x,
-                        this.player.y,
-                        interaction.x,
-                        interaction.y
-                    );
-
-
-                if (
-                    distance <
-                        interaction.radius &&
-                    distance <
-                        nearestDistance
-                ) {
-
-                    nearest =
-                        interaction;
-
-                    nearestDistance =
-                        distance;
-                }
-
-            }
+        updatePlayer(
+            this
         );
 
 
-        if (nearest) {
-
-            showPrompt(
-                nearest.text
-            );
-
-
-            if (
-                Phaser.Input.Keyboard
-                    .JustDown(
-                        this.keys.interact
-                    )
-            ) {
-
-                nearest.action();
-
-            }
-
-        }
-
-        else {
-
-            hidePrompt();
-
-        }
+        checkInteractions(
+            this
+        );
 
     }
 
@@ -1158,25 +1755,40 @@ extends Phaser.Scene {
 
 
 /* ==========================================================
-   MOONLIGHT CAFE INTERIOR
-   ========================================================== */
+   MOONLIGHT CAFE
+========================================================== */
 
 class MoonlightCafe
 extends Phaser.Scene {
 
     constructor() {
-        super("MoonlightCafe");
+
+        super(
+            "MoonlightCafe"
+        );
+
     }
 
 
     create() {
 
-        setLocation(
-            "Moonlight Cafe",
-            "MOONLIGHT DISTRICT"
-        );
+        currentScene =
+            this;
+
+        this.transitioning =
+            false;
 
         hidePrompt();
+
+
+        emergencyReturn.style.display =
+            "block";
+
+
+        setLocation(
+            "Moonlight Cafe",
+            "MOONLIGHT DISTRICT · INTERIOR"
+        );
 
 
         this.physics.world.setBounds(
@@ -1187,12 +1799,15 @@ extends Phaser.Scene {
         );
 
 
-        this.cameras.main.setBackgroundColor(
-            "#201b27"
-        );
+        this.cameras.main
+            .setBackgroundColor(
+                "#211b28"
+            );
 
 
-        /* FLOOR */
+        /* =========================
+           CAFE FLOOR
+        ========================= */
 
         this.add.rectangle(
             600,
@@ -1204,17 +1819,32 @@ extends Phaser.Scene {
         .setStrokeStyle(
             5,
             0xd6ba7c,
-            .35
+            0.45
         );
 
 
-        /* BACK WALL */
+        /*
+            Carpet / central walkway
+        */
 
         this.add.rectangle(
             600,
-            110,
+            500,
+            190,
+            560,
+            0x443748
+        );
+
+
+        /* =========================
+           BACK WALL
+        ========================= */
+
+        this.add.rectangle(
+            600,
+            105,
             1120,
-            150,
+            130,
             0x4a394e
         );
 
@@ -1231,52 +1861,94 @@ extends Phaser.Scene {
                 x,
                 100,
                 105,
-                75,
+                72,
                 0x282e49
             )
             .setStrokeStyle(
                 3,
                 0xb7a1d3,
-                .5
+                0.50
             );
 
         }
 
 
-        /* COUNTER */
-
-        this.add.rectangle(
-            210,
-            280,
-            260,
-            80,
-            0x6a5146
-        );
+        /* =========================
+           TITLE
+        ========================= */
 
         this.add.text(
-            210,
-            280,
-            "CAFE COUNTER",
+            600,
+            170,
+            "MOONLIGHT CAFE",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "14px",
-                color: "#f5efe4"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "28px",
+
+                color:
+                    "#f5efe4"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
-        /* TABLES */
+        /* =========================
+           CAFE COUNTER
+        ========================= */
 
-        this.tableColliders = [];
+        this.add.rectangle(
+            205,
+            285,
+            255,
+            82,
+            0x6a5146
+        )
+        .setStrokeStyle(
+            3,
+            0xd6ba7c,
+            0.35
+        );
+
+
+        this.add.text(
+            205,
+            285,
+            "CAFE COUNTER",
+            {
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "14px",
+
+                color:
+                    "#f5efe4"
+            }
+        )
+        .setOrigin(
+            0.5
+        );
+
+
+        /* =========================
+           TABLES
+        ========================= */
+
+        this.tableColliders =
+            [];
 
 
         const tables = [
 
-            [470, 340],
-            [760, 340],
-            [470, 580],
-            [760, 580]
+            [410, 360],
+            [735, 360],
+            [410, 575],
+            [735, 575]
 
         ];
 
@@ -1287,13 +1959,32 @@ extends Phaser.Scene {
                 this.add.circle(
                     position[0],
                     position[1],
-                    55,
+                    52,
                     0x705a55
                 )
                 .setStrokeStyle(
                     4,
                     0xd6ba7c,
-                    .35
+                    0.35
+                );
+
+
+                /*
+                    chairs
+                */
+
+                this.add.circle(
+                    position[0] - 72,
+                    position[1],
+                    18,
+                    0x4e4249
+                );
+
+                this.add.circle(
+                    position[0] + 72,
+                    position[1],
+                    18,
+                    0x4e4249
                 );
 
 
@@ -1320,7 +2011,9 @@ extends Phaser.Scene {
         );
 
 
-        /* SOCIAL HOUR AREA */
+        /* =========================
+           SOCIAL HOUR
+        ========================= */
 
         this.add.rectangle(
             980,
@@ -1332,49 +2025,70 @@ extends Phaser.Scene {
         .setStrokeStyle(
             4,
             0xb7a1d3,
-            .65
+            0.70
         );
 
 
         this.add.text(
             980,
-            400,
+            390,
             "✦",
             {
-                fontSize: "34px",
-                color: "#ead9ae"
+                fontSize:
+                    "36px",
+
+                color:
+                    "#ead9ae"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
         this.add.text(
             980,
-            450,
+            445,
             "Cafe Social Hour",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "19px",
-                color: "#f5efe4"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "19px",
+
+                color:
+                    "#f5efe4"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
         this.add.text(
             980,
-            485,
+            480,
             "Meet · Chat · Connect",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "11px",
-                color: "#c9c3d0"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "11px",
+
+                color:
+                    "#c9c3d0"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
-        /* OTHER PLAYERS */
+        /* =========================
+           OTHER CHARACTERS
+        ========================= */
 
         this.createOtherPlayer(
             660,
@@ -1390,12 +2104,14 @@ extends Phaser.Scene {
         );
 
 
-        /* EXIT */
+        /* =========================
+           EXIT
+        ========================= */
 
         this.add.rectangle(
             600,
             785,
-            110,
+            120,
             30,
             0xd6ba7c
         );
@@ -1403,29 +2119,44 @@ extends Phaser.Scene {
 
         this.add.text(
             600,
-            750,
-            "EXIT",
+            745,
+            "EXIT TO DISTRICT",
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "11px",
-                color: "#ead9ae"
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "11px",
+
+                color:
+                    "#ead9ae"
             }
         )
-        .setOrigin(.5);
+        .setOrigin(
+            0.5
+        );
 
 
-        /* PLAYER */
+        /* =========================
+           YANOLA
+        ========================= */
 
         this.player =
             createPlayer(
                 this,
                 600,
-                700
+                690
             );
 
 
-        createControls(this);
+        createControls(
+            this
+        );
 
+
+        /* =========================
+           COLLISIONS
+        ========================= */
 
         this.tableColliders.forEach(
             collider => {
@@ -1439,7 +2170,9 @@ extends Phaser.Scene {
         );
 
 
-        /* CAMERA */
+        /* =========================
+           CAMERA
+        ========================= */
 
         this.cameras.main.setBounds(
             0,
@@ -1452,81 +2185,146 @@ extends Phaser.Scene {
         this.cameras.main.startFollow(
             this.player,
             true,
-            .08,
-            .08
+            0.08,
+            0.08
         );
 
 
-        /* INTERACTIONS */
+        /*
+            IMPORTANT:
+            explicitly fade the cafe IN.
+        */
+
+        this.cameras.main.fadeIn(
+            350,
+            16,
+            18,
+            27
+        );
+
+
+        /* =========================
+           INTERACTIONS
+        ========================= */
 
         this.interactions = [
 
             {
-                x: 600,
-                y: 780,
-                radius: 80,
-                text: "Leave Moonlight Cafe",
+                x:
+                    600,
 
-                action: () => {
+                y:
+                    780,
 
-                    transition(
-                        this,
-                        "MoonlightDistrict"
-                    );
+                radius:
+                    95,
 
-                }
+                text:
+                    "Leave Moonlight Cafe",
+
+                action:
+                    () => {
+
+                        changeScene(
+                            this,
+                            "MoonlightDistrict",
+                            {
+                                fromCafe:
+                                    true
+                            }
+                        );
+
+                    }
             },
 
+
             {
-                x: 980,
-                y: 470,
-                radius: 155,
-                text: "Join Cafe Social Hour",
+                x:
+                    980,
 
-                action: () => {
+                y:
+                    470,
 
-                    completeGoal(
-                        "goal-social"
-                    );
+                radius:
+                    155,
 
-                    showMessage(
-                        "Yanola joined Cafe Social Hour ✦"
-                    );
+                text:
+                    "Join Cafe Social Hour",
 
-                }
+                action:
+                    () => {
+
+                        completeGoal(
+                            "goal-social"
+                        );
+
+
+                        showMessage(
+                            "Yanola joined Cafe Social Hour ✦"
+                        );
+
+                    }
             },
 
+
             {
-                x: 660,
-                y: 250,
-                radius: 90,
-                text: "Interact with Test Player",
+                x:
+                    660,
 
-                action: () => {
+                y:
+                    250,
 
-                    showMessage(
-                        "Test Player · Acquaintance — player interactions are coming next."
-                    );
+                radius:
+                    90,
 
-                }
+                text:
+                    "Interact with Test Player",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "Test Player · Acquaintance — this will connect to your real relationship system."
+                        );
+
+                    }
             },
 
+
             {
-                x: 210,
-                y: 280,
-                radius: 150,
-                text: "Visit Cafe Counter",
+                x:
+                    205,
 
-                action: () => {
+                y:
+                    285,
 
-                    showMessage(
-                        "Ordering, working and cafe purchases will happen here."
-                    );
+                radius:
+                    150,
 
-                }
+                text:
+                    "Visit Cafe Counter",
+
+                action:
+                    () => {
+
+                        showMessage(
+                            "Ordering, cafe jobs and purchases will happen here."
+                        );
+
+                    }
             }
 
         ];
+
+
+        /*
+            Visible confirmation that
+            the scene successfully loaded.
+        */
+
+        showMessage(
+            "Entered Moonlight Cafe"
+        );
 
     }
 
@@ -1546,7 +2344,7 @@ extends Phaser.Scene {
         .setStrokeStyle(
             3,
             0xd9e4d5,
-            .8
+            0.8
         );
 
 
@@ -1555,95 +2353,42 @@ extends Phaser.Scene {
             y + 30,
             name,
             {
-                fontFamily: "Georgia, serif",
-                fontSize: "11px",
-                color: "#f5efe4",
-                backgroundColor: "#11131dcc",
+                fontFamily:
+                    "Georgia, serif",
+
+                fontSize:
+                    "11px",
+
+                color:
+                    "#f5efe4",
+
+                backgroundColor:
+                    "#11131dcc",
+
                 padding: {
                     x: 5,
                     y: 2
                 }
             }
         )
-        .setOrigin(.5, 0);
+        .setOrigin(
+            0.5,
+            0
+        );
 
     }
 
 
     update() {
 
-        updatePlayer(this);
-
-        this.checkInteractions();
-
-    }
-
-
-    checkInteractions() {
-
-        let nearest =
-            null;
-
-        let nearestDistance =
-            Infinity;
-
-
-        this.interactions.forEach(
-            interaction => {
-
-                const distance =
-                    Phaser.Math.Distance.Between(
-                        this.player.x,
-                        this.player.y,
-                        interaction.x,
-                        interaction.y
-                    );
-
-
-                if (
-                    distance <
-                        interaction.radius &&
-                    distance <
-                        nearestDistance
-                ) {
-
-                    nearest =
-                        interaction;
-
-                    nearestDistance =
-                        distance;
-
-                }
-
-            }
+        updatePlayer(
+            this
         );
 
 
-        if (nearest) {
-
-            showPrompt(
-                nearest.text
-            );
-
-
-            if (
-                Phaser.Input.Keyboard
-                    .JustDown(
-                        this.keys.interact
-                    )
-            ) {
-
-                nearest.action();
-
-            }
-
-        }
-
-        else {
-
-            hidePrompt();
-
-        }
+        checkInteractions(
+            this
+        );
 
     }
 
@@ -1651,8 +2396,46 @@ extends Phaser.Scene {
 
 
 /* ==========================================================
-   GAME CONFIG
-   ========================================================== */
+   EMERGENCY RETURN
+========================================================== */
+
+emergencyReturn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !currentScene
+        ) {
+            return;
+        }
+
+
+        if (
+            currentScene.scene.key ===
+            "MoonlightDistrict"
+        ) {
+            return;
+        }
+
+
+        hidePrompt();
+
+
+        currentScene.scene.start(
+            "MoonlightDistrict",
+            {
+                fromCafe:
+                    true
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================================
+   PHASER CONFIG
+========================================================== */
 
 const config = {
 
@@ -1711,6 +2494,10 @@ const config = {
 
 };
 
+
+/* ==========================================================
+   START EVERWYN
+========================================================== */
 
 const game =
     new Phaser.Game(
