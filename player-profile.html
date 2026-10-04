@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Everwyn Online — Player Profile</title>
+
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8f1ff,
+                    #eef7ff,
+                    #fff5f8
+                );
+
+            color: #30263d;
+
+            min-height: 100vh;
+
+        }
+
+
+        .page {
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            padding:
+                40px 20px 60px;
+
+        }
+
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #7557a8;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .profile-card {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.9
+                );
+
+            border-radius: 26px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(
+                    70,
+                    45,
+                    95,
+                    0.12
+                );
+
+        }
+
+
+        .profile-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .avatar {
+
+            width: 110px;
+
+            height: 110px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dbc9f0,
+                    #c7e7f4
+                );
+
+            font-size: 42px;
+
+            font-weight: bold;
+
+            color: #604b73;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .player-name {
+
+            margin: 0;
+
+            font-size: 38px;
+
+        }
+
+
+        .player-status {
+
+            margin-top: 8px;
+
+            color: #75687e;
+
+            font-size: 16px;
+
+        }
+
+
+        .status-dot {
+
+            display: inline-block;
+
+            width: 9px;
+
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #75b798;
+
+            margin-right: 7px;
+
+        }
+
+
+        .section {
+
+            margin-top: 30px;
+
+        }
+
+
+        .section h2 {
+
+            margin-bottom: 12px;
+
+            font-size: 23px;
+
+        }
+
+
+        .bio {
+
+            line-height: 1.7;
+
+            color: #62566b;
+
+        }
+
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        180px,
+                        1fr
+                    )
+                );
+
+            gap: 14px;
+
+        }
+
+
+        .info-box {
+
+            padding: 17px;
+
+            border-radius: 15px;
+
+            background:
+                #f8f4fc;
+
+            border:
+                1px solid
+                #e7dcf2;
+
+        }
+
+
+        .info-label {
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+
+            color: #89779b;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .info-value {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 30px;
+
+        }
+
+
+        button {
+
+            border: none;
+
+            border-radius: 12px;
+
+            padding:
+                13px 21px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background:
+                #8c68b8;
+
+            color: white;
+
+        }
+
+
+        button:hover {
+
+            background:
+                #76549f;
+
+        }
+
+
+        .secondary {
+
+            background:
+                #e7dce9;
+
+            color: #513d58;
+
+        }
+
+
+        .secondary:hover {
+
+            background:
+                #dacbdc;
+
+        }
+
+
+        .message {
+
+            padding: 25px;
+
+            text-align: center;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.9
+                );
+
+            border-radius: 20px;
+
+        }
+
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .page {
+
+                padding:
+                    25px 14px 40px;
+
+            }
+
+
+            .profile-card {
+
+                padding: 24px;
+
+            }
+
+
+            .profile-header {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .player-name {
+
+                font-size: 30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="page">
+
+
+        <a
+            href="explore.html"
+            class="back-link"
+        >
+            ← Back to Explore Everwyn
+        </a>
+
+
+        <div id="profileContent">
+
+            <div class="message">
+
+                <p>
+                    Loading player profile...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        /*
+            SUPABASE CONNECTION
+        */
+
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+
+        /*
+            CURRENT EVERWYN PLAYER
+        */
+
+        const CURRENT_PLAYER_ID =
+            3;
+
+
+        const profileContent =
+            document.getElementById(
+                "profileContent"
+            );
+
+
+        /*
+            ESCAPE HTML
+        */
+
+        function escapeHtml(value) {
+
+            return String(
+                value ?? ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /*
+            GET PLAYER ID
+        */
+
+        function getPlayerId() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            return params.get(
+                "id"
+            );
+
+        }
+
+
+        /*
+            LOAD PLAYER PROFILE
+        */
+
+        async function loadPlayerProfile() {
+
+            const playerId =
+                getPlayerId();
+
+
+            if (!playerId) {
+
+                profileContent.innerHTML = `
+
+                    <div class="message">
+
+                        <h2>
+                            Player Not Found
+                        </h2>
+
+                        <p>
+                            No player was specified.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/players" +
+                        "?id=eq." +
+                        encodeURIComponent(
+                            playerId
+                        ) +
+                        "&select=id,name,bio,photo_url,profile_url,profile_visibility,current_status,status_message,approval_status,verification_status" +
+                        "&apikey=" +
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        )
+
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load player profile. HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                const players =
+                    await response.json();
+
+
+                if (!players.length) {
+
+                    profileContent.innerHTML = `
+
+                        <div class="message">
+
+                            <h2>
+                                Player Not Found
+                            </h2>
+
+                            <p>
+                                This player does not exist.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                const player =
+                    players[0];
+
+
+                const playerName =
+                    player.name ||
+                    "Unknown Player";
+
+
+                const firstLetter =
+                    playerName
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                const status =
+                    player.current_status ||
+                    "offline";
+
+
+                const bio =
+                    player.bio ||
+                    "This player hasn't added a bio yet.";
+
+
+                const statusMessage =
+                    player.status_message ||
+                    "";
+
+
+                const isCurrentPlayer =
+                    Number(player.id) ===
+                    CURRENT_PLAYER_ID;
+
+
+                profileContent.innerHTML = `
+
+                    <div class="profile-card">
+
+                        <div class="profile-header">
+
+                            <div class="avatar">
+
+                                ${escapeHtml(
+                                    firstLetter
+                                )}
+
+                            </div>
+
+
+                            <div>
+
+                                <h1 class="player-name">
+
+                                    ${escapeHtml(
+                                        playerName
+                                    )}
+
+                                </h1>
+
+
+                                <div class="player-status">
+
+                                    <span class="status-dot"></span>
+
+                                    ${escapeHtml(
+                                        status
+                                    )}
+
+                                </div>
+
+
+                                ${
+                                    statusMessage
+                                        ?
+                                        `
+
+                                            <div class="player-status">
+
+                                                ${escapeHtml(
+                                                    statusMessage
+                                                )}
+
+                                            </div>
+
+                                        `
+                                        :
+                                        ""
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="section">
+
+                            <h2>
+                                About
+                            </h2>
+
+
+                            <p class="bio">
+
+                                ${escapeHtml(
+                                    bio
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="section">
+
+                            <h2>
+                                Player Information
+                            </h2>
+
+
+                            <div class="info-grid">
+
+                                <div class="info-box">
+
+                                    <div class="info-label">
+                                        Player ID
+                                    </div>
+
+                                    <div class="info-value">
+
+                                        ${escapeHtml(
+                                            player.id
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-box">
+
+                                    <div class="info-label">
+                                        Status
+                                    </div>
+
+                                    <div class="info-value">
+
+                                        ${escapeHtml(
+                                            status
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-box">
+
+                                    <div class="info-label">
+                                        Profile
+                                    </div>
+
+                                    <div class="info-value">
+
+                                        ${
+                                            player.profile_visibility ===
+                                            "public"
+                                                ?
+                                                "Public"
+                                                :
+                                                "Private"
+                                        }
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-box">
+
+                                    <div class="info-label">
+                                        Verification
+                                    </div>
+
+                                    <div class="info-value">
+
+                                        ${escapeHtml(
+                                            player.verification_status ||
+                                            "Unverified"
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="actions">
+
+                            ${
+                                isCurrentPlayer
+                                    ?
+                                    `
+                                        <button
+                                            onclick="window.location.href='game.html'"
+                                        >
+                                            My Character
+                                        </button>
+                                    `
+                                    :
+                                    `
+                                        <button
+                                            onclick="alert('Messaging will be added next.')"
+                                        >
+                                            Message
+                                        </button>
+
+
+                                        <button
+                                            class="secondary"
+                                            onclick="alert('Relationships will be added next.')"
+                                        >
+                                            Add Friend
+                                        </button>
+                                    `
+                            }
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn profile error:",
+                    error
+                );
+
+
+                profileContent.innerHTML = `
+
+                    <div class="message">
+
+                        <h2>
+                            Unable to Load Profile
+                        </h2>
+
+                        <p>
+
+                            ${escapeHtml(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /*
+            START PAGE
+        */
+
+        loadPlayerProfile();
+
+    </script>
+
+</body>
+
+</html>
