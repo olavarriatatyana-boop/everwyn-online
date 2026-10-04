@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,11 +11,9 @@
 
     <title>Everwyn Online — Player Profile</title>
 
-
     <style>
 
         body {
-
             margin: 0;
 
             font-family:
@@ -33,48 +30,32 @@
                 );
 
             color: #30263d;
-
             min-height: 100vh;
-
         }
 
 
         .page {
-
             max-width: 900px;
-
             margin: 0 auto;
-
-            padding:
-                40px 20px 60px;
-
+            padding: 40px 20px 60px;
         }
 
 
         .back-link {
-
             display: inline-block;
-
             margin-bottom: 20px;
-
             color: #7557a8;
-
             text-decoration: none;
-
             font-weight: bold;
-
         }
 
 
         .back-link:hover {
-
             text-decoration: underline;
-
         }
 
 
         .profile-card {
-
             background:
                 rgba(
                     255,
@@ -84,7 +65,6 @@
                 );
 
             border-radius: 26px;
-
             padding: 35px;
 
             box-shadow:
@@ -95,35 +75,24 @@
                     95,
                     0.12
                 );
-
         }
 
 
         .profile-header {
-
             display: flex;
-
             align-items: center;
-
             gap: 25px;
-
             margin-bottom: 30px;
-
         }
 
 
         .avatar {
-
             width: 110px;
-
             height: 110px;
-
             border-radius: 50%;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             background:
@@ -134,80 +103,53 @@
                 );
 
             font-size: 42px;
-
             font-weight: bold;
-
             color: #604b73;
-
             flex-shrink: 0;
-
         }
 
 
         .player-name {
-
             margin: 0;
-
             font-size: 38px;
-
         }
 
 
         .player-status {
-
             margin-top: 8px;
-
             color: #75687e;
-
             font-size: 16px;
-
         }
 
 
         .status-dot {
-
             display: inline-block;
-
             width: 9px;
-
             height: 9px;
-
             border-radius: 50%;
-
             background: #75b798;
-
             margin-right: 7px;
-
         }
 
 
         .section {
-
             margin-top: 30px;
-
         }
 
 
         .section h2 {
-
             margin-bottom: 12px;
-
             font-size: 23px;
-
         }
 
 
         .bio {
-
             line-height: 1.7;
-
             color: #62566b;
-
         }
 
 
         .info-grid {
-
             display: grid;
 
             grid-template-columns:
@@ -220,118 +162,233 @@
                 );
 
             gap: 14px;
-
         }
 
 
         .info-box {
-
             padding: 17px;
-
             border-radius: 15px;
-
-            background:
-                #f8f4fc;
+            background: #f8f4fc;
 
             border:
                 1px solid
                 #e7dcf2;
-
         }
 
 
         .info-label {
-
             font-size: 12px;
-
             text-transform: uppercase;
-
             letter-spacing: 0.08em;
-
             color: #89779b;
-
             margin-bottom: 6px;
-
         }
 
 
         .info-value {
-
             font-size: 17px;
-
             font-weight: bold;
+        }
 
+
+        /*
+            RELATIONSHIP SECTION
+        */
+
+        .relationship-card {
+            margin-top: 12px;
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8f1ff,
+                    #f2f8ff
+                );
+
+            border:
+                1px solid
+                #dfd2ed;
+        }
+
+
+        .relationship-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+
+        .relationship-subtitle {
+            color: #75687e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+
+        .relationship-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        150px,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+        }
+
+
+        .relationship-box {
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.75
+                );
+
+            border-radius: 14px;
+            padding: 15px;
+
+            border:
+                1px solid
+                #e9dff2;
+        }
+
+
+        .relationship-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #8d7b9c;
+            margin-bottom: 6px;
+        }
+
+
+        .relationship-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4f3c5d;
+        }
+
+
+        .relationship-progress {
+            margin-top: 20px;
+        }
+
+
+        .progress-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            color: #75687e;
+        }
+
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            overflow: hidden;
+
+            border-radius: 999px;
+            background: #e6ddec;
+        }
+
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8c68b8,
+                    #a982cf
+                );
+
+            transition:
+                width 0.4s ease;
+        }
+
+
+        .relationship-note {
+            margin-top: 18px;
+            color: #75687e;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        .no-relationship {
+            margin-top: 12px;
+            padding: 20px;
+
+            border-radius: 16px;
+            background: #faf8fd;
+
+            border:
+                1px solid
+                #e8dff0;
+
+            color: #75687e;
+            line-height: 1.6;
         }
 
 
         .actions {
-
             display: flex;
-
             flex-wrap: wrap;
-
             gap: 12px;
-
             margin-top: 30px;
-
         }
 
 
         button {
-
             border: none;
-
             border-radius: 12px;
 
             padding:
                 13px 21px;
 
             font-family: inherit;
-
             font-size: 15px;
-
             font-weight: bold;
 
             cursor: pointer;
 
-            background:
-                #8c68b8;
-
+            background: #8c68b8;
             color: white;
-
         }
 
 
         button:hover {
-
-            background:
-                #76549f;
-
+            background: #76549f;
         }
 
 
         .secondary {
-
-            background:
-                #e7dce9;
-
+            background: #e7dce9;
             color: #513d58;
-
         }
 
 
         .secondary:hover {
-
-            background:
-                #dacbdc;
-
+            background: #dacbdc;
         }
 
 
         .message {
-
             padding: 25px;
-
             text-align: center;
 
             background:
@@ -343,7 +400,6 @@
                 );
 
             border-radius: 20px;
-
         }
 
 
@@ -352,35 +408,30 @@
         ) {
 
             .page {
-
                 padding:
                     25px 14px 40px;
-
             }
 
 
             .profile-card {
-
                 padding: 24px;
-
             }
 
 
             .profile-header {
-
-                flex-direction:
-                    column;
-
-                align-items:
-                    flex-start;
-
+                flex-direction: column;
+                align-items: flex-start;
             }
 
 
             .player-name {
-
                 font-size: 30px;
+            }
 
+
+            .progress-heading {
+                flex-direction: column;
+                gap: 4px;
             }
 
         }
@@ -392,9 +443,7 @@
 
 <body>
 
-
     <div class="page">
-
 
         <a
             href="explore.html"
@@ -421,7 +470,6 @@
 
     <script>
 
-
         /*
             SUPABASE CONNECTION
         */
@@ -436,6 +484,8 @@
 
         /*
             CURRENT EVERWYN PLAYER
+
+            Yanola currently has player ID 3.
         */
 
         const CURRENT_PLAYER_ID =
@@ -487,7 +537,84 @@
 
 
         /*
-            GET PLAYER ID
+            FORMAT RELATIONSHIP TYPE
+
+            Example:
+
+            close_friend
+            becomes
+            Close Friend
+        */
+
+        function formatRelationshipType(
+            value
+        ) {
+
+            if (!value) {
+
+                return "Acquaintance";
+
+            }
+
+
+            return String(value)
+
+                .replace(
+                    /_/g,
+                    " "
+                )
+
+                .replace(
+                    /\b\w/g,
+                    character =>
+                        character.toUpperCase()
+                );
+
+        }
+
+
+        /*
+            FORMAT DATE
+        */
+
+        function formatDate(value) {
+
+            if (!value) {
+
+                return "Unknown";
+
+            }
+
+
+            const date =
+                new Date(value);
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "Unknown";
+
+            }
+
+
+            return date.toLocaleDateString(
+                undefined,
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric"
+                }
+            );
+
+        }
+
+
+        /*
+            GET PLAYER ID FROM URL
         */
 
         function getPlayerId() {
@@ -501,6 +628,559 @@
             return params.get(
                 "id"
             );
+
+        }
+
+
+        /*
+            LOAD RELATIONSHIP BETWEEN
+            YANOLA AND PROFILE PLAYER
+
+            We check BOTH directions because
+            either player may be stored in
+            player_id or other_player_id.
+        */
+
+        async function loadRelationship(
+            profilePlayerId
+        ) {
+
+            const targetPlayerId =
+                Number(
+                    profilePlayerId
+                );
+
+
+            if (
+                targetPlayerId ===
+                CURRENT_PLAYER_ID
+            ) {
+
+                return null;
+
+            }
+
+
+            /*
+                FIRST DIRECTION:
+
+                Yanola -> Other Player
+            */
+
+            const firstResponse =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/player_relationships" +
+                    "?player_id=eq." +
+                    encodeURIComponent(
+                        CURRENT_PLAYER_ID
+                    ) +
+                    "&other_player_id=eq." +
+                    encodeURIComponent(
+                        targetPlayerId
+                    ) +
+                    "&select=*" +
+                    "&limit=1" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!firstResponse.ok) {
+
+                throw new Error(
+                    "Could not load relationship. HTTP " +
+                    firstResponse.status
+                );
+
+            }
+
+
+            const firstRelationships =
+                await firstResponse.json();
+
+
+            if (
+                firstRelationships.length
+            ) {
+
+                return firstRelationships[0];
+
+            }
+
+
+            /*
+                SECOND DIRECTION:
+
+                Other Player -> Yanola
+            */
+
+            const secondResponse =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/player_relationships" +
+                    "?player_id=eq." +
+                    encodeURIComponent(
+                        targetPlayerId
+                    ) +
+                    "&other_player_id=eq." +
+                    encodeURIComponent(
+                        CURRENT_PLAYER_ID
+                    ) +
+                    "&select=*" +
+                    "&limit=1" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!secondResponse.ok) {
+
+                throw new Error(
+                    "Could not load relationship. HTTP " +
+                    secondResponse.status
+                );
+
+            }
+
+
+            const secondRelationships =
+                await secondResponse.json();
+
+
+            return secondRelationships.length
+                ?
+                secondRelationships[0]
+                :
+                null;
+
+        }
+
+
+        /*
+            LOAD FIRST RECORDED
+            RELATIONSHIP INTERACTION
+        */
+
+        async function loadFirstInteraction(
+            relationshipId
+        ) {
+
+            if (!relationshipId) {
+
+                return null;
+
+            }
+
+
+            const response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/relationship_interactions" +
+                    "?relationship_id=eq." +
+                    encodeURIComponent(
+                        relationshipId
+                    ) +
+                    "&select=*" +
+                    "&order=created_at.asc" +
+                    "&limit=1" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Could not load relationship interaction. HTTP " +
+                    response.status
+                );
+
+            }
+
+
+            const interactions =
+                await response.json();
+
+
+            return interactions.length
+                ?
+                interactions[0]
+                :
+                null;
+
+        }
+
+
+        /*
+            LOAD ACTIVITY NAME FOR
+            FIRST INTERACTION
+        */
+
+        async function loadActivityName(
+            activityId
+        ) {
+
+            if (!activityId) {
+
+                return null;
+
+            }
+
+
+            const response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/world_activities" +
+                    "?id=eq." +
+                    encodeURIComponent(
+                        activityId
+                    ) +
+                    "&select=id,name" +
+                    "&limit=1" +
+                    "&apikey=" +
+                    encodeURIComponent(
+                        SUPABASE_KEY
+                    )
+
+                );
+
+
+            if (!response.ok) {
+
+                return null;
+
+            }
+
+
+            const activities =
+                await response.json();
+
+
+            if (!activities.length) {
+
+                return null;
+
+            }
+
+
+            return activities[0].name;
+
+        }
+
+
+        /*
+            BUILD RELATIONSHIP HTML
+        */
+
+        function buildRelationshipSection(
+            relationship,
+            firstInteraction,
+            firstActivityName,
+            playerName
+        ) {
+
+            /*
+                NO RELATIONSHIP EXISTS YET
+            */
+
+            if (!relationship) {
+
+                return `
+
+                    <div class="section">
+
+                        <h2>
+                            Relationship with Yanola
+                        </h2>
+
+
+                        <div class="no-relationship">
+
+                            Yanola has not formed a relationship
+                            with ${escapeHtml(
+                                playerName
+                            )} yet.
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            const relationshipType =
+                formatRelationshipType(
+                    relationship.relationship_type
+                );
+
+
+            const relationshipLevel =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(
+                            relationship.relationship_level
+                        ) || 0
+                    )
+                );
+
+
+            const interactionCount =
+                Number(
+                    relationship.interaction_count
+                ) || 0;
+
+
+            const positivePoints =
+                Number(
+                    relationship.positive_points
+                ) || 0;
+
+
+            const negativePoints =
+                Number(
+                    relationship.negative_points
+                ) || 0;
+
+
+            const firstMet =
+                formatDate(
+                    relationship.first_met_at
+                );
+
+
+            const lastInteraction =
+                formatDate(
+                    relationship.last_interaction_at
+                );
+
+
+            let firstMetText =
+                firstActivityName
+                    ?
+                    firstActivityName
+                    :
+                    firstMet;
+
+
+            if (
+                firstInteraction &&
+                firstInteraction.description
+            ) {
+
+                firstMetText =
+                    firstActivityName
+                        ?
+                        firstActivityName
+                        :
+                        firstInteraction.description;
+
+            }
+
+
+            return `
+
+                <div class="section">
+
+                    <h2>
+                        Relationship with Yanola
+                    </h2>
+
+
+                    <div class="relationship-card">
+
+                        <div class="relationship-title">
+
+                            ${escapeHtml(
+                                relationshipType
+                            )}
+
+                        </div>
+
+
+                        <div class="relationship-subtitle">
+
+                            Yanola's current relationship
+                            with ${escapeHtml(
+                                playerName
+                            )}
+
+                        </div>
+
+
+                        <div class="relationship-grid">
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    Relationship Level
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${relationshipLevel}
+                                    / 100
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    Interactions
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${interactionCount}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    Positive Points
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${positivePoints}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    Negative Points
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${negativePoints}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    First Met
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${escapeHtml(
+                                        firstMetText
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="relationship-box">
+
+                                <div class="relationship-label">
+                                    Last Interaction
+                                </div>
+
+                                <div class="relationship-value">
+
+                                    ${escapeHtml(
+                                        lastInteraction
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="relationship-progress">
+
+                            <div class="progress-heading">
+
+                                <span>
+                                    Relationship Progress
+                                </span>
+
+                                <span>
+                                    ${relationshipLevel}%
+                                </span>
+
+                            </div>
+
+
+                            <div class="progress-track">
+
+                                <div
+                                    class="progress-fill"
+                                    style="width:${relationshipLevel}%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        ${
+                            firstInteraction &&
+                            firstInteraction.description
+                                ?
+                                `
+
+                                    <div class="relationship-note">
+
+                                        <strong>
+                                            First recorded interaction:
+                                        </strong>
+
+                                        ${escapeHtml(
+                                            firstInteraction.description
+                                        )}
+
+                                    </div>
+
+                                `
+                                :
+                                ""
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
 
         }
 
@@ -539,6 +1219,10 @@
 
 
             try {
+
+                /*
+                    LOAD PLAYER
+                */
 
                 const response =
                     await fetch(
@@ -626,15 +1310,73 @@
 
 
                 const isCurrentPlayer =
-                    Number(player.id) ===
+                    Number(
+                        player.id
+                    ) ===
                     CURRENT_PLAYER_ID;
 
+
+                /*
+                    LOAD RELATIONSHIP DATA
+                    ONLY WHEN VIEWING SOMEONE ELSE
+                */
+
+                let relationship =
+                    null;
+
+
+                let firstInteraction =
+                    null;
+
+
+                let firstActivityName =
+                    null;
+
+
+                if (!isCurrentPlayer) {
+
+                    relationship =
+                        await loadRelationship(
+                            player.id
+                        );
+
+
+                    if (relationship) {
+
+                        firstInteraction =
+                            await loadFirstInteraction(
+                                relationship.id
+                            );
+
+
+                        if (
+                            firstInteraction &&
+                            firstInteraction.activity_id
+                        ) {
+
+                            firstActivityName =
+                                await loadActivityName(
+                                    firstInteraction.activity_id
+                                );
+
+                        }
+
+                    }
+
+                }
+
+
+                /*
+                    BUILD PROFILE
+                */
 
                 profileContent.innerHTML = `
 
                     <div class="profile-card">
 
+
                         <div class="profile-header">
+
 
                             <div class="avatar">
 
@@ -717,6 +1459,7 @@
 
                             <div class="info-grid">
 
+
                                 <div class="info-box">
 
                                     <div class="info-label">
@@ -790,9 +1533,24 @@
 
                                 </div>
 
+
                             </div>
 
                         </div>
+
+
+                        ${
+                            !isCurrentPlayer
+                                ?
+                                buildRelationshipSection(
+                                    relationship,
+                                    firstInteraction,
+                                    firstActivityName,
+                                    playerName
+                                )
+                                :
+                                ""
+                        }
 
 
                         <div class="actions">
@@ -801,16 +1559,19 @@
                                 isCurrentPlayer
                                     ?
                                     `
+
                                         <button
                                             onclick="window.location.href='game.html'"
                                         >
                                             My Character
                                         </button>
+
                                     `
                                     :
                                     `
+
                                         <button
-                                            onclick="alert('Messaging will be added next.')"
+                                            onclick="alert('Messaging will be added later.')"
                                         >
                                             Message
                                         </button>
@@ -818,18 +1579,21 @@
 
                                         <button
                                             class="secondary"
-                                            onclick="alert('Relationships will be added next.')"
+                                            onclick="alert('Friend actions will be connected next.')"
                                         >
                                             Add Friend
                                         </button>
+
                                     `
                             }
 
                         </div>
 
+
                     </div>
 
                 `;
+
 
             } catch (error) {
 
