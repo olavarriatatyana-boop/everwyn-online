@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Activity | Everwyn Online</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1 id="activity-name">Loading activity...</h1>
+        <p id="activity-description"></p>
+    </header>
+
+    <main>
+
+        <section>
+
+            <h2>Activity Details</h2>
+
+            <div id="activity-info">
+                <p>Discovering activity information...</p>
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <h2>Players</h2>
+
+            <div id="participants">
+
+                <p>
+                    Checking who is participating...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <h2>Activity Status</h2>
+
+            <div id="activity-status">
+
+                <p>
+                    This activity is available to join.
+                </p>
+
+            </div>
+
+            <button
+                id="join-button"
+                type="button"
+                onclick="joinActivity()">
+
+                Join Activity
+
+            </button>
+
+        </section>
+
+
+        <section>
+
+            <a id="back-to-location" href="explore.html">
+
+                ← Back to Location
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+
+        const activityName =
+            document.getElementById("activity-name");
+
+        const activityDescription =
+            document.getElementById("activity-description");
+
+        const activityInfo =
+            document.getElementById("activity-info");
+
+        const participantsContainer =
+            document.getElementById("participants");
+
+        const activityStatus =
+            document.getElementById("activity-status");
+
+        const joinButton =
+            document.getElementById("join-button");
+
+        const backToLocation =
+            document.getElementById("back-to-location");
+
+
+        let currentActivity = null;
+
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+
+        }
+
+
+        async function loadActivity() {
+
+            try {
+
+                const urlParams =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+
+                const activityId =
+                    urlParams.get("id");
+
+
+                if (!activityId) {
+
+                    activityName.textContent =
+                        "Activity Not Found";
+
+                    activityDescription.textContent =
+                        "No activity was selected.";
+
+                    activityInfo.innerHTML =
+                        "<p>Please return to the previous location and choose an activity.</p>";
+
+                    joinButton.style.display =
+                        "none";
+
+                    return;
+
+                }
+
+
+                /* LOAD ACTIVITY */
+
+                const activityResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/world_activities" +
+                        "?id=eq." +
+                        encodeURIComponent(activityId) +
+                        "&is_available=eq.true" +
+                        "&apikey=" +
+                        encodeURIComponent(SUPABASE_KEY)
+
+                    );
+
+
+                if (!activityResponse.ok) {
+
+                    throw new Error(
+                        "Could not load activity. HTTP " +
+                        activityResponse.status
+                    );
+
+                }
+
+
+                const activities =
+                    await activityResponse.json();
+
+
+                if (!activities.length) {
+
+                    activityName.textContent =
+                        "Activity Not Found";
+
+                    activityDescription.textContent =
+                        "This activity is not currently available.";
+
+                    activityInfo.innerHTML =
+                        "<p>This activity could not be found.</p>";
+
+                    joinButton.style.display =
+                        "none";
+
+                    return;
+
+                }
+
+
+                currentActivity =
+                    activities[0];
+
+
+                const activity =
+                    currentActivity;
+
+
+                document.title =
+                    activity.name +
+                    " | Everwyn Online";
+
+
+                activityName.textContent =
+                    activity.name;
+
+
+                activityDescription.textContent =
+                    activity.description ||
+                    "An activity waiting to be discovered.";
+
+
+                activityInfo.innerHTML = `
+
+                    <p>
+                        <strong>Type:</strong>
+                        ${escapeHtml(
+                            activity.activity_type ||
+                            "Unknown"
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Players:</strong>
+                        ${escapeHtml(
+                            activity.minimum_players ??
+                            1
+                        )}
+                        -
+                        ${escapeHtml(
+                            activity.maximum_players ??
+                            1
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Reward:</strong>
+                        ${escapeHtml(
+                            activity.reward_amount ??
+                            0
+                        )}
+                        ${escapeHtml(
+                            activity.reward_type ||
+                            ""
+                        )}
+                    </p>
+
+                `;
+
+
+                /*
+                    LOAD THE LOCATION
+                */
+
+                if (activity.location_id) {
+
+                    const locationResponse =
+                        await fetch(
+
+                            SUPABASE_URL +
+                            "/rest/v1/world_locations" +
+                            "?id=eq." +
+                            encodeURIComponent(
+                                activity.location_id
+                            ) +
+                            "&apikey=" +
+                            encodeURIComponent(
+                                SUPABASE_KEY
+                            )
+
+                        );
+
+
+                    if (locationResponse.ok) {
+
+                        const locations =
+                            await locationResponse.json();
+
+
+                        if (locations.length) {
+
+                            const location =
+                                locations[0];
+
+
+                            backToLocation.href =
+                                "location.html?id=" +
+                                encodeURIComponent(
+                                    location.id
+                                );
+
+                        }
+
+                    }
+
+                }
+
+
+                /*
+                    CHECK PARTICIPANTS
+                */
+
+                participantsContainer.innerHTML = `
+
+                    <p>
+                        No players have joined yet.
+                    </p>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn activity loading error:",
+                    error
+                );
+
+
+                activityName.textContent =
+                    "Everwyn could not load";
+
+
+                activityDescription.textContent =
+                    "Something went wrong while loading this activity.";
+
+
+                activityInfo.innerHTML = `
+
+                    <div class="error-message">
+
+                        <h3>
+                            Unable to load this activity.
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                error.message
+                            )}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="loadActivity()">
+
+                            Try Again
+
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                joinButton.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        function joinActivity() {
+
+            if (!currentActivity) {
+
+                return;
+
+            }
+
+
+            activityStatus.innerHTML = `
+
+                <p>
+                    <strong>
+                        You joined ${escapeHtml(
+                            currentActivity.name
+                        )}!
+                    </strong>
+                </p>
+
+                <p>
+                    The activity system is ready for the
+                    next layer of gameplay.
+                </p>
+
+            `;
+
+
+            joinButton.disabled =
+                true;
+
+
+            joinButton.textContent =
+                "Joined";
+
+
+            participantsContainer.innerHTML = `
+
+                <article class="participant-card">
+
+                    <h3>
+                        Yanola
+                    </h3>
+
+                    <p>
+                        Player
+                    </p>
+
+                </article>
+
+            `;
+
+        }
+
+
+        loadActivity();
+
+    </script>
+
+</body>
+</html>
