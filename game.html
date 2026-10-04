@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everwyn Online — Yanola</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Georgia, 'Times New Roman', serif;
+            background:
+                radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 35%),
+                linear-gradient(135deg, #17251f, #263b31 45%, #17231e);
+            color: #f5f1e8;
+        }
+
+        .game-shell {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 45px 0 60px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .title {
+            margin: 0;
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
+            letter-spacing: 0.08em;
+            font-weight: normal;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: #d7cdbb;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+        }
+
+        .welcome {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 22px;
+            padding: 28px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(8px);
+        }
+
+        .welcome h2 {
+            margin: 0 0 8px;
+            font-size: 1.8rem;
+            font-weight: normal;
+        }
+
+        .welcome p {
+            margin: 0;
+            color: #d8d1c4;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .game-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding: 25px;
+            min-height: 150px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.14);
+            transition: transform 0.2s ease,
+                        background 0.2s ease,
+                        border-color 0.2s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .game-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.35rem;
+            font-weight: normal;
+        }
+
+        .game-card p {
+            margin: 0;
+            color: #cbc4b8;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #aaa398;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 700px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .game-shell {
+                padding-top: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="game-shell">
+
+        <header class="header">
+            <h1 class="title">EVERWYN</h1>
+            <div class="subtitle">ONLINE</div>
+        </header>
+
+        <section class="welcome">
+            <h2>Welcome back, Yanola ✨</h2>
+            <p>
+                Your story continues in Everwyn. Explore the world,
+                meet its people, discover hidden places, and build a life
+                of your own.
+            </p>
+        </section>
+
+        <section class="dashboard">
+
+            <a class="game-card" href="neighborhood.html">
+                <div class="icon">🌎</div>
+                <h3>Explore Everwyn</h3>
+                <p>Visit regions, discover locations, and explore the living world.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">👤</div>
+                <h3>My Character</h3>
+                <p>View Yanola, customize your character, and follow your progression.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">🏠</div>
+                <h3>My Home</h3>
+                <p>Manage your home, rooms, furniture, visitors, and future properties.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">🎒</div>
+                <h3>Inventory</h3>
+                <p>See the items, resources, discoveries, and belongings you've collected.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">💬</div>
+                <h3>Social</h3>
+                <p>Meet players and NPCs, build relationships, and become part of Everwyn.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">💼</div>
+                <h3>Businesses</h3>
+                <p>Work, shop, build a career, or eventually create a business of your own.</p>
+            </a>
+
+            <a class="game-card" href="#">
+                <div class="icon">✨</div>
+                <h3>Discoveries</h3>
+                <p>Keep track of places, secrets, objects, encounters, and mysteries you've found.</p>
+            </a>
+
+            <a class="game-card" href="neighborhood.html">
+                <div class="icon">🗺️</div>
+                <h3>World Map</h3>
+                <p>See where you've been and decide where your next adventure takes you.</p>
+            </a>
+
+        </section>
+
+        <div class="footer">
+            Everwyn Online · Your world is still unfolding.
+        </div>
+
+    </main>
+
+</body>
+</html>
