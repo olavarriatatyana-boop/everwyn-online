@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Everwyn — Play</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #11131d;
+        }
+
+        #everwyn-game {
+            width: 100%;
+            height: 100%;
+        }
+
+        #game-status {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+
+            padding: 10px 18px;
+
+            color: #f5efe4;
+            background: rgba(17, 19, 29, 0.85);
+
+            border: 1px solid rgba(221, 209, 235, 0.25);
+            border-radius: 12px;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 14px;
+
+            backdrop-filter: blur(12px);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="everwyn-game"></div>
+
+    <div id="game-status">
+        Entering Everwyn...
+    </div>
+
+
+    <!-- PHASER GAME FRAMEWORK -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js">
+    </script>
+
+
+    <script>
+
+        /*
+         * EVERWYN
+         * FIRST PLAYABLE WORLD TEST
+         */
+
+
+        class MoonlightDistrict extends Phaser.Scene {
+
+            constructor() {
+
+                super("MoonlightDistrict");
+
+            }
+
+
+            create() {
+
+                /*
+                 * TEMPORARY WORLD BACKGROUND
+                 *
+                 * Later this becomes our actual
+                 * Moonlight District artwork/map.
+                 */
+
+                this.cameras.main.setBackgroundColor(
+                    "#191b29"
+                );
+
+
+                /*
+                 * WORLD TITLE
+                 */
+
+                this.add.text(
+                    400,
+                    160,
+                    "MOONLIGHT DISTRICT",
+                    {
+                        fontFamily:
+                            "Georgia, serif",
+
+                        fontSize:
+                            "36px",
+
+                        color:
+                            "#f5efe4"
+                    }
+                )
+                .setOrigin(0.5);
+
+
+                this.add.text(
+                    400,
+                    205,
+                    "EVERWYN",
+                    {
+                        fontFamily:
+                            "Georgia, serif",
+
+                        fontSize:
+                            "15px",
+
+                        color:
+                            "#b7a1d3",
+
+                        letterSpacing:
+                            8
+                    }
+                )
+                .setOrigin(0.5);
+
+
+                /*
+                 * TEMPORARY PLAZA
+                 */
+
+                const plaza =
+                    this.add.rectangle(
+                        400,
+                        400,
+                        620,
+                        300,
+                        0x242738
+                    );
+
+
+                plaza.setStrokeStyle(
+                    2,
+                    0x8066a8,
+                    0.45
+                );
+
+
+                /*
+                 * TEMPORARY MOONLIGHT CAFE
+                 */
+
+                const cafe =
+                    this.add.rectangle(
+                        610,
+                        350,
+                        190,
+                        130,
+                        0x493b55
+                    );
+
+
+                cafe.setStrokeStyle(
+                    3,
+                    0xd6ba7c,
+                    0.8
+                );
+
+
+                this.add.text(
+                    610,
+                    340,
+                    "Moonlight Cafe",
+                    {
+                        fontFamily:
+                            "Georgia, serif",
+
+                        fontSize:
+                            "18px",
+
+                        color:
+                            "#f5efe4"
+                    }
+                )
+                .setOrigin(0.5);
+
+
+                this.add.text(
+                    610,
+                    370,
+                    "Coming to life...",
+                    {
+                        fontFamily:
+                            "Georgia, serif",
+
+                        fontSize:
+                            "12px",
+
+                        color:
+                            "#c9c3d0"
+                    }
+                )
+                .setOrigin(0.5);
+
+
+                /*
+                 * TEMPORARY FOUNTAIN
+                 */
+
+                const fountain =
+                    this.add.circle(
+                        380,
+                        420,
+                        45,
+                        0x718e9c
+                    );
+
+
+                fountain.setStrokeStyle(
+                    4,
+                    0xb7a1d3,
+                    0.7
+                );
+
+
+                /*
+                 * TEMPORARY YANOLA
+                 *
+                 * This circle is only a placeholder.
+                 * Next we'll replace it with the
+                 * actual controllable character.
+                 */
+
+                this.add.circle(
+                    260,
+                    430,
+                    20,
+                    0xddd1eb
+                );
+
+
+                this.add.text(
+                    260,
+                    465,
+                    "Yanola",
+                    {
+                        fontFamily:
+                            "Georgia, serif",
+
+                        fontSize:
+                            "14px",
+
+                        color:
+                            "#f5efe4"
+                    }
+                )
+                .setOrigin(0.5);
+
+
+                /*
+                 * CONFIRM PHASER LOADED
+                 */
+
+                document.getElementById(
+                    "game-status"
+                ).textContent =
+                    "Everwyn game engine connected ✓";
+
+            }
+
+        }
+
+
+        /*
+         * PHASER CONFIGURATION
+         */
+
+        const config = {
+
+            type:
+                Phaser.AUTO,
+
+            parent:
+                "everwyn-game",
+
+            width:
+                800,
+
+            height:
+                650,
+
+            backgroundColor:
+                "#191b29",
+
+            scale: {
+
+                mode:
+                    Phaser.Scale.FIT,
+
+                autoCenter:
+                    Phaser.Scale.CENTER_BOTH
+
+            },
+
+            scene: [
+                MoonlightDistrict
+            ]
+
+        };
+
+
+        /*
+         * START EVERWYN
+         */
+
+        const game =
+            new Phaser.Game(
+                config
+            );
+
+    </script>
+
+</body>
+
+</html>
