@@ -1,118 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Explore Everwyn | Everwyn Online</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="css/everwyn.css"
+    >
+
+    <style>
+
+        .explore-hero {
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: flex-end;
+            padding: 38px;
+            margin-bottom: 30px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(214, 186, 124, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 20% 40%,
+                    rgba(113, 142, 156, 0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(33, 38, 50, 0.96),
+                    rgba(17, 19, 29, 0.97)
+                );
+        }
+
+
+        .explore-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+
+        .eyebrow {
+            margin-bottom: 10px;
+            color: var(--everwyn-gold-light);
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+
+        .explore-hero h1 {
+            margin-bottom: 12px;
+            color: var(--everwyn-moon);
+        }
+
+
+        .explore-hero p {
+            max-width: 620px;
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+
+        .world-orb {
+            position: absolute;
+            width: 135px;
+            height: 135px;
+            top: 45px;
+            right: 65px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    rgba(234, 217, 174, 0.95),
+                    rgba(128, 102, 168, 0.55) 42%,
+                    rgba(40, 48, 61, 0.2) 70%
+                );
+
+            box-shadow:
+                0 0 55px
+                rgba(183, 161, 211, 0.18);
+
+            opacity: 0.75;
+        }
+
+
+        .section-heading {
+            margin-bottom: 20px;
+        }
+
+
+        .section-heading h2 {
+            margin: 0 0 7px;
+        }
+
+
+        .section-heading p {
+            margin: 0;
+        }
+
+
+        #regions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 18px;
+        }
+
+
+        .region-card {
+            position: relative;
+            min-height: 280px;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 25px;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 80% 15%,
+                    rgba(143, 165, 148, 0.13),
+                    transparent 30%
+                ),
+                rgba(255, 255, 255, 0.055);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            border-radius: 20px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .region-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(183, 161, 211, 0.32);
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.22);
+        }
+
+
+        .region-number {
+            margin-bottom: 24px;
+
+            color:
+                var(--everwyn-gold-light);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.14em;
+        }
+
+
+        .region-card h3 {
+            margin: 0 0 10px;
+            font-size: 25px;
+            color: var(--everwyn-moon);
+        }
+
+
+        .region-description {
+            flex-grow: 1;
+            margin: 0;
+            font-size: 14px;
+        }
+
+
+        .region-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            margin:
+                18px 0;
+        }
+
+
+        .region-type {
+            display: inline-flex;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(128, 102, 168, 0.14);
+
+            border:
+                1px solid
+                rgba(183, 161, 211, 0.20);
+
+            color:
+                var(--everwyn-lilac);
+
+            font-size: 11px;
+
+            text-transform: capitalize;
+        }
+
+
+        .region-button {
+            width: 100%;
+        }
+
+
+        .loading-card,
+        .empty-card,
+        .error-message {
+            grid-column: 1 / -1;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border:
+                1px solid
+                var(--everwyn-border);
+
+            border-radius: 18px;
+        }
+
+
+        .error-message h3 {
+            margin-top: 0;
+        }
+
+
+        .bottom-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            margin-top: 35px;
+        }
+
+
+        .back-link {
+            text-decoration: none;
+            color: var(--everwyn-text-soft);
+        }
+
+
+        .back-link:hover {
+            color: var(--everwyn-moon);
+        }
+
+
+        @media (
+            max-width: 700px
+        ) {
+
+            .explore-hero {
+                min-height: 350px;
+                padding: 28px;
+            }
+
+
+            .world-orb {
+                width: 95px;
+                height: 95px;
+
+                top: 30px;
+                right: 30px;
+            }
+
+
+            #regions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1>Explore Everwyn</h1>
-        <p>Discover places, people, activities, and hidden corners of the world.</p>
-    </header>
 
-    <main>
+    <main class="everwyn-page everwyn-appear">
 
-        <section>
-            <h2>World Regions</h2>
 
-            <div id="regions">
-                <p>Loading Everwyn...</p>
+        <nav class="everwyn-nav">
+
+            <a
+                class="everwyn-logo"
+                href="game.html"
+            >
+                EVERWYN
+            </a>
+
+
+            <div class="everwyn-nav-links">
+
+                <a href="game.html">
+                    Home
+                </a>
+
+                <a href="explore.html">
+                    Explore
+                </a>
+
+                <a href="player-profile.html?id=3">
+                    Character
+                </a>
+
+            </div>
+
+        </nav>
+
+
+
+        <section
+            class="
+                everwyn-panel
+                everwyn-glow
+                explore-hero
+            "
+        >
+
+            <div
+                class="world-orb"
+                aria-hidden="true"
+            ></div>
+
+
+            <div class="explore-hero-content">
+
+                <div class="eyebrow">
+                    The Living World
+                </div>
+
+
+                <h1>
+                    Explore Everwyn
+                </h1>
+
+
+                <p>
+                    Wander beyond the familiar.
+                    Every region holds its own neighborhoods,
+                    gathering places, activities, people,
+                    businesses, secrets, and stories.
+                </p>
+
             </div>
 
         </section>
 
+
+
         <section>
-            <a href="game.html">← Back to Game</a>
+
+            <div class="section-heading">
+
+                <div class="eyebrow">
+                    World Regions
+                </div>
+
+
+                <h2>
+                    Choose your destination
+                </h2>
+
+
+                <p>
+                    These regions are currently open
+                    for exploration.
+                </p>
+
+            </div>
+
+
+            <div id="regions">
+
+                <div class="loading-card">
+
+                    <p>
+                        Exploring Everwyn...
+                    </p>
+
+                </div>
+
+            </div>
+
         </section>
+
+
+
+        <div class="bottom-navigation">
+
+            <a
+                class="back-link"
+                href="game.html"
+            >
+                ← Back to Game
+            </a>
+
+        </div>
+
 
     </main>
 
+
+
     <script>
+
+        /*
+            SUPABASE CONNECTION
+        */
+
         const SUPABASE_URL =
             "https://iajvwhrjutqkqqvbknth.supabase.co";
+
 
         const SUPABASE_KEY =
             "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
+
         const regionsContainer =
-            document.getElementById("regions");
+            document.getElementById(
+                "regions"
+            );
+
+
+        /*
+            LOAD AVAILABLE REGIONS
+        */
 
         async function loadRegions() {
 
-            regionsContainer.innerHTML =
-                "<p>Exploring Everwyn...</p>";
+            regionsContainer.innerHTML = `
+
+                <div class="loading-card">
+
+                    <p>
+                        Exploring Everwyn...
+                    </p>
+
+                </div>
+
+            `;
+
 
             try {
 
-                const response = await fetch(
-                    SUPABASE_URL +
-                    "/rest/v1/world_regions" +
-                    "?is_active=eq.true" +
-                    "&is_unlocked=eq.true" +
-                    "&order=id.asc" +
-                    "&apikey=" +
-                    encodeURIComponent(SUPABASE_KEY),
-                    {
-                        method: "GET",
-                        mode: "cors"
-                    }
-                );
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/world_regions" +
+                        "?is_active=eq.true" +
+                        "&is_unlocked=eq.true" +
+                        "&order=id.asc" +
+                        "&apikey=" +
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        ),
+
+                        {
+                            method: "GET",
+                            mode: "cors"
+                        }
+
+                    );
+
 
                 if (!response.ok) {
+
                     throw new Error(
                         "Supabase returned HTTP " +
                         response.status
                     );
+
                 }
 
-                const regions = await response.json();
+
+                const regions =
+                    await response.json();
+
 
                 if (!regions.length) {
-                    regionsContainer.innerHTML =
-                        "<p>No regions are currently available.</p>";
-                    return;
-                }
 
-                regionsContainer.innerHTML = "";
+                    regionsContainer.innerHTML = `
 
-                regions.forEach(region => {
+                        <div class="empty-card">
 
-                    const card =
-                        document.createElement("article");
+                            <h3>
+                                The roads are quiet.
+                            </h3>
 
-                    card.className = "region-card";
+                            <p>
+                                No regions are currently
+                                available for exploration.
+                            </p>
 
-                    card.innerHTML = `
-                        <h3>${escapeHtml(region.name)}</h3>
+                        </div>
 
-                        <p>
-                            ${escapeHtml(
-                                region.description ||
-                                "A mysterious part of Everwyn waiting to be explored."
-                            )}
-                        </p>
-
-                        <p>
-                            <strong>Type:</strong>
-                            ${escapeHtml(region.region_type || "Unknown")}
-                        </p>
-
-                        <button
-                            type="button"
-                            onclick="enterRegion(${region.id})"
-                        >
-                            Explore ${escapeHtml(region.name)}
-                        </button>
                     `;
 
-                    regionsContainer.appendChild(card);
-                });
+                    return;
+
+                }
+
+
+                regionsContainer.innerHTML =
+                    "";
+
+
+                regions.forEach(
+                    (
+                        region,
+                        index
+                    ) => {
+
+                        const card =
+                            document.createElement(
+                                "article"
+                            );
+
+
+                        card.className =
+                            "region-card";
+
+
+                        const regionNumber =
+                            String(
+                                index + 1
+                            ).padStart(
+                                2,
+                                "0"
+                            );
+
+
+                        card.innerHTML = `
+
+                            <div class="region-number">
+
+                                Region
+                                ${regionNumber}
+
+                            </div>
+
+
+                            <h3>
+
+                                ${escapeHtml(
+                                    region.name
+                                )}
+
+                            </h3>
+
+
+                            <p class="region-description">
+
+                                ${escapeHtml(
+                                    region.description ||
+                                    "A mysterious part of Everwyn waiting to be explored."
+                                )}
+
+                            </p>
+
+
+                            <div class="region-meta">
+
+                                <span class="region-type">
+
+                                    ${escapeHtml(
+                                        region.region_type ||
+                                        "Unknown"
+                                    )}
+
+                                </span>
+
+
+                                <span class="everwyn-badge">
+                                    Open
+                                </span>
+
+                            </div>
+
+
+                            <button
+                                class="
+                                    everwyn-button
+                                    region-button
+                                "
+                                type="button"
+                                onclick="enterRegion(${Number(
+                                    region.id
+                                )})"
+                            >
+
+                                Enter
+                                ${escapeHtml(
+                                    region.name
+                                )}
+
+                            </button>
+
+                        `;
+
+
+                        regionsContainer
+                            .appendChild(
+                                card
+                            );
+
+                    }
+
+                );
+
 
             } catch (error) {
 
@@ -121,58 +665,95 @@
                     error
                 );
 
+
                 regionsContainer.innerHTML = `
+
                     <div class="error-message">
-                        <h3>Everwyn could not load the regions.</h3>
+
+                        <h3>
+                            The path could not be opened.
+                        </h3>
+
 
                         <p>
-                            The world server could not be reached
-                            from this page.
+                            Everwyn could not load
+                            the world regions.
                         </p>
 
+
                         <p>
-                            Error: ${escapeHtml(error.message)}
+                            ${escapeHtml(
+                                error.message
+                            )}
                         </p>
+
 
                         <button
+                            class="everwyn-button"
                             type="button"
                             onclick="loadRegions()"
                         >
                             Try Again
                         </button>
+
                     </div>
+
                 `;
+
             }
+
         }
 
-        function enterRegion(regionId) {
 
-            /*
-             * For now, send the player to the existing
-             * neighborhood/world navigation page.
-             *
-             * Later this will become the actual dynamic
-             * region-loading system.
-             */
+        /*
+            ENTER SELECTED REGION
+        */
+
+        function enterRegion(
+            regionId
+        ) {
 
             window.location.href =
-                "neighborhood.html?region=" +
-                encodeURIComponent(regionId);
+                "region.html?id=" +
+                encodeURIComponent(
+                    regionId
+                );
+
         }
 
-        function escapeHtml(value) {
+
+        /*
+            ESCAPE HTML
+        */
+
+        function escapeHtml(
+            value
+        ) {
 
             const div =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             div.textContent =
                 value ?? "";
 
+
             return div.innerHTML;
+
         }
 
+
+        /*
+            START PAGE
+        */
+
         loadRegions();
+
     </script>
 
+
 </body>
+
 </html>
