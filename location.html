@@ -26,6 +26,7 @@
             </div>
         </section>
 
+
         <section>
             <h2>What You Can Do</h2>
 
@@ -33,6 +34,7 @@
                 <p>Looking for activities...</p>
             </div>
         </section>
+
 
         <section>
             <a id="back-to-region" href="explore.html">
@@ -90,6 +92,7 @@
                         window.location.search
                     );
 
+
                 const locationId =
                     urlParams.get("id");
 
@@ -113,9 +116,7 @@
                 }
 
 
-                /*
-                 * Load the selected location
-                 */
+                /* LOAD LOCATION */
 
                 const locationResponse =
                     await fetch(
@@ -181,10 +182,6 @@
                     "A place waiting to be explored.";
 
 
-                /*
-                 * Display location information
-                 */
-
                 locationInfo.innerHTML = `
 
                     <p>
@@ -208,10 +205,6 @@
                 `;
 
 
-                /*
-                 * Set the region return link
-                 */
-
                 if (location.region_id) {
 
                     backToRegion.href =
@@ -223,9 +216,7 @@
                 }
 
 
-                /*
-                 * Load activities at this location
-                 */
+                /* LOAD ACTIVITIES */
 
                 activitiesContainer.innerHTML =
                     "<p>Looking for activities...</p>";
@@ -323,6 +314,14 @@
                             )}
                         </p>
 
+                        <button
+                            type="button"
+                            onclick="startActivity(${activity.id})">
+
+                            Join Activity
+
+                        </button>
+
                     `;
 
 
@@ -364,7 +363,9 @@
                         <button
                             type="button"
                             onclick="loadLocation()">
+
                             Try Again
+
                         </button>
 
                     </div>
@@ -373,9 +374,18 @@
 
 
                 activitiesContainer.innerHTML =
-                    "<p>Activities could not be loaded.</p>";
+                    "<p>Activities could not be loaded.";
 
             }
+
+        }
+
+
+        function startActivity(activityId) {
+
+            window.location.href =
+                "activity.html?id=" +
+                encodeURIComponent(activityId);
 
         }
 
