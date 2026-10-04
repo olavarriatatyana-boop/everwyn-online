@@ -1,24 +1,11 @@
-!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Everwyn Online</title>
-    <style>
-        body {
-            background-color: #171421;
-            color: #f5edf7;
-        }
-
-        h1 {
-            color: #e8b8d8;
-        }
-
-        h2 {
-            color: #c9a7e8;
-        }
-    </style>
 
     <style>
         * {
@@ -32,6 +19,14 @@
             background:
                 radial-gradient(circle at top, #30264d 0%, #171421 45%, #0c0b10 100%);
             color: #f8f1e8;
+        }
+
+        h1 {
+            color: #fff8ef;
+        }
+
+        h2 {
+            color: #c9a7e8;
         }
 
         .hero {
@@ -60,7 +55,6 @@
             font-size: clamp(52px, 12vw, 100px);
             letter-spacing: 8px;
             line-height: 0.95;
-            color: #fff8ef;
         }
 
         .tagline {
@@ -111,12 +105,29 @@
             color: #91869e;
             text-transform: uppercase;
         }
+
+        .extra-content {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .extra-content p,
+        .extra-content li {
+            line-height: 1.7;
+            color: #ddd4e4;
+        }
+
+        .extra-content a {
+            color: #e8b8d8;
+        }
     </style>
 </head>
 
 <body>
 
     <main class="hero">
+
         <div class="content">
 
             <div class="eyebrow">
@@ -132,13 +143,21 @@
             </p>
 
             <div class="buttons">
-                <button class="primary" id="enterWorld">
+
+                <button
+                    class="primary"
+                    id="enterWorld"
+                    type="button">
                     Enter the World
                 </button>
 
-                <button class="secondary" id="discoverWorld">
+                <button
+                    class="secondary"
+                    id="discoverWorld"
+                    type="button">
                     Discover Everwyn
                 </button>
+
             </div>
 
             <div class="status">
@@ -146,29 +165,73 @@
             </div>
 
         </div>
+
     </main>
 
+
+    <section class="extra-content">
+
+        <p>
+            <a
+                href="https://www.pinterest.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+                Find inspiration for Everwyn
+            </a>
+        </p>
+
+        <img
+            src="Neocities.png"
+            alt="The Neocities cat">
+
+        <h2>
+            What You Can Do in Everwyn
+        </h2>
+
+        <ul>
+
+            <li>
+                Explore magical places and discover hidden parts of the world.
+            </li>
+
+            <li>
+                Create your own character and build a life of your own.
+            </li>
+
+            <li>
+                Make friends, form relationships, and meet other players.
+            </li>
+
+            <li>
+                Build homes, businesses, and your own place in Everwyn.
+            </li>
+
+        </ul>
+
+    </section>
+
+
     <script>
-        document.getElementById("enterWorld").addEventListener("click", function () {
-            alert("Everwyn is being built. Character creation and world access are coming next.");
-        });
 
-        document.getElementById("discoverWorld").addEventListener("click", function () {
-            alert("Welcome to Everwyn — a living modern-fantasy world.");
-        });
+        document
+            .getElementById("enterWorld")
+            .addEventListener("click", function () {
+
+                window.location.href = "game.html";
+
+            });
+
+
+        document
+            .getElementById("discoverWorld")
+            .addEventListener("click", function () {
+
+                window.location.href = "explore.html";
+
+            });
+
     </script>
-<p><a href="https://www.pinterest.com/" target="_blank">Find inspiration for Everwyn</a></p>
-<img src="Neocities.png" alt="The Neocities cat">
-<h2>What You Can Do in Everwyn</h2>
 
-<ul>
-    <li>Explore magical places and discover hidden parts of the world.</li>
-    <li>Create your own character and build a life of your own.</li>
-    <li>Make friends, form relationships, and meet other players.</li>
-    <li>Build homes, businesses, and your own place in Everwyn.</li>
-</ul>
 </body>
-<h1>Everwyn Online</h1>
 </html>
-<p>Hello, world!</p>
-<p>Everwyn Online is a modern-fantasy world where players can create their own stories, build relationships, explore magical places, and make the world their own.</p>
+```
