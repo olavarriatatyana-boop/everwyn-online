@@ -1,209 +1,1190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Everwyn Online — Yanola</title>
 
+    <!-- EVERWYN GLOBAL DESIGN SYSTEM -->
+    <link
+        rel="stylesheet"
+        href="css/everwyn.css"
+    >
+
     <style>
-        * {
-            box-sizing: border-box;
-        }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Georgia, 'Times New Roman', serif;
+        /*
+            GAME HOME
+            Page-specific styling only.
+            Global Everwyn styling lives in:
+            css/everwyn.css
+        */
+
+
+        .game-hero {
+
+            position: relative;
+
+            min-height: 360px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 42px;
+
+            margin-bottom: 25px;
+
             background:
-                radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 35%),
-                linear-gradient(135deg, #17251f, #263b31 45%, #17231e);
-            color: #f5f1e8;
+                radial-gradient(
+                    circle at 75% 25%,
+                    rgba(214, 186, 124, 0.14),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(128, 102, 168, 0.24),
+                    transparent 38%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(39, 43, 61, 0.96),
+                    rgba(18, 21, 31, 0.96)
+                );
+
         }
 
-        .game-shell {
-            width: min(1100px, 92%);
-            margin: 0 auto;
-            padding: 45px 0 60px;
+
+        .game-hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 650px;
+
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
+
+        .eyebrow {
+
+            margin-bottom: 10px;
+
+            color:
+                var(--everwyn-gold-light);
+
+            font-size: 12px;
+
+            letter-spacing: 0.22em;
+
+            text-transform: uppercase;
+
         }
 
-        .title {
+
+        .game-hero h1 {
+
+            margin-bottom: 12px;
+
+            color:
+                var(--everwyn-moon);
+
+        }
+
+
+        .game-hero p {
+
+            max-width: 590px;
+
+            margin-bottom: 22px;
+
+            font-size: 16px;
+
+        }
+
+
+        .hero-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+        }
+
+
+        /*
+            DECORATIVE MOON
+        */
+
+        .moon {
+
+            position: absolute;
+
+            width: 160px;
+
+            height: 160px;
+
+            top: 45px;
+
+            right: 70px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 35%,
+                    #fffdf5,
+                    #e8dcc1 65%,
+                    #c7b894
+                );
+
+            box-shadow:
+                0 0 50px
+                rgba(234, 217, 174, 0.24);
+
+            opacity: 0.88;
+
+        }
+
+
+        .moon::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+
+            height: 150px;
+
+            top: 10px;
+
+            left: -24px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(24, 27, 40, 0.96);
+
+        }
+
+
+        /*
+            PLAYER OVERVIEW
+        */
+
+        .player-overview {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                auto;
+
+            gap: 25px;
+
+            align-items: center;
+
+            padding: 22px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .player-main {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+        }
+
+
+        .player-copy h2 {
+
+            margin:
+                0 0 5px;
+
+            font-size: 22px;
+
+        }
+
+
+        .player-copy p {
+
             margin: 0;
-            font-size: clamp(2.4rem, 6vw, 4.5rem);
-            letter-spacing: 0.08em;
-            font-weight: normal;
+
+            font-size: 14px;
+
         }
 
-        .subtitle {
-            margin-top: 10px;
-            color: #d7cdbb;
-            font-size: 1rem;
-            letter-spacing: 0.08em;
+
+        .player-meta {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+
+            gap: 9px;
+
         }
 
-        .welcome {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.16);
-            border-radius: 22px;
-            padding: 28px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(8px);
-        }
 
-        .welcome h2 {
-            margin: 0 0 8px;
-            font-size: 1.8rem;
-            font-weight: normal;
-        }
-
-        .welcome p {
-            margin: 0;
-            color: #d8d1c4;
-            line-height: 1.6;
-        }
+        /*
+            DASHBOARD
+        */
 
         .dashboard {
+
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
             gap: 18px;
+
         }
 
-        .game-card {
-            display: block;
+
+        .dashboard-card {
+
+            position: relative;
+
+            min-height: 190px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
             text-decoration: none;
-            color: inherit;
-            padding: 25px;
-            min-height: 150px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.14);
-            transition: transform 0.2s ease,
-                        background 0.2s ease,
-                        border-color 0.2s ease;
+
+            color:
+                var(--everwyn-text);
+
         }
 
-        .game-card:hover {
-            transform: translateY(-4px);
-            background: rgba(255,255,255,0.12);
-            border-color: rgba(255,255,255,0.3);
+
+        .dashboard-card:hover {
+
+            text-decoration: none;
+
         }
 
-        .icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
+
+        .dashboard-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 22px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(183, 161, 211, 0.12);
+
+            border:
+                1px solid
+                rgba(183, 161, 211, 0.18);
+
+            font-size: 23px;
+
         }
 
-        .game-card h3 {
-            margin: 0 0 8px;
-            font-size: 1.35rem;
-            font-weight: normal;
+
+        .dashboard-card h3 {
+
+            margin:
+                0 0 7px;
+
+            font-size: 20px;
+
         }
 
-        .game-card p {
+
+        .dashboard-card p {
+
             margin: 0;
-            color: #cbc4b8;
-            line-height: 1.5;
-            font-size: 0.95rem;
+
+            font-size: 14px;
+
         }
 
-        .footer {
+
+        .card-footer {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .card-action {
+
+            color:
+                var(--everwyn-lavender);
+
+            font-size: 13px;
+
+        }
+
+
+        .coming-soon {
+
+            color:
+                var(--everwyn-text-soft);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.09em;
+
+            opacity: 0.72;
+
+        }
+
+
+        /*
+            FEATURED WORLD CARD
+        */
+
+        .world-card {
+
+            grid-column:
+                1 / -1;
+
+            min-height: 260px;
+
+            padding: 30px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 25%,
+                    rgba(143, 165, 148, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(128, 102, 168, 0.18),
+                    transparent 35%
+                ),
+                rgba(255, 255, 255, 0.055);
+
+        }
+
+
+        .world-card-content {
+
+            max-width: 600px;
+
+        }
+
+
+        .world-card h3 {
+
+            font-size: 27px;
+
+        }
+
+
+        /*
+            WORLD STATUS
+        */
+
+        .world-status {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-top: 18px;
+
+        }
+
+
+        .status-card {
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+        }
+
+
+        .status-label {
+
+            margin-bottom: 5px;
+
+            color:
+                var(--everwyn-text-soft);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+
+        }
+
+
+        .status-value {
+
+            color:
+                var(--everwyn-moon);
+
+            font-size: 15px;
+
+        }
+
+
+        /*
+            FOOTER
+        */
+
+        .game-footer {
+
+            padding-top: 40px;
+
             text-align: center;
-            margin-top: 40px;
-            color: #aaa398;
-            font-size: 0.85rem;
+
+            color:
+                var(--everwyn-text-soft);
+
+            font-size: 12px;
+
+            letter-spacing: 0.06em;
+
         }
 
-        @media (max-width: 700px) {
+
+        /*
+            MOBILE
+        */
+
+        @media (
+            max-width: 750px
+        ) {
+
+            .game-hero {
+
+                min-height: 410px;
+
+                padding: 28px;
+
+            }
+
+
+            .moon {
+
+                width: 115px;
+
+                height: 115px;
+
+                top: 35px;
+
+                right: 35px;
+
+            }
+
+
+            .moon::after {
+
+                width: 110px;
+
+                height: 110px;
+
+                left: -18px;
+
+            }
+
+
+            .player-overview {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .player-meta {
+
+                justify-content:
+                    flex-start;
+
+            }
+
+
             .dashboard {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    1fr;
+
             }
 
-            .game-shell {
-                padding-top: 30px;
+
+            .world-card {
+
+                grid-column:
+                    auto;
+
             }
+
+
+            .world-status {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <main class="game-shell">
 
-        <header class="header">
-            <h1 class="title">EVERWYN</h1>
-            <div class="subtitle">ONLINE</div>
-        </header>
+    <main class="everwyn-page everwyn-appear">
 
-        <section class="welcome">
-            <h2>Welcome back, Yanola ✨</h2>
-            <p>
-                Your story continues in Everwyn. Explore the world,
-                meet its people, discover hidden places, and build a life
-                of your own.
-            </p>
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <nav class="everwyn-nav">
+
+            <a
+                class="everwyn-logo"
+                href="game.html"
+            >
+                EVERWYN
+            </a>
+
+
+            <div class="everwyn-nav-links">
+
+                <a href="game.html">
+                    Home
+                </a>
+
+                <a href="explore.html">
+                    Explore
+                </a>
+
+                <a href="player-profile.html?id=3">
+                    Character
+                </a>
+
+            </div>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section
+            class="
+                everwyn-panel
+                everwyn-glow
+                game-hero
+            "
+        >
+
+            <div
+                class="moon"
+                aria-hidden="true"
+            ></div>
+
+
+            <div class="game-hero-content">
+
+                <div class="eyebrow">
+                    Everwyn Online
+                </div>
+
+
+                <h1>
+                    Welcome back,
+                    Yanola.
+                </h1>
+
+
+                <p>
+                    The city lights are beginning to glow,
+                    doors are opening across the realm,
+                    and another evening in Everwyn is waiting
+                    to unfold.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        class="everwyn-button gold"
+                        href="explore.html"
+                    >
+                        Explore Everwyn
+                    </a>
+
+
+                    <a
+                        class="everwyn-button secondary"
+                        href="player-profile.html?id=3"
+                    >
+                        View Character
+                    </a>
+
+                </div>
+
+            </div>
+
         </section>
+
+
+
+        <!-- =================================================
+             PLAYER
+             ================================================= -->
+
+        <section
+            class="
+                everwyn-panel
+                player-overview
+            "
+        >
+
+            <div class="player-main">
+
+                <div class="everwyn-avatar">
+                    Y
+                </div>
+
+
+                <div class="player-copy">
+
+                    <h2>
+                        Yanola
+                    </h2>
+
+
+                    <div class="everwyn-status">
+                        Online in Everwyn
+                    </div>
+
+
+                    <p>
+                        Your story is still being written.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="player-meta">
+
+                <span class="everwyn-badge">
+                    Player
+                </span>
+
+                <span class="everwyn-badge">
+                    Public Profile
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             WORLD
+             ================================================= -->
+
+        <div class="everwyn-section-header">
+
+            <div>
+
+                <div class="eyebrow">
+                    Your World
+                </div>
+
+                <h2>
+                    Where will you go?
+                </h2>
+
+                <p>
+                    Explore Everwyn or continue building
+                    your life within it.
+                </p>
+
+            </div>
+
+        </div>
+
+
 
         <section class="dashboard">
 
-            <a class="game-card" href="neighborhood.html">
-                <div class="icon">🌎</div>
-                <h3>Explore Everwyn</h3>
-                <p>Visit regions, discover locations, and explore the living world.</p>
+
+            <!-- EXPLORE -->
+
+            <a
+                class="
+                    everwyn-card
+                    dashboard-card
+                    world-card
+                "
+                href="explore.html"
+            >
+
+                <div class="world-card-content">
+
+                    <div class="dashboard-icon">
+                        ✦
+                    </div>
+
+
+                    <h3>
+                        Explore Everwyn
+                    </h3>
+
+
+                    <p>
+                        Travel through Everwyn's regions,
+                        enter its neighborhoods, discover
+                        businesses and hidden places, and
+                        see who else is out in the world.
+                    </p>
+
+
+                    <div class="world-status">
+
+                        <div class="status-card">
+
+                            <div class="status-label">
+                                World
+                            </div>
+
+                            <div class="status-value">
+                                Open
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-card">
+
+                            <div class="status-label">
+                                Activities
+                            </div>
+
+                            <div class="status-value">
+                                Available
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-card">
+
+                            <div class="status-label">
+                                Players
+                            </div>
+
+                            <div class="status-value">
+                                Online
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="card-action">
+                        Enter the world →
+                    </span>
+
+                </div>
+
             </a>
 
-            <a class="game-card" href="#">
-                <div class="icon">👤</div>
-                <h3>My Character</h3>
-                <p>View Yanola, customize your character, and follow your progression.</p>
+
+
+            <!-- CHARACTER -->
+
+            <a
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+                href="player-profile.html?id=3"
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ◇
+                    </div>
+
+
+                    <h3>
+                        My Character
+                    </h3>
+
+
+                    <p>
+                        View Yanola's profile,
+                        identity, status, and future
+                        character progression.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="card-action">
+                        View profile →
+                    </span>
+
+                </div>
+
             </a>
 
-            <a class="game-card" href="#">
-                <div class="icon">🏠</div>
-                <h3>My Home</h3>
-                <p>Manage your home, rooms, furniture, visitors, and future properties.</p>
+
+
+            <!-- HOME -->
+
+            <div
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ⌂
+                    </div>
+
+
+                    <h3>
+                        My Home
+                    </h3>
+
+
+                    <p>
+                        Build a personal space,
+                        decorate rooms, welcome visitors,
+                        and eventually own properties
+                        throughout Everwyn.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="coming-soon">
+                        Coming Soon
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SOCIAL -->
+
+            <div
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ♡
+                    </div>
+
+
+                    <h3>
+                        Social
+                    </h3>
+
+
+                    <p>
+                        Meet players, form friendships,
+                        build relationships, interact,
+                        and create a social life
+                        throughout the world.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="coming-soon">
+                        In Development
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INVENTORY -->
+
+            <div
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ✧
+                    </div>
+
+
+                    <h3>
+                        Inventory
+                    </h3>
+
+
+                    <p>
+                        Keep your clothing, objects,
+                        resources, discoveries, gifts,
+                        and belongings in one place.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="coming-soon">
+                        Coming Soon
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BUSINESS -->
+
+            <div
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ◈
+                    </div>
+
+
+                    <h3>
+                        Businesses
+                    </h3>
+
+
+                    <p>
+                        Work around Everwyn,
+                        earn currency, shop locally,
+                        develop skills, and eventually
+                        open a business of your own.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="coming-soon">
+                        Planned
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DISCOVERIES -->
+
+            <div
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ☾
+                    </div>
+
+
+                    <h3>
+                        Discoveries
+                    </h3>
+
+
+                    <p>
+                        Record mysterious locations,
+                        rare encounters, hidden objects,
+                        secrets, and pieces of
+                        Everwyn's history.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="coming-soon">
+                        Planned
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MAP -->
+
+            <a
+                class="
+                    everwyn-card
+                    dashboard-card
+                "
+                href="explore.html"
+            >
+
+                <div>
+
+                    <div class="dashboard-icon">
+                        ⟡
+                    </div>
+
+
+                    <h3>
+                        World Map
+                    </h3>
+
+
+                    <p>
+                        Browse the regions of Everwyn
+                        and choose where your next
+                        journey will take you.
+                    </p>
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <span class="card-action">
+                        Open world →
+                    </span>
+
+                </div>
+
             </a>
 
-            <a class="game-card" href="#">
-                <div class="icon">🎒</div>
-                <h3>Inventory</h3>
-                <p>See the items, resources, discoveries, and belongings you've collected.</p>
-            </a>
-
-            <a class="game-card" href="#">
-                <div class="icon">💬</div>
-                <h3>Social</h3>
-                <p>Meet players and NPCs, build relationships, and become part of Everwyn.</p>
-            </a>
-
-            <a class="game-card" href="#">
-                <div class="icon">💼</div>
-                <h3>Businesses</h3>
-                <p>Work, shop, build a career, or eventually create a business of your own.</p>
-            </a>
-
-            <a class="game-card" href="#">
-                <div class="icon">✨</div>
-                <h3>Discoveries</h3>
-                <p>Keep track of places, secrets, objects, encounters, and mysteries you've found.</p>
-            </a>
-
-            <a class="game-card" href="neighborhood.html">
-                <div class="icon">🗺️</div>
-                <h3>World Map</h3>
-                <p>See where you've been and decide where your next adventure takes you.</p>
-            </a>
 
         </section>
 
-        <div class="footer">
-            Everwyn Online · Your world is still unfolding.
-        </div>
+
+
+        <footer class="game-footer">
+
+            EVERWYN ONLINE
+            &nbsp;·&nbsp;
+            YOUR WORLD IS STILL UNFOLDING
+
+        </footer>
+
 
     </main>
 
+
 </body>
+
 </html>
