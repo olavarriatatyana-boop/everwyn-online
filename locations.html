@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Location | Everwyn Online</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1 id="location-name">Loading location...</h1>
+        <p id="location-description"></p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Location Details</h2>
+
+            <div id="location-info">
+                <p>Discovering this place...</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>What You Can Do</h2>
+
+            <div id="activities">
+                <p>Looking for activities...</p>
+            </div>
+        </section>
+
+        <section>
+            <a id="back-to-region" href="explore.html">
+                ← Back to Region
+            </a>
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+
+        const locationName =
+            document.getElementById("location-name");
+
+        const locationDescription =
+            document.getElementById("location-description");
+
+        const locationInfo =
+            document.getElementById("location-info");
+
+        const activitiesContainer =
+            document.getElementById("activities");
+
+        const backToRegion =
+            document.getElementById("back-to-region");
+
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+
+        }
+
+
+        async function loadLocation() {
+
+            try {
+
+                const urlParams =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+                const locationId =
+                    urlParams.get("id");
+
+
+                if (!locationId) {
+
+                    locationName.textContent =
+                        "Location Not Found";
+
+                    locationDescription.textContent =
+                        "No location was selected.";
+
+                    locationInfo.innerHTML =
+                        "<p>Please return to Explore Everwyn and choose a location.</p>";
+
+                    activitiesContainer.innerHTML =
+                        "<p>No activities available.</p>";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Load the selected location
+                 */
+
+                const locationResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/world_locations" +
+                        "?id=eq." +
+                        encodeURIComponent(locationId) +
+                        "&apikey=" +
+                        encodeURIComponent(SUPABASE_KEY)
+
+                    );
+
+
+                if (!locationResponse.ok) {
+
+                    throw new Error(
+                        "Could not load location. HTTP " +
+                        locationResponse.status
+                    );
+
+                }
+
+
+                const locations =
+                    await locationResponse.json();
+
+
+                if (!locations.length) {
+
+                    locationName.textContent =
+                        "Location Not Found";
+
+                    locationDescription.textContent =
+                        "This place could not be found.";
+
+                    locationInfo.innerHTML =
+                        "<p>This location is not currently available.</p>";
+
+                    activitiesContainer.innerHTML =
+                        "<p>No activities available.</p>";
+
+                    return;
+
+                }
+
+
+                const location =
+                    locations[0];
+
+
+                document.title =
+                    location.name +
+                    " | Everwyn Online";
+
+
+                locationName.textContent =
+                    location.name;
+
+
+                locationDescription.textContent =
+                    location.description ||
+                    "A place waiting to be explored.";
+
+
+                /*
+                 * Display location information
+                 */
+
+                locationInfo.innerHTML = `
+
+                    <p>
+                        <strong>Type:</strong>
+                        ${escapeHtml(
+                            location.location_type ||
+                            "Unknown"
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Coordinates:</strong>
+                        ${escapeHtml(
+                            location.x ?? "Unknown"
+                        )},
+                        ${escapeHtml(
+                            location.y ?? "Unknown"
+                        )}
+                    </p>
+
+                `;
+
+
+                /*
+                 * Set the region return link
+                 */
+
+                if (location.region_id) {
+
+                    backToRegion.href =
+                        "region.html?id=" +
+                        encodeURIComponent(
+                            location.region_id
+                        );
+
+                }
+
+
+                /*
+                 * Load activities at this location
+                 */
+
+                activitiesContainer.innerHTML =
+                    "<p>Looking for activities...</p>";
+
+
+                const activityResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/world_activities" +
+                        "?location_id=eq." +
+                        encodeURIComponent(locationId) +
+                        "&is_available=eq.true" +
+                        "&order=id.asc" +
+                        "&apikey=" +
+                        encodeURIComponent(SUPABASE_KEY)
+
+                    );
+
+
+                if (!activityResponse.ok) {
+
+                    throw new Error(
+                        "Could not load activities. HTTP " +
+                        activityResponse.status
+                    );
+
+                }
+
+
+                const activities =
+                    await activityResponse.json();
+
+
+                if (!activities.length) {
+
+                    activitiesContainer.innerHTML = `
+
+                        <p>
+                            There aren't any activities
+                            available here yet.
+                        </p>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                activitiesContainer.innerHTML = "";
+
+
+                activities.forEach(activity => {
+
+                    const card =
+                        document.createElement("article");
+
+
+                    card.className =
+                        "activity-card";
+
+
+                    card.innerHTML = `
+
+                        <h3>
+                            ${escapeHtml(activity.name)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                activity.description ||
+                                "An activity waiting to be discovered."
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>Type:</strong>
+                            ${escapeHtml(
+                                activity.activity_type ||
+                                "Unknown"
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>Players:</strong>
+                            ${escapeHtml(
+                                activity.minimum_players ??
+                                1
+                            )}
+                            -
+                            ${escapeHtml(
+                                activity.maximum_players ??
+                                1
+                            )}
+                        </p>
+
+                    `;
+
+
+                    activitiesContainer.appendChild(card);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn location loading error:",
+                    error
+                );
+
+
+                locationName.textContent =
+                    "Everwyn could not load";
+
+
+                locationDescription.textContent =
+                    "Something went wrong while loading this location.";
+
+
+                locationInfo.innerHTML = `
+
+                    <div class="error-message">
+
+                        <h3>
+                            Unable to load this location.
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                error.message
+                            )}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="loadLocation()">
+                            Try Again
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                activitiesContainer.innerHTML =
+                    "<p>Activities could not be loaded.</p>";
+
+            }
+
+        }
+
+
+        loadLocation();
+
+    </script>
+
+</body>
+</html>
