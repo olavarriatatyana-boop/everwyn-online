@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Everwyn | Everwyn Online</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Explore Everwyn</h1>
+        <p>Discover places, people, activities, and hidden corners of the world.</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>World Regions</h2>
+
+            <div id="regions">
+                <p>Loading Everwyn...</p>
+            </div>
+
+        </section>
+
+        <section>
+            <a href="game.html">← Back to Game</a>
+        </section>
+
+    </main>
+
+    <script>
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+        const regionsContainer =
+            document.getElementById("regions");
+
+        async function loadRegions() {
+
+            regionsContainer.innerHTML =
+                "<p>Exploring Everwyn...</p>";
+
+            try {
+
+                const response = await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/world_regions" +
+                    "?is_active=eq.true" +
+                    "&is_unlocked=eq.true" +
+                    "&order=id.asc" +
+                    "&apikey=" +
+                    encodeURIComponent(SUPABASE_KEY),
+                    {
+                        method: "GET",
+                        mode: "cors"
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Supabase returned HTTP " +
+                        response.status
+                    );
+                }
+
+                const regions = await response.json();
+
+                if (!regions.length) {
+                    regionsContainer.innerHTML =
+                        "<p>No regions are currently available.</p>";
+                    return;
+                }
+
+                regionsContainer.innerHTML = "";
+
+                regions.forEach(region => {
+
+                    const card =
+                        document.createElement("article");
+
+                    card.className = "region-card";
+
+                    card.innerHTML = `
+                        <h3>${escapeHtml(region.name)}</h3>
+
+                        <p>
+                            ${escapeHtml(
+                                region.description ||
+                                "A mysterious part of Everwyn waiting to be explored."
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>Type:</strong>
+                            ${escapeHtml(region.region_type || "Unknown")}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="enterRegion(${region.id})"
+                        >
+                            Explore ${escapeHtml(region.name)}
+                        </button>
+                    `;
+
+                    regionsContainer.appendChild(card);
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn region loading error:",
+                    error
+                );
+
+                regionsContainer.innerHTML = `
+                    <div class="error-message">
+                        <h3>Everwyn could not load the regions.</h3>
+
+                        <p>
+                            The world server could not be reached
+                            from this page.
+                        </p>
+
+                        <p>
+                            Error: ${escapeHtml(error.message)}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="loadRegions()"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function enterRegion(regionId) {
+
+            /*
+             * For now, send the player to the existing
+             * neighborhood/world navigation page.
+             *
+             * Later this will become the actual dynamic
+             * region-loading system.
+             */
+
+            window.location.href =
+                "neighborhood.html?region=" +
+                encodeURIComponent(regionId);
+        }
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+        }
+
+        loadRegions();
+    </script>
+
+</body>
+</html>
