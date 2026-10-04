@@ -90,6 +90,15 @@
             "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
 
+        /*
+            CURRENT EVERWYN PLAYER
+
+            Yanola's existing player record.
+        */
+
+        const CURRENT_PLAYER_ID = 3;
+
+
         const activityName =
             document.getElementById("activity-name");
 
@@ -161,7 +170,9 @@
                 }
 
 
-                /* LOAD ACTIVITY */
+                /*
+                    LOAD ACTIVITY
+                */
 
                 const activityResponse =
                     await fetch(
@@ -271,7 +282,7 @@
 
 
                 /*
-                    LOAD THE LOCATION
+                    LOAD LOCATION
                 */
 
                 if (activity.location_id) {
@@ -319,16 +330,12 @@
 
 
                 /*
-                    CHECK PARTICIPANTS
+                    LOAD PARTICIPANTS
                 */
 
-                participantsContainer.innerHTML = `
-
-                    <p>
-                        No players have joined yet.
-                    </p>
-
-                `;
+                await loadParticipants(
+                    activity.id
+                );
 
 
             } catch (error) {
@@ -382,7 +389,162 @@
         }
 
 
-        function joinActivity() {
+        /*
+            LOAD CURRENT PARTICIPANTS
+        */
+
+        async function loadParticipants(activityId) {
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants" +
+                        "?activity_id=eq." +
+                        encodeURIComponent(activityId) +
+                        "&participation_status=eq.active" +
+                        "&order=joined_at.asc" +
+                        "&apikey=" +
+                        encodeURIComponent(SUPABASE_KEY)
+
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load participants. HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                const participants =
+                    await response.json();
+
+
+                if (!participants.length) {
+
+                    participantsContainer.innerHTML = `
+
+                        <p>
+                            No players have joined yet.
+                        </p>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                participantsContainer.innerHTML = "";
+
+
+                participants.forEach(participant => {
+
+                    const card =
+                        document.createElement("article");
+
+
+                    card.className =
+                        "participant-card";
+
+
+                    const isCurrentPlayer =
+                        Number(
+                            participant.player_id
+                        ) === CURRENT_PLAYER_ID;
+
+
+                    card.innerHTML = `
+
+                        <h3>
+                            ${
+                                isCurrentPlayer
+                                    ? "Yanola"
+                                    : "Player " +
+                                      escapeHtml(
+                                          participant.player_id
+                                      )
+                            }
+                        </h3>
+
+                        <p>
+                            ${
+                                escapeHtml(
+                                    participant.role ||
+                                    "Participant"
+                                )
+                            }
+                        </p>
+
+                    `;
+
+
+                    participantsContainer.appendChild(card);
+
+                });
+
+
+                const alreadyJoined =
+                    participants.some(
+                        participant =>
+                            Number(
+                                participant.player_id
+                            ) === CURRENT_PLAYER_ID
+                    );
+
+
+                if (alreadyJoined) {
+
+                    activityStatus.innerHTML = `
+
+                        <p>
+                            <strong>
+                                Yanola is participating.
+                            </strong>
+                        </p>
+
+                    `;
+
+                    joinButton.disabled =
+                        true;
+
+                    joinButton.textContent =
+                        "Joined";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn participant loading error:",
+                    error
+                );
+
+
+                participantsContainer.innerHTML = `
+
+                    <p>
+                        Participants could not be loaded.
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        /*
+            JOIN ACTIVITY
+        */
+
+        async function joinActivity() {
 
             if (!currentActivity) {
 
@@ -391,47 +553,222 @@
             }
 
 
-            activityStatus.innerHTML = `
-
-                <p>
-                    <strong>
-                        You joined ${escapeHtml(
-                            currentActivity.name
-                        )}!
-                    </strong>
-                </p>
-
-                <p>
-                    The activity system is ready for the
-                    next layer of gameplay.
-                </p>
-
-            `;
-
-
             joinButton.disabled =
                 true;
 
 
             joinButton.textContent =
-                "Joined";
+                "Joining...";
 
 
-            participantsContainer.innerHTML = `
+            activityStatus.innerHTML = `
 
-                <article class="participant-card">
-
-                    <h3>
-                        Yanola
-                    </h3>
-
-                    <p>
-                        Player
-                    </p>
-
-                </article>
+                <p>
+                    Joining the activity...
+                </p>
 
             `;
+
+
+            try {
+
+                /*
+                    CHECK FOR EXISTING PARTICIPATION
+                */
+
+                const checkResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants" +
+                        "?activity_id=eq." +
+                        encodeURIComponent(
+                            currentActivity.id
+                        ) +
+                        "&player_id=eq." +
+                        encodeURIComponent(
+                            CURRENT_PLAYER_ID
+                        ) +
+                        "&apikey=" +
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        )
+
+                    );
+
+
+                if (!checkResponse.ok) {
+
+                    throw new Error(
+                        "Could not check participation. HTTP " +
+                        checkResponse.status
+                    );
+
+                }
+
+
+                const existing =
+                    await checkResponse.json();
+
+
+                if (existing.length) {
+
+                    activityStatus.innerHTML = `
+
+                        <p>
+                            <strong>
+                                Yanola is already participating.
+                            </strong>
+                        </p>
+
+                    `;
+
+                    joinButton.textContent =
+                        "Joined";
+
+
+                    await loadParticipants(
+                        currentActivity.id
+                    );
+
+
+                    return;
+
+                }
+
+
+                /*
+                    CREATE PARTICIPATION
+                */
+
+                const insertResponse =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "apikey":
+                                    SUPABASE_KEY,
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Prefer":
+                                    "return=representation"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                activity_id:
+                                    currentActivity.id,
+
+                                player_id:
+                                    CURRENT_PLAYER_ID,
+
+                                participation_status:
+                                    "active",
+
+                                role:
+                                    "Participant",
+
+                                contribution_score:
+                                    0,
+
+                                reward_claimed:
+                                    false,
+
+                                session_data:
+                                    {}
+
+                            })
+
+                        }
+
+                    );
+
+
+                if (!insertResponse.ok) {
+
+                    const errorText =
+                        await insertResponse.text();
+
+
+                    throw new Error(
+                        "Could not join activity. HTTP " +
+                        insertResponse.status +
+                        " - " +
+                        errorText
+                    );
+
+                }
+
+
+                activityStatus.innerHTML = `
+
+                    <p>
+                        <strong>
+                            Yanola joined ${escapeHtml(
+                                currentActivity.name
+                            )}!
+                        </strong>
+                    </p>
+
+                    <p>
+                        Your participation has been saved.
+                    </p>
+
+                `;
+
+
+                joinButton.textContent =
+                    "Joined";
+
+
+                await loadParticipants(
+                    currentActivity.id
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn activity join error:",
+                    error
+                );
+
+
+                activityStatus.innerHTML = `
+
+                    <p>
+                        <strong>
+                            Unable to join the activity.
+                        </strong>
+                    </p>
+
+                    <p>
+                        ${escapeHtml(
+                            error.message
+                        )}
+                    </p>
+
+                `;
+
+
+                joinButton.disabled =
+                    false;
+
+
+                joinButton.textContent =
+                    "Join Activity";
+
+            }
 
         }
 
