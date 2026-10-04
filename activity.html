@@ -65,6 +65,16 @@
 
             </button>
 
+            <button
+                id="leave-button"
+                type="button"
+                onclick="leaveActivity()"
+                style="display: none;">
+
+                Leave Activity
+
+            </button>
+
         </section>
 
 
@@ -90,12 +100,6 @@
             "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
 
-        /*
-            CURRENT EVERWYN PLAYER
-
-            Yanola's existing player record.
-        */
-
         const CURRENT_PLAYER_ID = 3;
 
 
@@ -116,6 +120,9 @@
 
         const joinButton =
             document.getElementById("join-button");
+
+        const leaveButton =
+            document.getElementById("leave-button");
 
         const backToLocation =
             document.getElementById("back-to-location");
@@ -163,6 +170,9 @@
                         "<p>Please return to the previous location and choose an activity.</p>";
 
                     joinButton.style.display =
+                        "none";
+
+                    leaveButton.style.display =
                         "none";
 
                     return;
@@ -214,6 +224,9 @@
                         "<p>This activity could not be found.</p>";
 
                     joinButton.style.display =
+                        "none";
+
+                    leaveButton.style.display =
                         "none";
 
                     return;
@@ -384,13 +397,16 @@
                 joinButton.style.display =
                     "none";
 
+                leaveButton.style.display =
+                    "none";
+
             }
 
         }
 
 
         /*
-            LOAD CURRENT PARTICIPANTS
+            LOAD PARTICIPANTS
         */
 
         async function loadParticipants(activityId) {
@@ -436,70 +452,108 @@
 
                     `;
 
-                    return;
+                } else {
+
+                    participantsContainer.innerHTML = "";
+
+
+                    participants.forEach(
+                        participant => {
+
+                            const card =
+                                document.createElement(
+                                    "article"
+                                );
+
+
+                            card.className =
+                                "participant-card";
+
+
+                            const isCurrentPlayer =
+                                Number(
+                                    participant.player_id
+                                ) ===
+                                CURRENT_PLAYER_ID;
+
+
+                            card.innerHTML = `
+
+                                <h3>
+                                    ${
+                                        isCurrentPlayer
+                                            ? "Yanola"
+                                            : "Player " +
+                                              escapeHtml(
+                                                  participant.player_id
+                                              )
+                                    }
+                                </h3>
+
+                                <p>
+                                    ${
+                                        escapeHtml(
+                                            participant.role ||
+                                            "Participant"
+                                        )
+                                    }
+                                </p>
+
+                            `;
+
+
+                            participantsContainer
+                                .appendChild(card);
+
+                        }
+                    );
 
                 }
 
 
-                participantsContainer.innerHTML = "";
+                /*
+                    CHECK CURRENT PLAYER
+                */
 
+                const currentPlayerResponse =
+                    await fetch(
 
-                participants.forEach(participant => {
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants" +
+                        "?activity_id=eq." +
+                        encodeURIComponent(activityId) +
+                        "&player_id=eq." +
+                        encodeURIComponent(
+                            CURRENT_PLAYER_ID
+                        ) +
+                        "&apikey=" +
+                        encodeURIComponent(
+                            SUPABASE_KEY
+                        )
 
-                    const card =
-                        document.createElement("article");
-
-
-                    card.className =
-                        "participant-card";
-
-
-                    const isCurrentPlayer =
-                        Number(
-                            participant.player_id
-                        ) === CURRENT_PLAYER_ID;
-
-
-                    card.innerHTML = `
-
-                        <h3>
-                            ${
-                                isCurrentPlayer
-                                    ? "Yanola"
-                                    : "Player " +
-                                      escapeHtml(
-                                          participant.player_id
-                                      )
-                            }
-                        </h3>
-
-                        <p>
-                            ${
-                                escapeHtml(
-                                    participant.role ||
-                                    "Participant"
-                                )
-                            }
-                        </p>
-
-                    `;
-
-
-                    participantsContainer.appendChild(card);
-
-                });
-
-
-                const alreadyJoined =
-                    participants.some(
-                        participant =>
-                            Number(
-                                participant.player_id
-                            ) === CURRENT_PLAYER_ID
                     );
 
 
-                if (alreadyJoined) {
+                if (!currentPlayerResponse.ok) {
+
+                    throw new Error(
+                        "Could not check your participation. HTTP " +
+                        currentPlayerResponse.status
+                    );
+
+                }
+
+
+                const currentPlayerRecords =
+                    await currentPlayerResponse.json();
+
+
+                if (
+                    currentPlayerRecords.length &&
+                    currentPlayerRecords[0]
+                        .participation_status ===
+                        "active"
+                ) {
 
                     activityStatus.innerHTML = `
 
@@ -511,13 +565,36 @@
 
                     `;
 
+                    joinButton.style.display =
+                        "none";
+
+                    leaveButton.style.display =
+                        "inline-block";
+
+                } else {
+
+                    activityStatus.innerHTML = `
+
+                        <p>
+                            This activity is available to join.
+                        </p>
+
+                    `;
+
+                    joinButton.style.display =
+                        "inline-block";
+
                     joinButton.disabled =
-                        true;
+                        false;
 
                     joinButton.textContent =
-                        "Joined";
+                        "Join Activity";
+
+                    leaveButton.style.display =
+                        "none";
 
                 }
+
 
             } catch (error) {
 
@@ -572,10 +649,6 @@
 
             try {
 
-                /*
-                    CHECK FOR EXISTING PARTICIPATION
-                */
-
                 const checkResponse =
                     await fetch(
 
@@ -613,122 +686,154 @@
 
                 if (existing.length) {
 
-                    activityStatus.innerHTML = `
+                    if (
+                        existing[0]
+                            .participation_status ===
+                        "active"
+                    ) {
 
-                        <p>
-                            <strong>
-                                Yanola is already participating.
-                            </strong>
-                        </p>
+                        await loadParticipants(
+                            currentActivity.id
+                        );
 
-                    `;
+                        return;
 
-                    joinButton.textContent =
-                        "Joined";
+                    }
+
+                    /*
+                        REACTIVATE A PREVIOUS
+                        PARTICIPATION RECORD
+                    */
+
+                    const updateResponse =
+                        await fetch(
+
+                            SUPABASE_URL +
+                            "/rest/v1/activity_participants" +
+                            "?id=eq." +
+                            encodeURIComponent(
+                                existing[0].id
+                            ),
+
+                            {
+
+                                method: "PATCH",
+
+                                headers: {
+
+                                    "apikey":
+                                        SUPABASE_KEY,
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body: JSON.stringify({
+
+                                    participation_status:
+                                        "active",
+
+                                    left_at:
+                                        null
+
+                                })
+
+                            }
+
+                        );
 
 
-                    await loadParticipants(
-                        currentActivity.id
-                    );
+                    if (!updateResponse.ok) {
+
+                        const errorText =
+                            await updateResponse.text();
+
+                        throw new Error(
+                            "Could not rejoin activity. HTTP " +
+                            updateResponse.status +
+                            " - " +
+                            errorText
+                        );
+
+                    }
 
 
-                    return;
+                } else {
+
+                    /*
+                        CREATE NEW PARTICIPATION
+                    */
+
+                    const insertResponse =
+                        await fetch(
+
+                            SUPABASE_URL +
+                            "/rest/v1/activity_participants",
+
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "apikey":
+                                        SUPABASE_KEY,
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Prefer":
+                                        "return=representation"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        activity_id:
+                                            currentActivity.id,
+
+                                        player_id:
+                                            CURRENT_PLAYER_ID,
+
+                                        participation_status:
+                                            "active",
+
+                                        role:
+                                            "Participant",
+
+                                        contribution_score:
+                                            0,
+
+                                        reward_claimed:
+                                            false,
+
+                                        session_data:
+                                            {}
+
+                                    })
+
+                            }
+
+                        );
+
+
+                    if (!insertResponse.ok) {
+
+                        const errorText =
+                            await insertResponse.text();
+
+                        throw new Error(
+                            "Could not join activity. HTTP " +
+                            insertResponse.status +
+                            " - " +
+                            errorText
+                        );
+
+                    }
 
                 }
-
-
-                /*
-                    CREATE PARTICIPATION
-                */
-
-                const insertResponse =
-                    await fetch(
-
-                        SUPABASE_URL +
-                        "/rest/v1/activity_participants",
-
-                        {
-
-                            method: "POST",
-
-                            headers: {
-
-                                "apikey":
-                                    SUPABASE_KEY,
-
-                                "Content-Type":
-                                    "application/json",
-
-                                "Prefer":
-                                    "return=representation"
-
-                            },
-
-                            body: JSON.stringify({
-
-                                activity_id:
-                                    currentActivity.id,
-
-                                player_id:
-                                    CURRENT_PLAYER_ID,
-
-                                participation_status:
-                                    "active",
-
-                                role:
-                                    "Participant",
-
-                                contribution_score:
-                                    0,
-
-                                reward_claimed:
-                                    false,
-
-                                session_data:
-                                    {}
-
-                            })
-
-                        }
-
-                    );
-
-
-                if (!insertResponse.ok) {
-
-                    const errorText =
-                        await insertResponse.text();
-
-
-                    throw new Error(
-                        "Could not join activity. HTTP " +
-                        insertResponse.status +
-                        " - " +
-                        errorText
-                    );
-
-                }
-
-
-                activityStatus.innerHTML = `
-
-                    <p>
-                        <strong>
-                            Yanola joined ${escapeHtml(
-                                currentActivity.name
-                            )}!
-                        </strong>
-                    </p>
-
-                    <p>
-                        Your participation has been saved.
-                    </p>
-
-                `;
-
-
-                joinButton.textContent =
-                    "Joined";
 
 
                 await loadParticipants(
@@ -764,11 +869,154 @@
                 joinButton.disabled =
                     false;
 
-
                 joinButton.textContent =
                     "Join Activity";
 
             }
+
+        }
+
+
+        /*
+            LEAVE ACTIVITY
+        */
+
+        async function leaveActivity() {
+
+            if (!currentActivity) {
+
+                return;
+
+            }
+
+
+            leaveButton.disabled =
+                true;
+
+
+            leaveButton.textContent =
+                "Leaving...";
+
+
+            activityStatus.innerHTML = `
+
+                <p>
+                    Leaving the activity...
+                </p>
+
+            `;
+
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/rest/v1/activity_participants" +
+                        "?activity_id=eq." +
+                        encodeURIComponent(
+                            currentActivity.id
+                        ) +
+                        "&player_id=eq." +
+                        encodeURIComponent(
+                            CURRENT_PLAYER_ID
+                        ),
+
+                        {
+
+                            method: "PATCH",
+
+                            headers: {
+
+                                "apikey":
+                                    SUPABASE_KEY,
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                participation_status:
+                                    "left",
+
+                                left_at:
+                                    new Date().toISOString()
+
+                            })
+
+                        }
+
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        "Could not leave activity. HTTP " +
+                        response.status +
+                        " - " +
+                        errorText
+                    );
+
+                }
+
+
+                activityStatus.innerHTML = `
+
+                    <p>
+                        <strong>
+                            Yanola left ${escapeHtml(
+                                currentActivity.name
+                            )}.
+                        </strong>
+                    </p>
+
+                `;
+
+
+                await loadParticipants(
+                    currentActivity.id
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Everwyn activity leave error:",
+                    error
+                );
+
+
+                activityStatus.innerHTML = `
+
+                    <p>
+                        <strong>
+                            Unable to leave the activity.
+                        </strong>
+                    </p>
+
+                    <p>
+                        ${escapeHtml(
+                            error.message
+                        )}
+                    </p>
+
+                `;
+
+            }
+
+
+            leaveButton.disabled =
+                false;
+
+            leaveButton.textContent =
+                "Leave Activity";
 
         }
 
