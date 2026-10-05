@@ -25,7 +25,7 @@ const EVERWYN_DEFAULT_AVATAR = {
 
     eyebrow_style: "brows_01",
 
-    hair_style: "hair_01",
+    hair_style: "long_01",
     hair_color: "dark_brown",
 
     top_item: "starter_top_01",
@@ -636,7 +636,14 @@ function createEverwynAvatar(
         hairRight
 
     };
+/* ======================================================
+   APPLY SAVED HAIRSTYLE
+====================================================== */
 
+setAvatarHairStyle(
+    avatar,
+    appearance.hair_style
+);
 
     return avatar;
 
@@ -755,7 +762,452 @@ function setAvatarHairColor(
 
 }
 
+/* ==========================================================
+   CHANGE HAIRSTYLE
+========================================================== */
 
+function setAvatarHairStyle(
+    avatar,
+    hairStyle
+) {
+
+    if (
+        !avatar ||
+        !avatar.layers
+    ) {
+
+        return;
+
+    }
+
+
+    const hairBack =
+        avatar.layers.hairBack;
+
+    const hairTop =
+        avatar.layers.hairTop;
+
+    const hairLeft =
+        avatar.layers.hairLeft;
+
+    const hairRight =
+        avatar.layers.hairRight;
+
+
+    /* ======================================================
+       RESET HAIR LAYERS
+    ====================================================== */
+
+    hairBack.setVisible(true);
+    hairTop.setVisible(true);
+    hairLeft.setVisible(true);
+    hairRight.setVisible(true);
+
+
+    hairBack.setPosition(
+        0,
+        -29
+    );
+
+    hairBack.setDisplaySize(
+        39,
+        38
+    );
+
+
+    hairTop.setPosition(
+        0,
+        -40
+    );
+
+    hairTop.setDisplaySize(
+        36,
+        20
+    );
+
+
+    hairLeft.setPosition(
+        -14,
+        -20
+    );
+
+    hairLeft.setDisplaySize(
+        10,
+        28
+    );
+
+
+    hairRight.setPosition(
+        14,
+        -20
+    );
+
+    hairRight.setDisplaySize(
+        10,
+        28
+    );
+
+
+    /* ======================================================
+       LONG
+    ====================================================== */
+
+    if (
+        hairStyle === "long_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -22
+        );
+
+        hairBack.setDisplaySize(
+            42,
+            54
+        );
+
+
+        hairLeft.setPosition(
+            -15,
+            -15
+        );
+
+        hairLeft.setDisplaySize(
+            11,
+            39
+        );
+
+
+        hairRight.setPosition(
+            15,
+            -15
+        );
+
+        hairRight.setDisplaySize(
+            11,
+            39
+        );
+
+    }
+
+
+    /* ======================================================
+       CURLS
+    ====================================================== */
+
+    else if (
+        hairStyle === "curls_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -26
+        );
+
+        hairBack.setDisplaySize(
+            48,
+            46
+        );
+
+
+        hairTop.setPosition(
+            0,
+            -41
+        );
+
+        hairTop.setDisplaySize(
+            42,
+            25
+        );
+
+
+        hairLeft.setPosition(
+            -17,
+            -20
+        );
+
+        hairLeft.setDisplaySize(
+            16,
+            32
+        );
+
+
+        hairRight.setPosition(
+            17,
+            -20
+        );
+
+        hairRight.setDisplaySize(
+            16,
+            32
+        );
+
+    }
+
+
+    /* ======================================================
+       WAVES
+    ====================================================== */
+
+    else if (
+        hairStyle === "waves_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -23
+        );
+
+        hairBack.setDisplaySize(
+            43,
+            51
+        );
+
+
+        hairTop.setPosition(
+            -2,
+            -40
+        );
+
+        hairTop.setDisplaySize(
+            39,
+            21
+        );
+
+
+        hairLeft.setPosition(
+            -15,
+            -17
+        );
+
+        hairLeft.setDisplaySize(
+            12,
+            37
+        );
+
+
+        hairRight.setPosition(
+            15,
+            -15
+        );
+
+        hairRight.setDisplaySize(
+            14,
+            40
+        );
+
+    }
+
+
+    /* ======================================================
+       SHORT
+    ====================================================== */
+
+    else if (
+        hairStyle === "short_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -32
+        );
+
+        hairBack.setDisplaySize(
+            38,
+            27
+        );
+
+
+        hairTop.setPosition(
+            0,
+            -41
+        );
+
+        hairTop.setDisplaySize(
+            37,
+            20
+        );
+
+
+        hairLeft.setPosition(
+            -15,
+            -27
+        );
+
+        hairLeft.setDisplaySize(
+            8,
+            18
+        );
+
+
+        hairRight.setPosition(
+            15,
+            -27
+        );
+
+        hairRight.setDisplaySize(
+            8,
+            18
+        );
+
+    }
+
+
+    /* ======================================================
+       BRAIDS
+    ====================================================== */
+
+    else if (
+        hairStyle === "braids_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -31
+        );
+
+        hairBack.setDisplaySize(
+            38,
+            31
+        );
+
+
+        hairTop.setPosition(
+            0,
+            -41
+        );
+
+        hairTop.setDisplaySize(
+            36,
+            20
+        );
+
+
+        hairLeft.setPosition(
+            -16,
+            -10
+        );
+
+        hairLeft.setDisplaySize(
+            7,
+            48
+        );
+
+
+        hairRight.setPosition(
+            16,
+            -10
+        );
+
+        hairRight.setDisplaySize(
+            7,
+            48
+        );
+
+    }
+
+
+    /* ======================================================
+       UPDO
+    ====================================================== */
+
+    else if (
+        hairStyle === "updo_01"
+    ) {
+
+        hairBack.setPosition(
+            0,
+            -32
+        );
+
+        hairBack.setDisplaySize(
+            37,
+            30
+        );
+
+
+        hairTop.setPosition(
+            0,
+            -41
+        );
+
+        hairTop.setDisplaySize(
+            35,
+            19
+        );
+
+
+        /*
+         * Hair-left becomes the bun.
+         */
+
+        hairLeft.setPosition(
+            0,
+            -53
+        );
+
+        hairLeft.setDisplaySize(
+            19,
+            17
+        );
+
+
+        hairRight.setVisible(
+            false
+        );
+
+    }
+
+
+    /* ======================================================
+       UNKNOWN STYLE FALLBACK
+    ====================================================== */
+
+    else {
+
+        hairStyle =
+            "long_01";
+
+
+        hairBack.setPosition(
+            0,
+            -22
+        );
+
+        hairBack.setDisplaySize(
+            42,
+            54
+        );
+
+
+        hairLeft.setPosition(
+            -15,
+            -15
+        );
+
+        hairLeft.setDisplaySize(
+            11,
+            39
+        );
+
+
+        hairRight.setPosition(
+            15,
+            -15
+        );
+
+        hairRight.setDisplaySize(
+            11,
+            39
+        );
+
+    }
+
+
+    avatar.characterData.hair_style =
+        hairStyle;
+
+}
 /* ==========================================================
    CHANGE EYE COLOR
 ========================================================== */
