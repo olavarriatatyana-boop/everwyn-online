@@ -1308,7 +1308,425 @@
 
         });
 
+/* =====================================================
+   HAIRSTYLE SELECTION
+===================================================== */
 
+document
+    .querySelectorAll(".hairstyle-choice")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                /* Remove selected state from other styles */
+
+                document
+                    .querySelectorAll(".hairstyle-choice")
+                    .forEach(choice => {
+
+                        choice.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                /* Select the clicked hairstyle */
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                /* Save hairstyle ID */
+
+                character.hair_style =
+                    button.dataset.value;
+
+
+                /* Update the preview */
+
+                applyHairstyle(
+                    character.hair_style
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   APPLY HAIRSTYLE TO CHARACTER PREVIEW
+===================================================== */
+
+function applyHairstyle(style) {
+
+    const hairBack =
+        document.querySelector(
+            ".hair-back"
+        );
+
+    const hairTop =
+        document.querySelector(
+            ".hair-top"
+        );
+
+    const hairLeft =
+        document.querySelector(
+            ".hair-side.left"
+        );
+
+    const hairRight =
+        document.querySelector(
+            ".hair-side.right"
+        );
+
+
+    /* -------------------------------------------------
+       RESET HAIR
+    ------------------------------------------------- */
+
+    hairBack.style.display =
+        "block";
+
+    hairTop.style.display =
+        "block";
+
+    hairLeft.style.display =
+        "block";
+
+    hairRight.style.display =
+        "block";
+
+
+    hairBack.style.width =
+        "116px";
+
+    hairBack.style.height =
+        "125px";
+
+    hairBack.style.left =
+        "17px";
+
+    hairBack.style.top =
+        "15px";
+
+    hairBack.style.borderRadius =
+        "55% 55% 42% 42%";
+
+
+    hairTop.style.width =
+        "98px";
+
+    hairTop.style.height =
+        "55px";
+
+    hairTop.style.left =
+        "26px";
+
+    hairTop.style.top =
+        "18px";
+
+    hairTop.style.borderRadius =
+        "55% 55% 35% 25%";
+
+
+    hairLeft.style.width =
+        "24px";
+
+    hairLeft.style.height =
+        "88px";
+
+    hairLeft.style.left =
+        "18px";
+
+    hairLeft.style.top =
+        "46px";
+
+    hairLeft.style.borderRadius =
+        "45%";
+
+
+    hairRight.style.width =
+        "24px";
+
+    hairRight.style.height =
+        "88px";
+
+    hairRight.style.right =
+        "18px";
+
+    hairRight.style.top =
+        "46px";
+
+    hairRight.style.borderRadius =
+        "45%";
+
+
+    /* =================================================
+       LONG
+    ================================================= */
+
+    if (style === "long_01") {
+
+        hairBack.style.height =
+            "150px";
+
+        hairBack.style.borderRadius =
+            "55% 55% 35% 35%";
+
+        hairLeft.style.height =
+            "110px";
+
+        hairRight.style.height =
+            "110px";
+
+    }
+
+
+    /* =================================================
+       CURLS
+    ================================================= */
+
+    else if (style === "curls_01") {
+
+        hairBack.style.width =
+            "134px";
+
+        hairBack.style.height =
+            "130px";
+
+        hairBack.style.left =
+            "8px";
+
+        hairBack.style.borderRadius =
+            "48% 48% 45% 45%";
+
+
+        hairTop.style.width =
+            "110px";
+
+        hairTop.style.height =
+            "63px";
+
+        hairTop.style.left =
+            "20px";
+
+        hairTop.style.borderRadius =
+            "50%";
+
+
+        hairLeft.style.width =
+            "34px";
+
+        hairLeft.style.height =
+            "95px";
+
+        hairLeft.style.left =
+            "8px";
+
+        hairLeft.style.borderRadius =
+            "50%";
+
+
+        hairRight.style.width =
+            "34px";
+
+        hairRight.style.height =
+            "95px";
+
+        hairRight.style.right =
+            "8px";
+
+        hairRight.style.borderRadius =
+            "50%";
+
+    }
+
+
+    /* =================================================
+       WAVES
+    ================================================= */
+
+    else if (style === "waves_01") {
+
+        hairBack.style.height =
+            "142px";
+
+        hairBack.style.borderRadius =
+            "60% 45% 55% 40%";
+
+
+        hairTop.style.borderRadius =
+            "65% 40% 55% 30%";
+
+
+        hairLeft.style.width =
+            "28px";
+
+        hairLeft.style.height =
+            "108px";
+
+        hairLeft.style.borderRadius =
+            "60% 35% 65% 40%";
+
+
+        hairRight.style.width =
+            "28px";
+
+        hairRight.style.height =
+            "108px";
+
+        hairRight.style.borderRadius =
+            "35% 60% 40% 65%";
+
+    }
+
+
+    /* =================================================
+       SHORT
+    ================================================= */
+
+    else if (style === "short_01") {
+
+        hairBack.style.height =
+            "72px";
+
+        hairBack.style.width =
+            "100px";
+
+        hairBack.style.left =
+            "25px";
+
+
+        hairTop.style.height =
+            "52px";
+
+
+        hairLeft.style.height =
+            "42px";
+
+        hairLeft.style.width =
+            "20px";
+
+        hairLeft.style.left =
+            "23px";
+
+
+        hairRight.style.height =
+            "42px";
+
+        hairRight.style.width =
+            "20px";
+
+        hairRight.style.right =
+            "23px";
+
+    }
+
+
+    /* =================================================
+       BRAIDS
+    ================================================= */
+
+    else if (style === "braids_01") {
+
+        hairBack.style.width =
+            "100px";
+
+        hairBack.style.height =
+            "90px";
+
+        hairBack.style.left =
+            "25px";
+
+
+        hairTop.style.borderRadius =
+            "55% 55% 35% 35%";
+
+
+        hairLeft.style.width =
+            "14px";
+
+        hairLeft.style.height =
+            "135px";
+
+        hairLeft.style.left =
+            "25px";
+
+        hairLeft.style.borderRadius =
+            "45% 45% 50% 50%";
+
+
+        hairRight.style.width =
+            "14px";
+
+        hairRight.style.height =
+            "135px";
+
+        hairRight.style.right =
+            "25px";
+
+        hairRight.style.borderRadius =
+            "45% 45% 50% 50%";
+
+    }
+
+
+    /* =================================================
+       UPDO
+    ================================================= */
+
+    else if (style === "updo_01") {
+
+        hairBack.style.width =
+            "80px";
+
+        hairBack.style.height =
+            "68px";
+
+        hairBack.style.left =
+            "35px";
+
+        hairBack.style.top =
+            "20px";
+
+
+        hairTop.style.width =
+            "88px";
+
+        hairTop.style.height =
+            "58px";
+
+        hairTop.style.left =
+            "31px";
+
+
+        hairLeft.style.width =
+            "42px";
+
+        hairLeft.style.height =
+            "42px";
+
+        hairLeft.style.left =
+            "54px";
+
+        hairLeft.style.top =
+            "-8px";
+
+        hairLeft.style.borderRadius =
+            "50%";
+
+
+        hairRight.style.display =
+            "none";
+
+    }
+
+}
    /* =====================================================
    SUPABASE CONNECTION
 ===================================================== */
