@@ -284,6 +284,78 @@
 }
 
 
+/* ===============================================
+   CUSTOM MAGICAL MARKINGS
+=============================================== */
+
+/* SUBTLE */
+
+.avatar.marking-subtle_01 .species-mark {
+    display: block;
+    width: 12px;
+    height: 3px;
+    left: 69px;
+    top: 56px;
+    border-radius: 50%;
+    background: #b39ac4;
+    box-shadow: 0 0 6px rgba(179,154,196,.7);
+}
+
+
+/* MOON */
+
+.avatar.marking-moon_01 .species-mark {
+    display: block;
+    width: 12px;
+    height: 12px;
+    left: 69px;
+    top: 50px;
+    border-radius: 50%;
+    border-left: 3px solid #d8bd79;
+    background: transparent;
+    transform: rotate(-20deg);
+    box-shadow: -2px 0 5px rgba(216,189,121,.45);
+}
+
+
+/* STAR */
+
+.avatar.marking-star_01 .species-mark {
+    display: block;
+    width: 14px;
+    height: 14px;
+    left: 68px;
+    top: 49px;
+    background: #d8bd79;
+    clip-path: polygon(
+        50% 0%,
+        61% 37%,
+        100% 50%,
+        61% 63%,
+        50% 100%,
+        39% 63%,
+        0% 50%,
+        39% 37%
+    );
+    box-shadow: 0 0 7px rgba(216,189,121,.7);
+}
+
+
+/* RUNE */
+
+.avatar.marking-rune_01 .species-mark {
+    display: block;
+    width: 10px;
+    height: 10px;
+    left: 70px;
+    top: 50px;
+    border: 2px solid #a58bbb;
+    background: transparent;
+    transform: rotate(45deg);
+    box-shadow: 0 0 7px rgba(165,139,187,.8);
+}
+
+
 /* Magical aura behind the character */
 
 .species-aura {
@@ -341,7 +413,7 @@
 
 /* WITCHBORN */
 
-.avatar.species-witchborn .species-mark {
+.avatar.species-witchborn:not([class*="marking-"]) .species-mark {
     display: block;
     width: 9px;
     height: 9px;
@@ -356,7 +428,7 @@
 
 /* CELESTIAL */
 
-.avatar.species-celestial .species-mark {
+.avatar.species-celestial:not([class*="marking-"]) .species-mark {
     display: block;
     width: 15px;
     height: 15px;
@@ -378,7 +450,7 @@
 
 /* SHADOWKIN */
 
-.avatar.species-shadowkin .species-mark {
+.avatar.species-shadowkin:not([class*="marking-"]) .species-mark {
     display: block;
     width: 22px;
     height: 5px;
@@ -1549,7 +1621,34 @@ document
 
                 character.species =
                     button.dataset.value;
+/* Reset species-specific fantasy traits */
 
+character.ear_style = null;
+character.horn_style = null;
+character.wing_style = null;
+character.tail_style = null;
+character.marking_style = null;
+character.aura_style = null;
+
+
+/* Remove old custom marking */
+
+applyMagicalMarking(
+    null
+);
+
+
+/* Clear selected Fantasy Trait buttons */
+
+document
+    .querySelectorAll(".trait-choice")
+    .forEach(choice => {
+
+        choice.classList.remove(
+            "selected"
+        );
+
+    });
 
                 document.getElementById(
                     "preview-species"
@@ -1841,7 +1940,17 @@ document
 
                 character[trait] =
                     value;
+/* Apply visual fantasy trait */
 
+if (
+    trait === "marking_style"
+) {
+
+    applyMagicalMarking(
+        value
+    );
+
+}
 
                 console.log(
                     "Fantasy trait selected:",
@@ -1853,7 +1962,48 @@ document
         );
 
     });
+/* =====================================================
+   APPLY MAGICAL MARKING
+===================================================== */
 
+function applyMagicalMarking(
+    markingStyle
+) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    /* Remove previously selected marking */
+
+    avatar.classList.remove(
+        "marking-subtle_01",
+        "marking-moon_01",
+        "marking-star_01",
+        "marking-rune_01"
+    );
+
+
+    /* Apply newly selected marking */
+
+    if (markingStyle) {
+
+        avatar.classList.add(
+            "marking-" + markingStyle
+        );
+
+    }
+
+}
 
 /* =====================================================
    INITIAL SPECIES + TRAITS
