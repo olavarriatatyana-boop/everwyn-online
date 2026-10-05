@@ -1,25 +1,32 @@
 /* ==========================================================
    EVERWYN ONLINE
    PLAYER SYSTEM
-   Connected to the Everwyn Avatar Engine
+   Loads saved character customization from Supabase
 ========================================================== */
 
 
 /* ==========================================================
-   TEMPORARY PLAYER DATA
-
-   This matches Yanola's current Supabase character record.
-
-   NEXT:
-   We will replace this object with data loaded directly
-   from Supabase.
+   SUPABASE CONNECTION
 ========================================================== */
 
-const CURRENT_PLAYER_CHARACTER = {
+const EVERWYN_SUPABASE_URL =
+    "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+const EVERWYN_SUPABASE_KEY =
+    "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+
+/* ==========================================================
+   FALLBACK CHARACTER
+
+   Used only if Everwyn cannot load the saved character.
+========================================================== */
+
+const EVERWYN_FALLBACK_CHARACTER = {
 
     player_id: 3,
 
-    character_name: "Yanola",
+    character_name: "Traveler",
 
     species: "human",
 
@@ -56,7 +63,196 @@ const CURRENT_PLAYER_CHARACTER = {
 
 
 /* ==========================================================
+   CURRENT CHARACTER DATA
+
+   This starts with the fallback character.
+
+   Once Supabase responds, it is replaced with the player's
+   actual saved customization.
+========================================================== */
+
+let CURRENT_PLAYER_CHARACTER = {
+
+    ...EVERWYN_FALLBACK_CHARACTER
+
+};
+
+
+/* ==========================================================
+   GET CURRENT PLAYER ID
+
+   The Character Creator stores the player's ID in
+   localStorage before sending them into Everwyn.
+
+   Player 3 remains the development fallback for now.
+========================================================== */
+
+function getCurrentPlayerId() {
+
+    const savedPlayerId =
+        localStorage.getItem(
+            "everwyn_player_id"
+        );
+
+
+    if (savedPlayerId) {
+
+        const parsedId =
+            Number(
+                savedPlayerId
+            );
+
+
+        if (
+            Number.isInteger(parsedId) &&
+            parsedId > 0
+        ) {
+
+            return parsedId;
+
+        }
+
+    }
+
+
+    return 3;
+
+}
+
+
+/* ==========================================================
+   LOAD CHARACTER FROM SUPABASE
+========================================================== */
+
+async function loadPlayerCharacter() {
+
+    const playerId =
+        getCurrentPlayerId();
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                EVERWYN_SUPABASE_URL +
+                "/rest/v1/player_characters" +
+                "?player_id=eq." +
+                encodeURIComponent(
+                    playerId
+                ) +
+                "&select=*",
+
+                {
+
+                    method:
+                        "GET",
+
+                    headers: {
+
+                        "apikey":
+                            EVERWYN_SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            EVERWYN_SUPABASE_KEY,
+
+                        "Accept":
+                            "application/json"
+
+                    }
+
+                }
+
+            );
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+
+            throw new Error(
+                "HTTP " +
+                response.status +
+                " — " +
+                errorText
+            );
+
+        }
+
+
+        const characters =
+            await response.json();
+
+
+        if (
+            !characters ||
+            characters.length === 0
+        ) {
+
+            throw new Error(
+                "No character was found for player " +
+                playerId +
+                "."
+            );
+
+        }
+
+
+        CURRENT_PLAYER_CHARACTER = {
+
+            ...EVERWYN_FALLBACK_CHARACTER,
+
+            ...characters[0]
+
+        };
+
+
+        console.log(
+            "Everwyn character loaded:",
+            CURRENT_PLAYER_CHARACTER
+        );
+
+
+        return CURRENT_PLAYER_CHARACTER;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Everwyn could not load the saved character:",
+            error
+        );
+
+
+        CURRENT_PLAYER_CHARACTER = {
+
+            ...EVERWYN_FALLBACK_CHARACTER,
+
+            player_id:
+                playerId
+
+        };
+
+
+        return CURRENT_PLAYER_CHARACTER;
+
+    }
+
+}
+
+
+/* ==========================================================
    CREATE PLAYER
+
+   This remains synchronous so our existing Moonlight
+   District and Moonlight Cafe scenes do not need to be
+   rebuilt.
+
+   game.js will load the character before Phaser starts.
 ========================================================== */
 
 function createPlayer(
@@ -75,10 +271,7 @@ function createPlayer(
 
 
     /*
-     * Give the avatar a smaller collision body.
-     *
-     * This lets the visible character overlap objects
-     * naturally while the feet determine collision.
+     * Smaller collision body around the character's feet.
      */
 
     if (player.body) {
@@ -281,12 +474,7 @@ function updatePlayer(scene) {
 
 
     /* ======================================================
-       WALK ANIMATION
-
-       This is procedural for now.
-
-       Once we have illustrated sprite layers,
-       the same movement state will control their frames.
+       PROCEDURAL WALK ANIMATION
     ====================================================== */
 
     if (player.isMoving) {
@@ -376,12 +564,6 @@ function updatePlayer(scene) {
 
     /* ======================================================
        DIRECTION
-
-       For this first procedural avatar, turning left/right
-       slightly mirrors the character.
-
-       The illustrated sprite system will later use true
-       front/back/left/right frames.
     ====================================================== */
 
     if (
