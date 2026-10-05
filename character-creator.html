@@ -377,10 +377,53 @@
 
 .avatar.aura-soft_01 .species-aura {
     display: block;
-    background: transparent;
+    background: radial-gradient(
+        ellipse,
+        rgba(190, 163, 211, .16),
+        transparent 68%
+    ) !important;
     box-shadow:
-        0 0 35px rgba(190, 163, 211, .32),
-        inset 0 0 30px rgba(190, 163, 211, .12);
+        0 0 35px rgba(190, 163, 211, .45),
+        inset 0 0 30px rgba(190, 163, 211, .18) !important;
+}
+
+
+.avatar.aura-celestial_01 .species-aura {
+    display: block;
+    background: radial-gradient(
+        ellipse,
+        rgba(226, 199, 125, .25),
+        transparent 68%
+    ) !important;
+    box-shadow:
+        0 0 48px rgba(226, 199, 125, .60),
+        inset 0 0 32px rgba(226, 199, 125, .25) !important;
+}
+
+
+.avatar.aura-shadow_01 .species-aura {
+    display: block;
+    background: radial-gradient(
+        ellipse,
+        rgba(70, 43, 95, .32),
+        transparent 68%
+    ) !important;
+    box-shadow:
+        0 0 48px rgba(76, 45, 105, .65),
+        inset 0 0 35px rgba(76, 45, 105, .28) !important;
+}
+
+
+.avatar.aura-arcane_01 .species-aura {
+    display: block;
+    background: radial-gradient(
+        ellipse,
+        rgba(172, 94, 225, .30),
+        transparent 65%
+    ) !important;
+    box-shadow:
+        0 0 52px rgba(180, 95, 235, .72),
+        inset 0 0 35px rgba(180, 95, 235, .30) !important;
 }
 
 
@@ -2034,6 +2077,7 @@ if (
         );
 
     });
+
 /* =====================================================
    APPLY MAGICAL MARKING
 ===================================================== */
@@ -2041,6 +2085,43 @@ if (
 function applyMagicalMarking(
     markingStyle
 ) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    /* Remove previous custom marking */
+
+    avatar.classList.remove(
+        "marking-subtle_01",
+        "marking-moon_01",
+        "marking-star_01",
+        "marking-rune_01"
+    );
+
+
+    /* Apply selected marking */
+
+    if (markingStyle) {
+
+        avatar.classList.add(
+            "marking-" + markingStyle
+        );
+
+    }
+
+}
+
+
 /* =====================================================
    APPLY AURA
 ===================================================== */
@@ -2083,41 +2164,6 @@ function applyAura(
     }
 
 }
-    const avatar =
-        document.querySelector(
-            ".avatar"
-        );
-
-
-    if (!avatar) {
-
-        return;
-
-    }
-
-
-    /* Remove previously selected marking */
-
-    avatar.classList.remove(
-        "marking-subtle_01",
-        "marking-moon_01",
-        "marking-star_01",
-        "marking-rune_01"
-    );
-
-
-    /* Apply newly selected marking */
-
-    if (markingStyle) {
-
-        avatar.classList.add(
-            "marking-" + markingStyle
-        );
-
-    }
-
-}
-
 /* =====================================================
    INITIAL SPECIES + TRAITS
 ===================================================== */
