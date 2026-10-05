@@ -1153,13 +1153,63 @@
                         "preview-species"
                     ).textContent =
                         button.textContent.trim();
+/* Update the character's visual species traits */
 
+applySpeciesAppearance(
+    character.species
+);
                 }
             );
 
         });
 
+/* =====================================================
+   APPLY SPECIES APPEARANCE
+===================================================== */
 
+function applySpeciesAppearance(
+    species
+) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    /* Remove any previous species class */
+
+    avatar.classList.remove(
+        "species-human",
+        "species-fae",
+        "species-elf",
+        "species-witchborn",
+        "species-celestial",
+        "species-shadowkin"
+    );
+
+
+    /* Add the newly selected species */
+
+    avatar.classList.add(
+        "species-" + species
+    );
+
+}
+
+
+/* Apply Human when the creator first opens */
+
+applySpeciesAppearance(
+    character.species
+);
     /* =====================================================
        SKIN
     ===================================================== */
