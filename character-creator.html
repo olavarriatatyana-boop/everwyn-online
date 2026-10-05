@@ -1348,25 +1348,37 @@
 
     const character = {
 
-        character_name: "Traveler",
+    character_name: "Traveler",
 
-        species: "human",
+    species: "human",
 
-        skin_tone: "skin_01",
+    skin_tone: "skin_01",
 
-        eye_color: "brown",
+    eye_color: "brown",
 
-        hair_style: "long_01",
+    hair_style: "long_01",
 
-        hair_color: "dark_brown",
+    hair_color: "dark_brown",
 
-        top_item: "starter_top_01",
+    top_item: "starter_top_01",
 
-        bottom_item: "starter_bottom_01",
+    bottom_item: "starter_bottom_01",
 
-        shoes_item: "starter_shoes_01"
+    shoes_item: "starter_shoes_01",
 
-    };
+    ear_style: null,
+
+    horn_style: null,
+
+    wing_style: null,
+
+    tail_style: null,
+
+    marking_style: null,
+
+    aura_style: null
+
+};
 
 
     /* =====================================================
@@ -1507,53 +1519,354 @@
     /* =====================================================
        SPECIES
     ===================================================== */
+/* =====================================================
+   SPECIES
+===================================================== */
 
-    document
-        .querySelectorAll(".species-choice")
-        .forEach(button => {
+document
+    .querySelectorAll(".species-choice")
+    .forEach(button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-                    document
-                        .querySelectorAll(
-                            ".species-choice"
-                        )
-                        .forEach(choice => {
+                document
+                    .querySelectorAll(".species-choice")
+                    .forEach(choice => {
 
-                            choice.classList.remove(
-                                "selected"
-                            );
+                        choice.classList.remove(
+                            "selected"
+                        );
 
-                        });
-
-
-                    button.classList.add(
-                        "selected"
-                    );
+                    });
 
 
-                    character.species =
-                        button.dataset.value;
+                button.classList.add(
+                    "selected"
+                );
 
 
-                    document.getElementById(
-                        "preview-species"
-                    ).textContent =
-                        button.textContent.trim();
-/* Update the character's visual species traits */
+                character.species =
+                    button.dataset.value;
+
+
+                document.getElementById(
+                    "preview-species"
+                ).textContent =
+                    button.textContent.trim();
+
+
+                /* Update character preview */
+
+                applySpeciesAppearance(
+                    character.species
+                );
+
+
+                /* Update available Fantasy Traits */
+
+                updateFantasyTraits(
+                    character.species
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   APPLY SPECIES APPEARANCE
+===================================================== */
+
+function applySpeciesAppearance(
+    species
+) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    avatar.classList.remove(
+        "species-human",
+        "species-fae",
+        "species-elf",
+        "species-witchborn",
+        "species-celestial",
+        "species-shadowkin"
+    );
+
+
+    avatar.classList.add(
+        "species-" + species
+    );
+
+}
+
+
+/* =====================================================
+   FANTASY TRAITS SYSTEM
+===================================================== */
+
+function updateFantasyTraits(
+    species
+) {
+
+    const title =
+        document.getElementById(
+            "fantasy-species-title"
+        );
+
+    const description =
+        document.getElementById(
+            "fantasy-species-description"
+        );
+
+
+    const earGroup =
+        document.getElementById(
+            "ear-trait-group"
+        );
+
+    const wingGroup =
+        document.getElementById(
+            "wing-trait-group"
+        );
+
+    const hornGroup =
+        document.getElementById(
+            "horn-trait-group"
+        );
+
+    const tailGroup =
+        document.getElementById(
+            "tail-trait-group"
+        );
+
+    const markingGroup =
+        document.getElementById(
+            "marking-trait-group"
+        );
+
+    const auraGroup =
+        document.getElementById(
+            "aura-trait-group"
+        );
+
+
+    /* Hide every group first */
+
+    earGroup.hidden = true;
+    wingGroup.hidden = true;
+    hornGroup.hidden = true;
+    tailGroup.hidden = true;
+    markingGroup.hidden = true;
+    auraGroup.hidden = true;
+
+
+    /* HUMAN */
+
+    if (species === "human") {
+
+        title.textContent =
+            "Human Traits";
+
+        description.textContent =
+            "Humans begin without innate magical traits.";
+
+        markingGroup.hidden =
+            false;
+
+    }
+
+
+    /* FAE */
+
+    else if (species === "fae") {
+
+        title.textContent =
+            "Fae Traits";
+
+        description.textContent =
+            "Choose the enchanted traits carried by your Fae.";
+
+        earGroup.hidden =
+            false;
+
+        wingGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* ELF */
+
+    else if (species === "elf") {
+
+        title.textContent =
+            "Elf Traits";
+
+        description.textContent =
+            "Shape the elegant features of your Elven heritage.";
+
+        earGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+    }
+
+
+    /* WITCHBORN */
+
+    else if (species === "witchborn") {
+
+        title.textContent =
+            "Witchborn Traits";
+
+        description.textContent =
+            "Choose how your inherited magic manifests.";
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* CELESTIAL */
+
+    else if (species === "celestial") {
+
+        title.textContent =
+            "Celestial Traits";
+
+        description.textContent =
+            "Shape the otherworldly signs of your celestial blood.";
+
+        wingGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* SHADOWKIN */
+
+    else if (species === "shadowkin") {
+
+        title.textContent =
+            "Shadowkin Traits";
+
+        description.textContent =
+            "Choose the supernatural traits carried from the shadows.";
+
+        hornGroup.hidden =
+            false;
+
+        tailGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+}
+
+
+/* =====================================================
+   FANTASY TRAIT BUTTONS
+===================================================== */
+
+document
+    .querySelectorAll(".trait-choice")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const trait =
+                    button.dataset.trait;
+
+                const value =
+                    button.dataset.value;
+
+
+                document
+                    .querySelectorAll(
+                        `.trait-choice[data-trait="${trait}"]`
+                    )
+                    .forEach(choice => {
+
+                        choice.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                character[trait] =
+                    value;
+
+
+                console.log(
+                    "Fantasy trait selected:",
+                    trait,
+                    value
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   INITIAL SPECIES + TRAITS
+===================================================== */
 
 applySpeciesAppearance(
     character.species
 );
+
 updateFantasyTraits(
     character.species
 );
-                                    }
-            );
-
-        });
+    
 /* =====================================================
    APPLY SPECIES APPEARANCE
 ===================================================== */
