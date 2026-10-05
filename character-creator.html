@@ -369,7 +369,67 @@
     z-index: 0;
     pointer-events: none;
 }
+/* ===============================================
+   CUSTOM AURAS
+=============================================== */
 
+/* SOFT GLOW */
+
+.avatar.aura-soft_01 .species-aura {
+    display: block;
+    background: transparent;
+    box-shadow:
+        0 0 35px rgba(190, 163, 211, .32),
+        inset 0 0 30px rgba(190, 163, 211, .12);
+}
+
+
+/* CELESTIAL */
+
+.avatar.species-celestial:not([class*="aura-"]) .species-aura {
+    display: block;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(226, 199, 125, .16),
+            transparent 68%
+        );
+    box-shadow:
+        0 0 42px rgba(226, 199, 125, .38),
+        inset 0 0 28px rgba(226, 199, 125, .16);
+}
+
+
+/* SHADOW */
+
+.avatar.species-shadowkin:not([class*="aura-"]) .species-aura {
+    display: block;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(91, 61, 119, .22),
+            transparent 68%
+        );
+    box-shadow:
+        0 0 45px rgba(91, 61, 119, .42),
+        inset 0 0 32px rgba(91, 61, 119, .18);
+}
+
+
+/* ARCANE */
+
+.avatar.aura-arcane_01 .species-aura {
+    display: block;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(154, 111, 190, .18),
+            transparent 65%
+        );
+    box-shadow:
+        0 0 48px rgba(165, 119, 205, .48),
+        inset 0 0 30px rgba(165, 119, 205, .20);
+}
 
 /* FAE */
 
@@ -1636,7 +1696,9 @@ character.aura_style = null;
 applyMagicalMarking(
     null
 );
-
+applyAura(
+    null
+);
 
 /* Clear selected Fantasy Trait buttons */
 
@@ -1951,7 +2013,17 @@ if (
     );
 
 }
+/* Apply visual aura */
 
+if (
+    trait === "aura_style"
+) {
+
+    applyAura(
+        value
+    );
+
+}
                 console.log(
                     "Fantasy trait selected:",
                     trait,
@@ -1969,7 +2041,48 @@ if (
 function applyMagicalMarking(
     markingStyle
 ) {
+/* =====================================================
+   APPLY AURA
+===================================================== */
 
+function applyAura(
+    auraStyle
+) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    /* Remove previous custom aura */
+
+    avatar.classList.remove(
+        "aura-soft_01",
+        "aura-celestial_01",
+        "aura-shadow_01",
+        "aura-arcane_01"
+    );
+
+
+    /* Apply selected aura */
+
+    if (auraStyle) {
+
+        avatar.classList.add(
+            "aura-" + auraStyle
+        );
+
+    }
+
+}
     const avatar =
         document.querySelector(
             ".avatar"
