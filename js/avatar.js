@@ -233,15 +233,41 @@ function createEverwynAvatar(
     ====================================================== */
 
     const aura =
-        scene.add.circle(
-            0,
-            0,
-            31,
-            0xc9a7e8,
-            appearance.aura_style
-                ? 0.12
-                : 0
-        );
+    scene.add.circle(
+        0,
+        -10,
+        35,
+        0xc9a7e8,
+        0
+    );
+
+
+/* ======================================================
+   SPECIES AURA
+====================================================== */
+
+if (
+    appearance.species === "celestial"
+) {
+
+    aura.setFillStyle(
+        0xe1c77d,
+        0.16
+    );
+
+}
+
+
+else if (
+    appearance.species === "shadowkin"
+) {
+
+    aura.setFillStyle(
+        0x76558f,
+        0.18
+    );
+
+}
 
 
     /* ======================================================
@@ -356,7 +382,85 @@ function createEverwynAvatar(
        EARS
     ====================================================== */
 
-    const leftEar =
+    /* ======================================================
+   EARS
+====================================================== */
+
+let leftEar;
+let rightEar;
+
+
+/* ------------------------------------------------------
+   FAE EARS
+------------------------------------------------------ */
+
+if (
+    appearance.species === "fae"
+) {
+
+    leftEar =
+        scene.add.triangle(
+            -20,
+            -25,
+            8, 0,
+            0, 5,
+            8, 10,
+            skinColor
+        );
+
+
+    rightEar =
+        scene.add.triangle(
+            20,
+            -25,
+            0, 0,
+            8, 5,
+            0, 10,
+            skinColor
+        );
+
+}
+
+
+/* ------------------------------------------------------
+   ELF EARS
+------------------------------------------------------ */
+
+else if (
+    appearance.species === "elf"
+) {
+
+    leftEar =
+        scene.add.triangle(
+            -23,
+            -25,
+            12, 0,
+            0, 5,
+            12, 10,
+            skinColor
+        );
+
+
+    rightEar =
+        scene.add.triangle(
+            23,
+            -25,
+            0, 0,
+            12, 5,
+            0, 10,
+            skinColor
+        );
+
+}
+
+
+/* ------------------------------------------------------
+   STANDARD EARS
+------------------------------------------------------ */
+
+else {
+
+    leftEar =
         scene.add.circle(
             -18,
             -25,
@@ -365,13 +469,15 @@ function createEverwynAvatar(
         );
 
 
-    const rightEar =
+    rightEar =
         scene.add.circle(
             18,
             -25,
             5,
             skinColor
         );
+
+}
 
 
     /* ======================================================
@@ -402,7 +508,95 @@ function createEverwynAvatar(
             2.5,
             eyeColor
         );
+/* ======================================================
+   SPECIES MARKING
+====================================================== */
 
+let speciesMark;
+
+
+/* ------------------------------------------------------
+   WITCHBORN
+------------------------------------------------------ */
+
+if (
+    appearance.species === "witchborn"
+) {
+
+    speciesMark =
+        scene.add.rectangle(
+            0,
+            -35,
+            5,
+            5,
+            0xa58bbb
+        );
+
+
+    speciesMark.setAngle(
+        45
+    );
+
+}
+
+
+/* ------------------------------------------------------
+   CELESTIAL
+------------------------------------------------------ */
+
+else if (
+    appearance.species === "celestial"
+) {
+
+    speciesMark =
+        scene.add.circle(
+            0,
+            -35,
+            4,
+            0xe1c77d
+        );
+
+}
+
+
+/* ------------------------------------------------------
+   SHADOWKIN
+------------------------------------------------------ */
+
+else if (
+    appearance.species === "shadowkin"
+) {
+
+    speciesMark =
+        scene.add.ellipse(
+            0,
+            -35,
+            11,
+            3,
+            0x76558f
+        );
+
+}
+
+
+/* ------------------------------------------------------
+   HUMAN / FAE / ELF
+
+   Invisible placeholder keeps our layer system consistent.
+------------------------------------------------------ */
+
+else {
+
+    speciesMark =
+        scene.add.circle(
+            0,
+            -35,
+            1,
+            0xffffff,
+            0
+        );
+
+}
 
     /* ======================================================
        HAIR
@@ -503,7 +697,8 @@ function createEverwynAvatar(
 
         leftEye,
         rightEye,
-
+       speciesMark,
+       
         faceHighlight,
 
         hairTop,
@@ -630,6 +825,7 @@ function createEverwynAvatar(
         leftEye,
         rightEye,
 
+       speciesMark,
         hairBack,
         hairTop,
         hairLeft,
