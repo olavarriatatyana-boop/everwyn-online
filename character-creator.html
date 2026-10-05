@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Your Character | Everwyn Online</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --night: #11131b;
+            --panel: #1d2029;
+            --panel-light: #292d37;
+            --cream: #f2eadf;
+            --muted: #aaa2ad;
+            --gold: #c9aa72;
+            --lavender: #a58bbb;
+            --border: rgba(255,255,255,0.11);
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--cream);
+            font-family: Georgia, "Times New Roman", serif;
+            background:
+                radial-gradient(circle at 50% 0%, #3a3144 0%, transparent 35%),
+                radial-gradient(circle at 85% 60%, #26362f 0%, transparent 30%),
+                linear-gradient(145deg, #11131b, #171a21 60%, #101219);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .creator {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 280px 1fr 360px;
+        }
+
+        /* ===============================================
+           LEFT NAVIGATION
+        =============================================== */
+
+        .sidebar {
+            padding: 34px 24px;
+            background: rgba(12,14,20,0.88);
+            border-right: 1px solid var(--border);
+        }
+
+        .brand {
+            margin-bottom: 44px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: .18em;
+            font-size: 1.65rem;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 6px;
+            color: var(--gold);
+            letter-spacing: .3em;
+            font-size: .7rem;
+        }
+
+        .step-label {
+            color: #746f78;
+            font-size: .7rem;
+            letter-spacing: .16em;
+            margin-bottom: 14px;
+        }
+
+        .tabs {
+            display: grid;
+            gap: 8px;
+        }
+
+        .tab {
+            border: 1px solid transparent;
+            background: transparent;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #a8a2ac;
+            transition: .2s;
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,.04);
+            color: white;
+        }
+
+        .tab.active {
+            background: rgba(165,139,187,.13);
+            border-color: rgba(165,139,187,.28);
+            color: #eee4f2;
+        }
+
+        .tab-number {
+            color: var(--gold);
+            margin-right: 10px;
+            font-size: .75rem;
+        }
+
+        /* ===============================================
+           CHARACTER PREVIEW
+        =============================================== */
+
+        .preview-area {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .preview-area::before {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            border-radius: 50%;
+            border: 1px solid rgba(202,175,221,.08);
+            box-shadow:
+                0 0 90px rgba(173,142,199,.08),
+                inset 0 0 90px rgba(173,142,199,.04);
+        }
+
+        .preview-wrap {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .preview-title {
+            margin-bottom: 38px;
+        }
+
+        .preview-title small {
+            display: block;
+            color: var(--gold);
+            letter-spacing: .22em;
+            font-size: .65rem;
+            margin-bottom: 9px;
+        }
+
+        .preview-title h2 {
+            margin: 0;
+            font-weight: normal;
+            font-size: 2rem;
+        }
+
+        .character-stage {
+            position: relative;
+            width: 300px;
+            height: 430px;
+            margin: auto;
+        }
+
+        .character-shadow {
+            position: absolute;
+            width: 120px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.34);
+            left: 90px;
+            bottom: 25px;
+            filter: blur(4px);
+        }
+
+        .avatar {
+            position: absolute;
+            left: 50%;
+            bottom: 48px;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 310px;
+        }
+
+        .hair-back {
+            position: absolute;
+            width: 116px;
+            height: 125px;
+            background: #3b2926;
+            border-radius: 55% 55% 42% 42%;
+            left: 17px;
+            top: 15px;
+        }
+
+        .neck {
+            position: absolute;
+            width: 30px;
+            height: 35px;
+            background: #f2d1bc;
+            left: 60px;
+            top: 115px;
+        }
+
+        .head {
+            position: absolute;
+            width: 88px;
+            height: 103px;
+            background: #f2d1bc;
+            border-radius: 48% 48% 46% 46%;
+            left: 31px;
+            top: 30px;
+            z-index: 3;
+        }
+
+        .ear {
+            position: absolute;
+            width: 17px;
+            height: 28px;
+            background: #f2d1bc;
+            border-radius: 50%;
+            top: 68px;
+            z-index: 2;
+        }
+
+        .ear.left { left: 23px; }
+        .ear.right { right: 23px; }
+
+        .hair-top {
+            position: absolute;
+            width: 98px;
+            height: 55px;
+            background: #3b2926;
+            border-radius: 55% 55% 35% 25%;
+            left: 26px;
+            top: 18px;
+            z-index: 5;
+        }
+
+        .hair-side {
+            position: absolute;
+            width: 24px;
+            height: 88px;
+            background: #3b2926;
+            top: 46px;
+            z-index: 5;
+            border-radius: 45%;
+        }
+
+        .hair-side.left { left: 18px; }
+        .hair-side.right { right: 18px; }
+
+        .eye {
+            position: absolute;
+            width: 10px;
+            height: 7px;
+            background: #654238;
+            border-radius: 50%;
+            top: 78px;
+            z-index: 6;
+        }
+
+        .eye.left { left: 51px; }
+        .eye.right { right: 51px; }
+
+        .body {
+            position: absolute;
+            width: 96px;
+            height: 105px;
+            background: #62546f;
+            left: 27px;
+            top: 138px;
+            border-radius: 30px 30px 12px 12px;
+        }
+
+        .leg {
+            position: absolute;
+            width: 38px;
+            height: 78px;
+            background: #363845;
+            top: 226px;
+            border-radius: 5px;
+        }
+
+        .leg.left { left: 33px; }
+        .leg.right { right: 33px; }
+
+        .shoe {
+            position: absolute;
+            width: 43px;
+            height: 18px;
+            background: #29262d;
+            top: 292px;
+            border-radius: 50% 50% 30% 30%;
+        }
+
+        .shoe.left { left: 29px; }
+        .shoe.right { right: 29px; }
+
+        .character-name {
+            margin-top: 4px;
+            font-size: 1.2rem;
+        }
+
+        .character-species {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: .78rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        /* ===============================================
+           OPTIONS
+        =============================================== */
+
+        .options-panel {
+            padding: 34px 30px;
+            background: rgba(20,22,29,.94);
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .options-panel h2 {
+            margin: 0;
+            font-weight: normal;
+            font-size: 1.65rem;
+        }
+
+        .panel-description {
+            color: var(--muted);
+            font-size: .85rem;
+            line-height: 1.6;
+            margin: 8px 0 28px;
+        }
+
+        .option-section {
+            margin-bottom: 30px;
+        }
+
+        .option-section h3 {
+            font-size: .75rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #c6bdc8;
+            margin-bottom: 12px;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: #12141b;
+            color: white;
+            outline: none;
+        }
+
+        .name-input:focus {
+            border-color: var(--lavender);
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+        }
+
+        .choice {
+            padding: 11px 8px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.025);
+            cursor: pointer;
+            font-size: .75rem;
+        }
+
+        .choice:hover,
+        .choice.selected {
+            border-color: rgba(190,163,211,.65);
+            background: rgba(165,139,187,.12);
+        }
+
+        .swatches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.12);
+        }
+
+        .swatch.selected {
+            border-color: #eee4f2;
+        }
+
+        .coming-soon {
+            border: 1px dashed rgba(255,255,255,.15);
+            border-radius: 10px;
+            padding: 14px;
+            color: #817b84;
+            font-size: .78rem;
+            line-height: 1.5;
+        }
+
+        /* ===============================================
+           BUTTONS
+        =============================================== */
+
+        .actions {
+            margin-top: 35px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .enter-button {
+            width: 100%;
+            border: 1px solid #d2b476;
+            background: linear-gradient(135deg, #806a45, #a98b57);
+            color: #fff9ed;
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            letter-spacing: .08em;
+        }
+
+        .enter-button:hover {
+            filter: brightness(1.1);
+        }
+
+        .save-note {
+            text-align: center;
+            color: #716b74;
+            font-size: .7rem;
+            margin-top: 10px;
+        }
+
+        /* ===============================================
+           RESPONSIVE
+        =============================================== */
+
+        @media (max-width: 1000px) {
+            .creator {
+                grid-template-columns: 190px 1fr 300px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .creator {
+                display: block;
+            }
+
+            .sidebar,
+            .options-panel {
+                border: 0;
+            }
+
+            .preview-area {
+                min-height: 600px;
+            }
+
+            .options-panel {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="creator">
+
+    <!-- ===============================================
+         LEFT MENU
+    ================================================ -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <h1>EVERWYN</h1>
+            <span>ONLINE</span>
+        </div>
+
+        <div class="step-label">
+            CREATE YOUR CHARACTER
+        </div>
+
+        <div class="tabs">
+
+            <button class="tab active" data-tab="identity">
+                <span class="tab-number">01</span>
+                Identity
+            </button>
+
+            <button class="tab" data-tab="body">
+                <span class="tab-number">02</span>
+                Body & Skin
+            </button>
+
+            <button class="tab" data-tab="face">
+                <span class="tab-number">03</span>
+                Face & Eyes
+            </button>
+
+            <button class="tab" data-tab="hair">
+                <span class="tab-number">04</span>
+                Hair
+            </button>
+
+            <button class="tab" data-tab="clothing">
+                <span class="tab-number">05</span>
+                Clothing
+            </button>
+
+            <button class="tab" data-tab="fantasy">
+                <span class="tab-number">06</span>
+                Fantasy Traits
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ===============================================
+         LIVE CHARACTER PREVIEW
+    ================================================ -->
+
+    <main class="preview-area">
+
+        <div class="preview-wrap">
+
+            <div class="preview-title">
+                <small>YOUR EVERWYN STORY BEGINS</small>
+                <h2>Create Your Character</h2>
+            </div>
+
+            <div class="character-stage">
+
+                <div class="character-shadow"></div>
+
+                <div class="avatar">
+
+                    <div class="hair-back hair-color"></div>
+
+                    <div class="neck skin-color"></div>
+
+                    <div class="ear left skin-color"></div>
+                    <div class="ear right skin-color"></div>
+
+                    <div class="head skin-color"></div>
+
+                    <div class="eye left eye-color"></div>
+                    <div class="eye right eye-color"></div>
+
+                    <div class="body"></div>
+
+                    <div class="leg left"></div>
+                    <div class="leg right"></div>
+
+                    <div class="shoe left"></div>
+                    <div class="shoe right"></div>
+
+                    <div class="hair-top hair-color"></div>
+                    <div class="hair-side left hair-color"></div>
+                    <div class="hair-side right hair-color"></div>
+
+                </div>
+
+            </div>
+
+            <div class="character-name" id="preview-name">
+                Traveler
+            </div>
+
+            <div class="character-species" id="preview-species">
+                Human
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ===============================================
+         CUSTOMIZATION OPTIONS
+    ================================================ -->
+
+    <aside class="options-panel">
+
+        <h2 id="panel-title">
+            Identity
+        </h2>
+
+        <p class="panel-description" id="panel-description">
+            Every story begins with a name. Choose who you will become in Everwyn.
+        </p>
+
+
+        <!-- IDENTITY -->
+
+        <div class="tab-content" data-content="identity">
+
+            <div class="option-section">
+
+                <h3>Character Name</h3>
+
+                <input
+                    id="character-name"
+                    class="name-input"
+                    maxlength="20"
+                    value="Traveler"
+                    placeholder="Enter a name"
+                >
+
+            </div>
+
+
+            <div class="option-section">
+
+                <h3>Species</h3>
+
+                <div class="choice-grid">
+
+                    <button class="choice species-choice selected" data-value="human">
+                        Human
+                    </button>
+
+                    <button class="choice species-choice" data-value="fae">
+                        Fae
+                    </button>
+
+                    <button class="choice species-choice" data-value="elf">
+                        Elf
+                    </button>
+
+                    <button class="choice species-choice" data-value="witchborn">
+                        Witchborn
+                    </button>
+
+                    <button class="choice species-choice" data-value="celestial">
+                        Celestial
+                    </button>
+
+                    <button class="choice species-choice" data-value="shadowkin">
+                        Shadowkin
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BODY -->
+
+        <div class="tab-content" data-content="body" hidden>
+
+            <div class="option-section">
+
+                <h3>Skin Tone</h3>
+
+                <div class="swatches">
+
+                    <button class="swatch skin-swatch selected"
+                        data-value="skin_01"
+                        data-color="#f2d1bc"
+                        style="background:#f2d1bc">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_02"
+                        data-color="#e8bc9f"
+                        style="background:#e8bc9f">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_03"
+                        data-color="#d89c78"
+                        style="background:#d89c78">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_04"
+                        data-color="#b97855"
+                        style="background:#b97855">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_05"
+                        data-color="#8e573d"
+                        style="background:#8e573d">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_06"
+                        data-color="#603b2c"
+                        style="background:#603b2c">
+                    </button>
+
+                    <button class="swatch skin-swatch"
+                        data-value="skin_07"
+                        data-color="#3e271f"
+                        style="background:#3e271f">
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FACE -->
+
+        <div class="tab-content" data-content="face" hidden>
+
+            <div class="option-section">
+
+                <h3>Eye Color</h3>
+
+                <div class="swatches">
+
+                    <button class="swatch eye-swatch selected"
+                        data-value="brown"
+                        data-color="#654238"
+                        style="background:#654238">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="hazel"
+                        data-color="#81704b"
+                        style="background:#81704b">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="green"
+                        data-color="#57735e"
+                        style="background:#57735e">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="blue"
+                        data-color="#577b99"
+                        style="background:#577b99">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="gray"
+                        data-color="#7d8289"
+                        style="background:#7d8289">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="violet"
+                        data-color="#76628f"
+                        style="background:#76628f">
+                    </button>
+
+                    <button class="swatch eye-swatch"
+                        data-value="gold"
+                        data-color="#b28a45"
+                        style="background:#b28a45">
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HAIR -->
+
+        <div class="tab-content" data-content="hair" hidden>
+
+            <div class="option-section">
+
+                <h3>Hair Color</h3>
+
+                <div class="swatches">
+
+                    <button class="swatch hair-swatch"
+                        data-value="black"
+                        data-color="#211d24"
+                        style="background:#211d24">
+                    </button>
+
+                    <button class="swatch hair-swatch selected"
+                        data-value="dark_brown"
+                        data-color="#3b2926"
+                        style="background:#3b2926">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="brown"
+                        data-color="#684536"
+                        style="background:#684536">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="auburn"
+                        data-color="#8d4937"
+                        style="background:#8d4937">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="blonde"
+                        data-color="#caa66d"
+                        style="background:#caa66d">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="platinum"
+                        data-color="#e2d8ca"
+                        style="background:#e2d8ca">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="lavender"
+                        data-color="#9b83b4"
+                        style="background:#9b83b4">
+                    </button>
+
+                    <button class="swatch hair-swatch"
+                        data-value="midnight"
+                        data-color="#303653"
+                        style="background:#303653">
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="option-section">
+
+                <h3>Hairstyle</h3>
+
+                <div class="choice-grid">
+
+                    <button class="choice selected">
+                        Long
+                    </button>
+
+                    <button class="choice">
+                        Curls
+                    </button>
+
+                    <button class="choice">
+                        Waves
+                    </button>
+
+                    <button class="choice">
+                        Short
+                    </button>
+
+                    <button class="choice">
+                        Braids
+                    </button>
+
+                    <button class="choice">
+                        Updo
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLOTHING -->
+
+        <div class="tab-content" data-content="clothing" hidden>
+
+            <div class="coming-soon">
+                Your starter wardrobe will appear here. Later, clothing purchased from Everwyn shops and player-owned businesses will also become available in your wardrobe.
+            </div>
+
+        </div>
+
+
+        <!-- FANTASY -->
+
+        <div class="tab-content" data-content="fantasy" hidden>
+
+            <div class="coming-soon">
+                Species-specific traits will appear here — including pointed ears, horns, wings, tails, magical markings, and aura effects.
+            </div>
+
+        </div>
+
+
+        <!-- ACTION -->
+
+        <div class="actions">
+
+            <button class="enter-button" id="enter-everwyn">
+                ENTER EVERWYN
+            </button>
+
+            <div class="save-note">
+                Preview mode · Supabase saving comes next
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       CHARACTER STATE
+    ===================================================== */
+
+    const character = {
+
+        character_name: "Traveler",
+
+        species: "human",
+
+        skin_tone: "skin_01",
+
+        eye_color: "brown",
+
+        hair_style: "hair_01",
+
+        hair_color: "dark_brown",
+
+        top_item: "starter_top_01",
+
+        bottom_item: "starter_bottom_01",
+
+        shoes_item: "starter_shoes_01"
+
+    };
+
+
+    /* =====================================================
+       TAB INFORMATION
+    ===================================================== */
+
+    const tabInfo = {
+
+        identity: {
+            title: "Identity",
+            description:
+                "Every story begins with a name. Choose who you will become in Everwyn."
+        },
+
+        body: {
+            title: "Body & Skin",
+            description:
+                "Choose the foundation of your character's appearance."
+        },
+
+        face: {
+            title: "Face & Eyes",
+            description:
+                "Shape the details that make your character recognizable."
+        },
+
+        hair: {
+            title: "Hair",
+            description:
+                "Choose a hairstyle and color that fits your character."
+        },
+
+        clothing: {
+            title: "Clothing",
+            description:
+                "Build your first Everwyn outfit."
+        },
+
+        fantasy: {
+            title: "Fantasy Traits",
+            description:
+                "Express the magical traits connected to your character and species."
+        }
+
+    };
+
+
+    /* =====================================================
+       TABS
+    ===================================================== */
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+
+            tab.addEventListener(
+                "click",
+                () => {
+
+                    const target =
+                        tab.dataset.tab;
+
+
+                    document
+                        .querySelectorAll(".tab")
+                        .forEach(button => {
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                    tab.classList.add(
+                        "active"
+                    );
+
+
+                    document
+                        .querySelectorAll(".tab-content")
+                        .forEach(content => {
+
+                            content.hidden =
+                                content.dataset.content !== target;
+
+                        });
+
+
+                    document.getElementById(
+                        "panel-title"
+                    ).textContent =
+                        tabInfo[target].title;
+
+
+                    document.getElementById(
+                        "panel-description"
+                    ).textContent =
+                        tabInfo[target].description;
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       CHARACTER NAME
+    ===================================================== */
+
+    const nameInput =
+        document.getElementById(
+            "character-name"
+        );
+
+
+    nameInput.addEventListener(
+        "input",
+        () => {
+
+            const value =
+                nameInput.value.trim();
+
+
+            character.character_name =
+                value || "Traveler";
+
+
+            document.getElementById(
+                "preview-name"
+            ).textContent =
+                character.character_name;
+
+        }
+    );
+
+
+    /* =====================================================
+       SPECIES
+    ===================================================== */
+
+    document
+        .querySelectorAll(".species-choice")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".species-choice"
+                        )
+                        .forEach(choice => {
+
+                            choice.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    character.species =
+                        button.dataset.value;
+
+
+                    document.getElementById(
+                        "preview-species"
+                    ).textContent =
+                        button.textContent.trim();
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       SKIN
+    ===================================================== */
+
+    document
+        .querySelectorAll(".skin-swatch")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".skin-swatch"
+                        )
+                        .forEach(swatch => {
+
+                            swatch.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    character.skin_tone =
+                        button.dataset.value;
+
+
+                    document
+                        .querySelectorAll(
+                            ".skin-color"
+                        )
+                        .forEach(part => {
+
+                            part.style.background =
+                                button.dataset.color;
+
+                        });
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       EYES
+    ===================================================== */
+
+    document
+        .querySelectorAll(".eye-swatch")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".eye-swatch"
+                        )
+                        .forEach(swatch => {
+
+                            swatch.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    character.eye_color =
+                        button.dataset.value;
+
+
+                    document
+                        .querySelectorAll(
+                            ".eye-color"
+                        )
+                        .forEach(part => {
+
+                            part.style.background =
+                                button.dataset.color;
+
+                        });
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       HAIR
+    ===================================================== */
+
+    document
+        .querySelectorAll(".hair-swatch")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".hair-swatch"
+                        )
+                        .forEach(swatch => {
+
+                            swatch.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    character.hair_color =
+                        button.dataset.value;
+
+
+                    document
+                        .querySelectorAll(
+                            ".hair-color"
+                        )
+                        .forEach(part => {
+
+                            part.style.background =
+                                button.dataset.color;
+
+                        });
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       ENTER BUTTON
+
+       We deliberately are NOT saving to Supabase yet.
+    ===================================================== */
+
+    document
+        .getElementById(
+            "enter-everwyn"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                console.log(
+                    "Everwyn character preview:",
+                    character
+                );
+
+
+                alert(
+                    character.character_name +
+                    " is ready to enter Everwyn! " +
+                    "Saving will be connected in the next step."
+                );
+
+            }
+        );
+
+</script>
+
+</body>
+</html>
