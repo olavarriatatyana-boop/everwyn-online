@@ -1051,14 +1051,275 @@
 
         <!-- FANTASY -->
 
-        <div class="tab-content" data-content="fantasy" hidden>
+<div class="tab-content" data-content="fantasy" hidden>
 
-            <div class="coming-soon">
-                Species-specific traits will appear here — including pointed ears, horns, wings, tails, magical markings, and aura effects.
+    <div class="fantasy-traits-panel">
+
+        <h3 id="fantasy-species-title">
+            Human Traits
+        </h3>
+
+        <p id="fantasy-species-description">
+            Humans begin without innate magical traits.
+        </p>
+
+
+        <!-- EAR STYLE -->
+
+        <div
+            class="fantasy-trait-group"
+            id="ear-trait-group"
+            hidden
+        >
+
+            <h3>Ear Style</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="ear_style"
+                    data-value="ear_soft_01"
+                >
+                    Soft Point
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="ear_style"
+                    data-value="ear_long_01"
+                >
+                    Long Point
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="ear_style"
+                    data-value="ear_swept_01"
+                >
+                    Swept
+                </button>
+
             </div>
 
         </div>
 
+
+        <!-- WINGS -->
+
+        <div
+            class="fantasy-trait-group"
+            id="wing-trait-group"
+            hidden
+        >
+
+            <h3>Wing Style</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="wing_style"
+                    data-value="wing_delicate_01"
+                >
+                    Delicate
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="wing_style"
+                    data-value="wing_moth_01"
+                >
+                    Moth
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="wing_style"
+                    data-value="wing_arcane_01"
+                >
+                    Arcane
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HORNS -->
+
+        <div
+            class="fantasy-trait-group"
+            id="horn-trait-group"
+            hidden
+        >
+
+            <h3>Horn Style</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="horn_style"
+                    data-value="horn_small_01"
+                >
+                    Small
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="horn_style"
+                    data-value="horn_curved_01"
+                >
+                    Curved
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="horn_style"
+                    data-value="horn_crown_01"
+                >
+                    Crown
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TAIL -->
+
+        <div
+            class="fantasy-trait-group"
+            id="tail-trait-group"
+            hidden
+        >
+
+            <h3>Tail Style</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="tail_style"
+                    data-value="tail_shadow_01"
+                >
+                    Shadow
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="tail_style"
+                    data-value="tail_spade_01"
+                >
+                    Spade
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAGICAL MARKING -->
+
+        <div
+            class="fantasy-trait-group"
+            id="marking-trait-group"
+            hidden
+        >
+
+            <h3>Magical Marking</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="marking_style"
+                    data-value="marking_subtle_01"
+                >
+                    Subtle
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="marking_style"
+                    data-value="marking_moon_01"
+                >
+                    Moon
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="marking_style"
+                    data-value="marking_star_01"
+                >
+                    Star
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="marking_style"
+                    data-value="marking_rune_01"
+                >
+                    Rune
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- AURA -->
+
+        <div
+            class="fantasy-trait-group"
+            id="aura-trait-group"
+            hidden
+        >
+
+            <h3>Aura</h3>
+
+            <div class="choice-grid">
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="aura_style"
+                    data-value="aura_soft_01"
+                >
+                    Soft Glow
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="aura_style"
+                    data-value="aura_celestial_01"
+                >
+                    Celestial
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="aura_style"
+                    data-value="aura_shadow_01"
+                >
+                    Shadow
+                </button>
+
+                <button
+                    class="choice trait-choice"
+                    data-trait="aura_style"
+                    data-value="aura_arcane_01"
+                >
+                    Arcane
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         <!-- ACTION -->
 
@@ -1336,6 +1597,290 @@ function applySpeciesAppearance(
 /* Apply Human when the creator first opens */
 
 applySpeciesAppearance(
+    character.species
+);
+    updateFantasyTraits(
+    character.species
+);
+    /* =====================================================
+   FANTASY TRAITS SYSTEM
+===================================================== */
+
+function updateFantasyTraits(
+    species
+) {
+
+    const title =
+        document.getElementById(
+            "fantasy-species-title"
+        );
+
+    const description =
+        document.getElementById(
+            "fantasy-species-description"
+        );
+
+
+    const earGroup =
+        document.getElementById(
+            "ear-trait-group"
+        );
+
+    const wingGroup =
+        document.getElementById(
+            "wing-trait-group"
+        );
+
+    const hornGroup =
+        document.getElementById(
+            "horn-trait-group"
+        );
+
+    const tailGroup =
+        document.getElementById(
+            "tail-trait-group"
+        );
+
+    const markingGroup =
+        document.getElementById(
+            "marking-trait-group"
+        );
+
+    const auraGroup =
+        document.getElementById(
+            "aura-trait-group"
+        );
+
+
+    /* -----------------------------------------------
+       HIDE EVERYTHING FIRST
+    ----------------------------------------------- */
+
+    earGroup.hidden = true;
+    wingGroup.hidden = true;
+    hornGroup.hidden = true;
+    tailGroup.hidden = true;
+    markingGroup.hidden = true;
+    auraGroup.hidden = true;
+
+
+    /* ===============================================
+       HUMAN
+    =============================================== */
+
+    if (
+        species === "human"
+    ) {
+
+        title.textContent =
+            "Human Traits";
+
+        description.textContent =
+            "Humans begin without innate magical traits.";
+
+        markingGroup.hidden =
+            false;
+
+    }
+
+
+    /* ===============================================
+       FAE
+    =============================================== */
+
+    else if (
+        species === "fae"
+    ) {
+
+        title.textContent =
+            "Fae Traits";
+
+        description.textContent =
+            "Choose the enchanted traits carried by your Fae.";
+
+        earGroup.hidden =
+            false;
+
+        wingGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* ===============================================
+       ELF
+    =============================================== */
+
+    else if (
+        species === "elf"
+    ) {
+
+        title.textContent =
+            "Elf Traits";
+
+        description.textContent =
+            "Shape the elegant features of your Elven heritage.";
+
+        earGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+    }
+
+
+    /* ===============================================
+       WITCHBORN
+    =============================================== */
+
+    else if (
+        species === "witchborn"
+    ) {
+
+        title.textContent =
+            "Witchborn Traits";
+
+        description.textContent =
+            "Choose how your inherited magic manifests.";
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* ===============================================
+       CELESTIAL
+    =============================================== */
+
+    else if (
+        species === "celestial"
+    ) {
+
+        title.textContent =
+            "Celestial Traits";
+
+        description.textContent =
+            "Shape the otherworldly signs of your celestial blood.";
+
+        wingGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+
+    /* ===============================================
+       SHADOWKIN
+    =============================================== */
+
+    else if (
+        species === "shadowkin"
+    ) {
+
+        title.textContent =
+            "Shadowkin Traits";
+
+        description.textContent =
+            "Choose the supernatural traits carried from the shadows.";
+
+        hornGroup.hidden =
+            false;
+
+        tailGroup.hidden =
+            false;
+
+        markingGroup.hidden =
+            false;
+
+        auraGroup.hidden =
+            false;
+
+    }
+
+}
+
+
+/* =====================================================
+   FANTASY TRAIT BUTTONS
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".trait-choice"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const trait =
+                    button.dataset.trait;
+
+                const value =
+                    button.dataset.value;
+
+
+                /* Remove selected state only from
+                   buttons belonging to this trait */
+
+                document
+                    .querySelectorAll(
+                        `.trait-choice[data-trait="${trait}"]`
+                    )
+                    .forEach(choice => {
+
+                        choice.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                /* Save selection into character data */
+
+                character[trait] =
+                    value;
+
+
+                console.log(
+                    "Fantasy trait selected:",
+                    trait,
+                    value
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   LOAD STARTING SPECIES TRAITS
+===================================================== */
+
+updateFantasyTraits(
     character.species
 );
     /* =====================================================
