@@ -1,2266 +1,1222 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Everwyn Online — Play</title>
+    <meta charset="UTF-8">
 
-<style>
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #10121b;
-    font-family: Georgia, "Times New Roman", serif;
-}
-
-#everwyn-game {
-    position: fixed;
-    inset: 0;
-}
-
-/* =========================
-   HUD
-========================= */
-
-.hud-panel {
-    position: fixed;
-    z-index: 100;
-    color: #f5efe4;
-    background: rgba(15, 17, 27, 0.88);
-    border: 1px solid rgba(213, 197, 230, 0.22);
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(12px);
-}
-
-#player-hud {
-    top: 18px;
-    left: 18px;
-    width: 210px;
-    padding: 14px 16px;
-    border-radius: 16px;
-}
-
-.player-name {
-    font-size: 18px;
-}
-
-.player-level {
-    margin-top: 3px;
-    color: #b7a1d3;
-    font-size: 11px;
-}
-
-.stat {
-    margin-top: 10px;
-}
-
-.stat-label {
-    display: flex;
-    justify-content: space-between;
-    color: #c9c3d0;
-    font-size: 10px;
-}
-
-.stat-bar {
-    height: 5px;
-    margin-top: 4px;
-    overflow: hidden;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.09);
-}
-
-.stat-fill {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: #b7a1d3;
-}
-
-/* =========================
-   LOCATION
-========================= */
-
-#location-hud {
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 22px;
-    border-radius: 14px;
-    text-align: center;
-}
-
-#location-name {
-    font-size: 15px;
-    letter-spacing: 0.06em;
-}
-
-#location-subtitle {
-    margin-top: 3px;
-    color: #d6ba7c;
-    font-size: 9px;
-    letter-spacing: 0.22em;
-}
-
-/* =========================
-   MINIMAP
-========================= */
-
-#mini-map {
-    top: 18px;
-    right: 18px;
-    width: 170px;
-    padding: 12px;
-    border-radius: 16px;
-}
-
-.mini-title {
-    margin-bottom: 8px;
-    color: #d6ba7c;
-    font-size: 9px;
-    letter-spacing: 0.14em;
-}
-
-.mini-world {
-    position: relative;
-    height: 90px;
-    overflow: hidden;
-    border-radius: 10px;
-    background:
-        linear-gradient(
-            90deg,
-            transparent 48%,
-            rgba(183,161,211,.16) 49%,
-            rgba(183,161,211,.16) 51%,
-            transparent 52%
-        ),
-        linear-gradient(
-            0deg,
-            transparent 48%,
-            rgba(183,161,211,.16) 49%,
-            rgba(183,161,211,.16) 51%,
-            transparent 52%
-        ),
-        #222536;
-}
-
-.mini-marker {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    background: #ead9ae;
-    box-shadow: 0 0 10px #ead9ae;
-}
-
-/* =========================
-   GOALS
-========================= */
-
-#goals {
-    top: 145px;
-    right: 18px;
-    width: 220px;
-    padding: 14px;
-    border-radius: 16px;
-}
-
-.goal-title {
-    margin-bottom: 9px;
-    color: #d6ba7c;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-}
-
-.goal {
-    margin: 7px 0;
-    color: #c9c3d0;
-    font-size: 11px;
-}
-
-.goal.complete {
-    color: #8fa594;
-}
-
-/* =========================
-   INTERACTION PROMPT
-========================= */
-
-#interaction-prompt {
-    position: fixed;
-    left: 50%;
-    bottom: 82px;
-    transform: translateX(-50%);
-    z-index: 200;
-
-    display: none;
-    align-items: center;
-    gap: 10px;
-
-    padding: 11px 18px;
-
-    color: #f5efe4;
-    background: rgba(15, 17, 27, 0.95);
-
-    border: 1px solid rgba(214, 186, 124, 0.60);
-    border-radius: 13px;
-
-    box-shadow: 0 10px 30px rgba(0,0,0,.35);
-}
-
-.key {
-    width: 30px;
-    height: 30px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 8px;
-
-    color: #252118;
-    background: #ead9ae;
-
-    font-weight: bold;
-}
-
-/* =========================
-   NOTIFICATION
-========================= */
-
-#notification {
-    position: fixed;
-    z-index: 300;
-
-    left: 50%;
-    top: 100px;
-
-    transform: translate(-50%, -20px);
-
-    max-width: 430px;
-
-    padding: 13px 20px;
-
-    color: #f5efe4;
-    background: rgba(28,31,45,.97);
-
-    border: 1px solid rgba(183,161,211,.35);
-    border-radius: 13px;
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition:
-        opacity .25s,
-        transform .25s;
-}
-
-#notification.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
-/* =========================
-   BOTTOM MENU
-========================= */
-
-#bottom-menu {
-    position: fixed;
-    z-index: 100;
-
-    bottom: 16px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    display: flex;
-    gap: 5px;
-
-    padding: 7px;
-
-    border-radius: 16px;
-
-    background: rgba(15,17,27,.89);
-    border: 1px solid rgba(213,197,230,.18);
-
-    backdrop-filter: blur(12px);
-}
-
-.menu-button {
-    border: 0;
-
-    padding: 9px 13px;
-
-    border-radius: 10px;
-
-    color: #c9c3d0;
-    background: transparent;
-
-    font-family: inherit;
-    font-size: 11px;
-
-    cursor: pointer;
-}
-
-.menu-button:hover {
-    color: white;
-    background: rgba(183,161,211,.12);
-}
-
-/* =========================
-   RETURN BUTTON
-========================= */
-
-#emergency-return {
-    position: fixed;
-
-    right: 18px;
-    bottom: 18px;
-
-    z-index: 250;
-
-    display: none;
-
-    border: 1px solid rgba(214,186,124,.35);
-
-    padding: 9px 12px;
-
-    border-radius: 10px;
-
-    color: #d8d1c4;
-    background: rgba(15,17,27,.90);
-
-    font-family: inherit;
-    font-size: 10px;
-
-    cursor: pointer;
-}
-
-/* =========================
-   CONTROLS
-========================= */
-
-#controls {
-    position: fixed;
-
-    left: 18px;
-    bottom: 18px;
-
-    z-index: 100;
-
-    color: #9e99aa;
-    font-size: 10px;
-}
-
-@media (max-width: 760px) {
-
-    #mini-map,
-    #goals {
-        display: none;
-    }
-
-    #player-hud {
-        width: 155px;
-    }
-
-    #bottom-menu {
-        max-width: 94%;
-        overflow-x: auto;
-    }
-
-    .menu-button {
-        white-space: nowrap;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<div id="everwyn-game"></div>
-
-<div id="player-hud" class="hud-panel">
-
-    <div class="player-name">
-        Yanola
-    </div>
-
-    <div class="player-level">
-        LEVEL 1 · ONLINE
-    </div>
-
-    <div class="stat">
-
-        <div class="stat-label">
-            <span>ENERGY</span>
-            <span>100 / 100</span>
-        </div>
-
-        <div class="stat-bar">
-            <div class="stat-fill"></div>
-        </div>
-
-    </div>
-
-</div>
-
-<div id="location-hud" class="hud-panel">
-
-    <div id="location-name">
-        Moonlight District
-    </div>
-
-    <div id="location-subtitle">
-        EVERWYN
-    </div>
-
-</div>
-
-<div id="mini-map" class="hud-panel">
-
-    <div class="mini-title">
-        MOONLIGHT DISTRICT
-    </div>
-
-    <div class="mini-world">
-        <div class="mini-marker"></div>
-    </div>
-
-</div>
-
-<div id="goals" class="hud-panel">
-
-    <div class="goal-title">
-        CURRENT GOALS
-    </div>
-
-    <div class="goal" id="goal-explore">
-        ◇ Explore Moonlight District
-    </div>
-
-    <div class="goal" id="goal-cafe">
-        ◇ Enter Moonlight Cafe
-    </div>
-
-    <div class="goal" id="goal-social">
-        ◇ Find Cafe Social Hour
-    </div>
-
-</div>
-
-<div id="interaction-prompt">
-
-    <span class="key">
-        E
-    </span>
-
-    <span id="interaction-text">
-        Interact
-    </span>
-
-</div>
-
-<div id="notification"></div>
-
-<div id="controls">
-    WASD / ARROWS · MOVE
-    &nbsp;&nbsp;
-    E · INTERACT
-</div>
-
-<div id="bottom-menu">
-
-    <button
-        class="menu-button"
-        onclick="showMessage('Character panel will connect to Yanola.')"
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
-        Character
-    </button>
 
-    <button
-        class="menu-button"
-        onclick="showMessage('Inventory system coming next.')"
-    >
-        Inventory
-    </button>
+    <title>
+        Everwyn Online — Play
+    </title>
 
-    <button
-        class="menu-button"
-        onclick="showMessage('World map panel coming next.')"
-    >
-        Map
-    </button>
 
-    <button
-        class="menu-button"
-        onclick="showMessage('Relationships will connect to Supabase.')"
-    >
-        Relationships
-    </button>
+    <style>
 
-    <button
-        class="menu-button"
-        onclick="showMessage('Quest journal coming next.')"
-    >
-        Quests
-    </button>
-
-</div>
-
-<button
-    id="emergency-return"
-    type="button"
->
-    Return to District
-</button>
-
-
-<script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
-
-<script>
-
-/* ==========================================================
-   UI
-========================================================== */
-
-const interactionPrompt =
-    document.getElementById("interaction-prompt");
-
-const interactionText =
-    document.getElementById("interaction-text");
-
-const locationName =
-    document.getElementById("location-name");
-
-const locationSubtitle =
-    document.getElementById("location-subtitle");
-
-const emergencyReturn =
-    document.getElementById("emergency-return");
-
-
-let notificationTimer;
-
-let currentScene = null;
-
-
-/* ==========================================================
-   UI FUNCTIONS
-========================================================== */
-
-function showMessage(message) {
-
-    const notification =
-        document.getElementById("notification");
-
-    notification.textContent =
-        message;
-
-    notification.classList.add(
-        "show"
-    );
-
-    clearTimeout(
-        notificationTimer
-    );
-
-    notificationTimer =
-        setTimeout(
-            () => {
-
-                notification.classList.remove(
-                    "show"
-                );
-
-            },
-            2600
-        );
-}
-
-
-function showPrompt(text) {
-
-    interactionText.textContent =
-        text;
-
-    interactionPrompt.style.display =
-        "flex";
-}
-
-
-function hidePrompt() {
-
-    interactionPrompt.style.display =
-        "none";
-}
-
-
-function setLocation(
-    name,
-    subtitle
-) {
-
-    locationName.textContent =
-        name;
-
-    locationSubtitle.textContent =
-        subtitle;
-}
-
-
-function completeGoal(id) {
-
-    const element =
-        document.getElementById(id);
-
-    if (!element) {
-        return;
-    }
-
-    if (
-        element.classList.contains(
-            "complete"
-        )
-    ) {
-        return;
-    }
-
-    element.classList.add(
-        "complete"
-    );
-
-    element.textContent =
-        "✓ " +
-        element.textContent.replace(
-            "◇ ",
-            ""
-        );
-}
-
-
-/* ==========================================================
-   SCENE CHANGE
-========================================================== */
-
-function changeScene(
-    scene,
-    targetScene,
-    data = {}
-) {
-
-    if (
-        !scene ||
-        scene.transitioning
-    ) {
-        return;
-    }
-
-    scene.transitioning =
-        true;
-
-    hidePrompt();
-
-    if (
-        scene.player &&
-        scene.player.body
-    ) {
-
-        scene.player.body.setVelocity(
-            0,
-            0
-        );
-    }
-
-    /*
-        IMPORTANT:
-        No camera fade.
-
-        Switch directly to the new scene.
-    */
-
-    scene.scene.start(
-        targetScene,
-        data
-    );
-}
-
-
-/* ==========================================================
-   PLAYER
-========================================================== */
-
-function createPlayer(
-    scene,
-    x,
-    y
-) {
-
-    const player =
-        scene.add.circle(
-            x,
-            y,
-            20,
-            0xddd1eb
-        );
-
-    player.setStrokeStyle(
-        3,
-        0xb7a1d3,
-        1
-    );
-
-    scene.physics.add.existing(
-        player
-    );
-
-    player.body.setCollideWorldBounds(
-        true
-    );
-
-    player.nameText =
-        scene.add.text(
-            x,
-            y + 31,
-            "Yanola",
-            {
-                fontFamily:
-                    "Georgia, serif",
-
-                fontSize:
-                    "12px",
-
-                color:
-                    "#f5efe4",
-
-                backgroundColor:
-                    "#11131dcc",
-
-                padding: {
-                    x: 5,
-                    y: 2
-                }
-            }
-        )
-        .setOrigin(
-            0.5,
-            0
-        );
-
-    return player;
-}
-
-
-function createControls(scene) {
-
-    scene.cursors =
-        scene.input.keyboard
-            .createCursorKeys();
-
-    scene.keys =
-        scene.input.keyboard
-            .addKeys({
-
-                up:
-                    Phaser.Input.Keyboard
-                        .KeyCodes.W,
-
-                down:
-                    Phaser.Input.Keyboard
-                        .KeyCodes.S,
-
-                left:
-                    Phaser.Input.Keyboard
-                        .KeyCodes.A,
-
-                right:
-                    Phaser.Input.Keyboard
-                        .KeyCodes.D,
-
-                interact:
-                    Phaser.Input.Keyboard
-                        .KeyCodes.E
-
-            });
-}
-
-
-function updatePlayer(scene) {
-
-    if (
-        !scene.player ||
-        !scene.player.body ||
-        scene.transitioning
-    ) {
-        return;
-    }
-
-    const player =
-        scene.player;
-
-    const speed =
-        220;
-
-    player.body.setVelocity(
-        0,
-        0
-    );
-
-
-    if (
-        scene.cursors.left.isDown ||
-        scene.keys.left.isDown
-    ) {
-
-        player.body.setVelocityX(
-            -speed
-        );
-    }
-
-    else if (
-        scene.cursors.right.isDown ||
-        scene.keys.right.isDown
-    ) {
-
-        player.body.setVelocityX(
-            speed
-        );
-    }
-
-
-    if (
-        scene.cursors.up.isDown ||
-        scene.keys.up.isDown
-    ) {
-
-        player.body.setVelocityY(
-            -speed
-        );
-    }
-
-    else if (
-        scene.cursors.down.isDown ||
-        scene.keys.down.isDown
-    ) {
-
-        player.body.setVelocityY(
-            speed
-        );
-    }
-
-
-    if (
-        player.body.velocity.x !== 0 ||
-        player.body.velocity.y !== 0
-    ) {
-
-        player.body.velocity
-            .normalize()
-            .scale(
-                speed
-            );
-    }
-
-
-    player.nameText.setPosition(
-        player.x,
-        player.y + 31
-    );
-}
-
-
-/* ==========================================================
-   INTERACTIONS
-========================================================== */
-
-function checkInteractions(scene) {
-
-    if (
-        scene.transitioning ||
-        !scene.interactions
-    ) {
-        return;
-    }
-
-    let nearest =
-        null;
-
-    let nearestDistance =
-        Infinity;
-
-
-    scene.interactions.forEach(
-        interaction => {
-
-            const distance =
-                Phaser.Math.Distance.Between(
-                    scene.player.x,
-                    scene.player.y,
-                    interaction.x,
-                    interaction.y
-                );
-
-
-            if (
-                distance <
-                    interaction.radius &&
-                distance <
-                    nearestDistance
-            ) {
-
-                nearest =
-                    interaction;
-
-                nearestDistance =
-                    distance;
-            }
-        }
-    );
-
-
-    if (!nearest) {
-
-        hidePrompt();
-
-        return;
-    }
-
-
-    showPrompt(
-        nearest.text
-    );
-
-
-    if (
-        Phaser.Input.Keyboard.JustDown(
-            scene.keys.interact
-        )
-    ) {
-
-        nearest.action();
-    }
-}
-
-
-/* ==========================================================
-   MOONLIGHT DISTRICT
-========================================================== */
-
-class MoonlightDistrict
-extends Phaser.Scene {
-
-    constructor() {
-
-        super(
-            "MoonlightDistrict"
-        );
-    }
-
-
-    init(data) {
-
-        this.spawnFromCafe =
-            Boolean(
-                data &&
-                data.fromCafe
-            );
-    }
-
-
-    create() {
-
-        currentScene =
-            this;
-
-        this.transitioning =
-            false;
-
-        hidePrompt();
-
-        emergencyReturn.style.display =
-            "none";
-
-
-        setLocation(
-            "Moonlight District",
-            "EVERWYN"
-        );
-
-
-        completeGoal(
-            "goal-explore"
-        );
-
-
-        /* =========================
-           WORLD SETTINGS
-        ========================= */
-
-        this.physics.world.setBounds(
-            0,
-            0,
-            1800,
-            1200
-        );
-
-        this.cameras.main.resetFX();
-
-        this.cameras.main.setBackgroundColor(
-            "#171927"
-        );
-
-
-        /* =========================
-           WORLD FLOOR
-        ========================= */
-
-        this.add.rectangle(
-            900,
-            600,
-            1800,
-            1200,
-            0x171927
-        );
-
-
-        this.add.rectangle(
-            900,
-            650,
-            1650,
-            1000,
-            0x27332f
-        );
-
-
-        /* =========================
-           ROADS
-        ========================= */
-
-        this.add.rectangle(
-            900,
-            650,
-            1450,
-            190,
-            0x343344
-        );
-
-
-        this.add.rectangle(
-            880,
-            620,
-            190,
-            850,
-            0x343344
-        );
-
-
-        /* =========================
-           PLAZA
-        ========================= */
-
-        this.add.rectangle(
-            880,
-            630,
-            560,
-            440,
-            0x3b394b
-        )
-        .setStrokeStyle(
-            3,
-            0x8066a8,
-            0.35
-        );
-
-
-        /* =========================
-           BUILDINGS
-        ========================= */
-
-        this.buildingColliders =
-            [];
-
-
-        this.createBuilding(
-            1340,
-            330,
-            300,
-            210,
-            0x4e3d59,
-            "Moonlight Cafe"
-        );
-
-
-        this.createBuilding(
-            430,
-            320,
-            280,
-            200,
-            0x3e5360,
-            "Moonveil Boutique"
-        );
-
-
-        this.createBuilding(
-            380,
-            900,
-            320,
-            220,
-            0x4a485b,
-            "Moonlight Apartments"
-        );
-
-
-        this.createBuilding(
-            1400,
-            880,
-            300,
-            220,
-            0x465447,
-            "The Atelier"
-        );
-
-
-        /* =========================
-           NIGHT MARKET
-        ========================= */
-
-        this.add.rectangle(
-            1180,
-            680,
-            260,
-            150,
-            0x554b45
-        )
-        .setStrokeStyle(
-            3,
-            0xd6ba7c,
-            0.35
-        );
-
-
-        this.add.text(
-            1180,
-            680,
-            "Night Market",
-            {
-                fontFamily:
-                    "Georgia, serif",
-
-                fontSize:
-                    "19px",
-
-                color:
-                    "#f5efe4"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
-
-
-        /* =========================
-           GROVE
-        ========================= */
-
-        this.add.text(
-            1520,
-            1080,
-            "The Grove",
-            {
-                fontFamily:
-                    "Georgia, serif",
-
-                fontSize:
-                    "22px",
-
-                color:
-                    "#d9e4d5"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
-
-
-        const groveTrees = [
-
-            [1370, 1010],
-            [1440, 1050],
-            [1510, 1000],
-            [1590, 1040],
-            [1660, 1000],
-            [1400, 1120],
-            [1490, 1140],
-            [1580, 1110],
-            [1680, 1130]
-
-        ];
-
-
-        groveTrees.forEach(
-            position => {
-
-                this.add.circle(
-                    position[0],
-                    position[1],
-                    32,
-                    0x526b5a
-                );
-
-
-                this.add.circle(
-                    position[0] - 12,
-                    position[1] - 12,
-                    22,
-                    0x657d69
-                );
-            }
-        );
-
-
-        /* =========================
-           FOUNTAIN
-        ========================= */
-
-        this.add.circle(
-            880,
-            620,
-            82,
-            0x6f8e9d
-        )
-        .setStrokeStyle(
-            6,
-            0xb7a1d3,
-            0.65
-        );
-
-
-        this.add.circle(
-            880,
-            620,
-            35,
-            0xa6c4cf
-        );
-
-
-        this.fountainCollider =
-            this.add.zone(
-                880,
-                620,
-                160,
-                160
-            );
-
-
-        this.physics.add.existing(
-            this.fountainCollider,
-            true
-        );
-
-
-        /* =========================
-           PLAYER SPAWN
-        ========================= */
-
-        let spawnX =
-            780;
-
-        let spawnY =
-            850;
-
-
-        if (
-            this.spawnFromCafe
-        ) {
-
-            spawnX =
-                1340;
-
-            spawnY =
-                520;
+        * {
+            box-sizing: border-box;
         }
 
 
-        this.player =
-            createPlayer(
-                this,
-                spawnX,
-                spawnY
-            );
+        html,
+        body {
 
+            margin: 0;
 
-        createControls(
-            this
-        );
+            width: 100%;
+            height: 100%;
 
+            overflow: hidden;
 
-        /* =========================
-           COLLISION
-        ========================= */
+            background:
+                #10121b;
 
-        this.physics.add.collider(
-            this.player,
-            this.fountainCollider
-        );
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-
-        this.buildingColliders.forEach(
-            collider => {
-
-                this.physics.add.collider(
-                    this.player,
-                    collider
-                );
-            }
-        );
-
-
-        /* =========================
-           CAMERA
-        ========================= */
-
-        this.cameras.main.setBounds(
-            0,
-            0,
-            1800,
-            1200
-        );
-
-
-        this.cameras.main.startFollow(
-            this.player,
-            true,
-            0.08,
-            0.08
-        );
-
-
-        /* =========================
-           INTERACTIONS
-        ========================= */
-
-        this.interactions = [
-
-            {
-                x: 1340,
-                y: 465,
-                radius: 110,
-
-                text:
-                    "Enter Moonlight Cafe",
-
-                action:
-                    () => {
-
-                        completeGoal(
-                            "goal-cafe"
-                        );
-
-                        changeScene(
-                            this,
-                            "MoonlightCafe"
-                        );
-                    }
-            },
-
-
-            {
-                x: 430,
-                y: 440,
-                radius: 110,
-
-                text:
-                    "Visit Moonveil Boutique",
-
-                action:
-                    () => {
-
-                        showMessage(
-                            "Moonveil Boutique will become an enterable shop."
-                        );
-                    }
-            },
-
-
-            {
-                x: 380,
-                y: 770,
-                radius: 115,
-
-                text:
-                    "Enter Apartments",
-
-                action:
-                    () => {
-
-                        showMessage(
-                            "Player apartments and homes will live here."
-                        );
-                    }
-            },
-
-
-            {
-                x: 1180,
-                y: 680,
-                radius: 145,
-
-                text:
-                    "Browse Night Market",
-
-                action:
-                    () => {
-
-                        showMessage(
-                            "The Night Market will eventually contain merchants and player businesses."
-                        );
-                    }
-            },
-
-
-            {
-                x: 880,
-                y: 620,
-                radius: 145,
-
-                text:
-                    "Look at Moonlight Fountain",
-
-                action:
-                    () => {
-
-                        showMessage(
-                            "The water glimmers with faint violet light."
-                        );
-                    }
-            }
-
-        ];
-    }
-
-
-    createBuilding(
-        x,
-        y,
-        width,
-        height,
-        color,
-        name
-    ) {
-
-        this.add.rectangle(
-            x,
-            y,
-            width,
-            height,
-            color
-        )
-        .setStrokeStyle(
-            4,
-            0xd6ba7c,
-            0.32
-        );
-
-
-        this.add.text(
-            x,
-            y,
-            name,
-            {
-                fontFamily:
-                    "Georgia, serif",
-
-                fontSize:
-                    "20px",
-
-                color:
-                    "#f5efe4"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
-
-
-        const collider =
-            this.add.zone(
-                x,
-                y,
-                width,
-                height
-            );
-
-
-        this.physics.add.existing(
-            collider,
-            true
-        );
-
-
-        this.buildingColliders.push(
-            collider
-        );
-
-
-        this.add.rectangle(
-            x,
-            y + height / 2 + 10,
-            58,
-            20,
-            0xd6ba7c
-        );
-    }
-
-
-    update() {
-
-        updatePlayer(
-            this
-        );
-
-        checkInteractions(
-            this
-        );
-    }
-}
-
-
-/* ==========================================================
-   MOONLIGHT CAFE
-========================================================== */
-
-class MoonlightCafe
-extends Phaser.Scene {
-
-    constructor() {
-
-        super(
-            "MoonlightCafe"
-        );
-    }
-
-
-    create() {
-
-        currentScene =
-            this;
-
-        this.transitioning =
-            false;
-
-        hidePrompt();
-
-        emergencyReturn.style.display =
-            "block";
-
-
-        setLocation(
-            "Moonlight Cafe",
-            "MOONLIGHT DISTRICT · INTERIOR"
-        );
-
-
-        /*
-            Completely reset any camera effects
-            inherited from previous scene usage.
-        */
-
-        this.cameras.main.resetFX();
-
-        this.cameras.main.setAlpha(
-            1
-        );
-
-        this.cameras.main.setVisible(
-            true
-        );
-
-
-        /* =========================
-           WORLD
-        ========================= */
-
-        this.physics.world.setBounds(
-            0,
-            0,
-            1200,
-            850
-        );
-
-
-        this.cameras.main.setBounds(
-            0,
-            0,
-            1200,
-            850
-        );
-
-
-        this.cameras.main.setBackgroundColor(
-            "#211b28"
-        );
-
-
-        /* =========================
-           FLOOR
-        ========================= */
-
-        this.add.rectangle(
-            600,
-            425,
-            1120,
-            760,
-            0x382f3d
-        )
-        .setStrokeStyle(
-            5,
-            0xd6ba7c,
-            0.45
-        );
-
-
-        /* CENTER CARPET */
-
-        this.add.rectangle(
-            600,
-            500,
-            190,
-            560,
-            0x443748
-        );
-
-
-        /* =========================
-           WALL
-        ========================= */
-
-        this.add.rectangle(
-            600,
-            105,
-            1120,
-            130,
-            0x4a394e
-        );
-
-
-        /* WINDOWS */
-
-        for (
-            let x = 230;
-            x <= 970;
-            x += 185
-        ) {
-
-            this.add.rectangle(
-                x,
-                100,
-                105,
-                72,
-                0x282e49
-            )
-            .setStrokeStyle(
-                3,
-                0xb7a1d3,
-                0.50
-            );
         }
 
 
-        /* =========================
-           CAFE TITLE
-        ========================= */
+        #everwyn-game {
 
-        this.add.text(
-            600,
-            170,
-            "MOONLIGHT CAFE",
-            {
-                fontFamily:
-                    "Georgia, serif",
+            position: fixed;
 
-                fontSize:
-                    "28px",
+            inset: 0;
 
-                color:
-                    "#f5efe4"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
+        }
 
 
-        /* =========================
-           COUNTER
-        ========================= */
+        /* ==================================================
+           HUD PANELS
+        ================================================== */
 
-        this.add.rectangle(
-            205,
-            285,
-            255,
-            82,
-            0x6a5146
-        )
-        .setStrokeStyle(
-            3,
-            0xd6ba7c,
-            0.35
-        );
+        .hud-panel {
 
+            position: fixed;
 
-        this.add.text(
-            205,
-            285,
-            "CAFE COUNTER",
-            {
-                fontFamily:
-                    "Georgia, serif",
+            z-index: 100;
 
-                fontSize:
-                    "14px",
+            color:
+                #f5efe4;
 
-                color:
-                    "#f5efe4"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
+            background:
+                rgba(
+                    15,
+                    17,
+                    27,
+                    0.88
+                );
 
+            border:
+                1px solid
+                rgba(
+                    213,
+                    197,
+                    230,
+                    0.22
+                );
 
-        /* =========================
-           TABLES
-        ========================= */
+            box-shadow:
+                0 10px 35px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.28
+                );
 
-        this.tableColliders =
-            [];
+            backdrop-filter:
+                blur(12px);
 
-
-        const tables = [
-
-            [410, 360],
-            [735, 360],
-            [410, 575],
-            [735, 575]
-
-        ];
+        }
 
 
-        tables.forEach(
-            position => {
+        /* ==================================================
+           PLAYER HUD
+        ================================================== */
 
-                this.add.circle(
-                    position[0],
-                    position[1],
-                    52,
-                    0x705a55
+        #player-hud {
+
+            top: 18px;
+            left: 18px;
+
+            width: 210px;
+
+            padding:
+                14px 16px;
+
+            border-radius:
+                16px;
+
+        }
+
+
+        .player-name {
+
+            font-size:
+                18px;
+
+        }
+
+
+        .player-level {
+
+            margin-top:
+                3px;
+
+            color:
+                #b7a1d3;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .stat {
+
+            margin-top:
+                10px;
+
+        }
+
+
+        .stat-label {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            color:
+                #c9c3d0;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .stat-bar {
+
+            height:
+                5px;
+
+            margin-top:
+                4px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.09
+                );
+
+        }
+
+
+        .stat-fill {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border-radius:
+                inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #9174b1,
+                    #c3a6df
+                );
+
+        }
+
+
+        /* ==================================================
+           LOCATION
+        ================================================== */
+
+        #location-hud {
+
+            top: 18px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            padding:
+                10px 22px;
+
+            border-radius:
+                14px;
+
+            text-align:
+                center;
+
+        }
+
+
+        #location-name {
+
+            font-size:
+                15px;
+
+            letter-spacing:
+                0.06em;
+
+        }
+
+
+        #location-subtitle {
+
+            margin-top:
+                3px;
+
+            color:
+                #d6ba7c;
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                0.22em;
+
+        }
+
+
+        /* ==================================================
+           MINI MAP
+        ================================================== */
+
+        #mini-map {
+
+            top: 18px;
+            right: 18px;
+
+            width: 170px;
+
+            padding:
+                12px;
+
+            border-radius:
+                16px;
+
+        }
+
+
+        .mini-title {
+
+            margin-bottom:
+                8px;
+
+            color:
+                #d6ba7c;
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                0.14em;
+
+        }
+
+
+        .mini-world {
+
+            position:
+                relative;
+
+            height:
+                90px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                10px;
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    rgba(
+                        183,
+                        161,
+                        211,
+                        0.14
+                    ),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    90deg,
+                    transparent 48%,
+                    rgba(
+                        183,
+                        161,
+                        211,
+                        0.16
+                    ) 49%,
+                    rgba(
+                        183,
+                        161,
+                        211,
+                        0.16
+                    ) 51%,
+                    transparent 52%
+                ),
+
+                linear-gradient(
+                    0deg,
+                    transparent 48%,
+                    rgba(
+                        183,
+                        161,
+                        211,
+                        0.16
+                    ) 49%,
+                    rgba(
+                        183,
+                        161,
+                        211,
+                        0.16
+                    ) 51%,
+                    transparent 52%
+                ),
+
+                #222536;
+
+        }
+
+
+        .mini-marker {
+
+            position:
+                absolute;
+
+            width:
+                8px;
+
+            height:
+                8px;
+
+            left:
+                50%;
+
+            top:
+                50%;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
                 )
-                .setStrokeStyle(
-                    4,
-                    0xd6ba7c,
+                rotate(45deg);
+
+            background:
+                #ead9ae;
+
+            box-shadow:
+                0 0 10px
+                #ead9ae;
+
+        }
+
+
+        /* ==================================================
+           GOALS
+        ================================================== */
+
+        #goals {
+
+            top: 145px;
+            right: 18px;
+
+            width: 220px;
+
+            padding:
+                14px;
+
+            border-radius:
+                16px;
+
+        }
+
+
+        .goal-title {
+
+            margin-bottom:
+                9px;
+
+            color:
+                #d6ba7c;
+
+            font-size:
+                10px;
+
+            letter-spacing:
+                0.14em;
+
+        }
+
+
+        .goal {
+
+            margin:
+                7px 0;
+
+            color:
+                #c9c3d0;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.4;
+
+        }
+
+
+        .goal.complete {
+
+            color:
+                #9bb5a0;
+
+        }
+
+
+        /* ==================================================
+           INTERACTION PROMPT
+        ================================================== */
+
+        #interaction-prompt {
+
+            position:
+                fixed;
+
+            left:
+                50%;
+
+            bottom:
+                82px;
+
+            transform:
+                translateX(-50%);
+
+            z-index:
+                200;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                11px 18px;
+
+            color:
+                #f5efe4;
+
+            background:
+                rgba(
+                    15,
+                    17,
+                    27,
+                    0.95
+                );
+
+            border:
+                1px solid
+                rgba(
+                    214,
+                    186,
+                    124,
+                    0.60
+                );
+
+            border-radius:
+                13px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    0,
+                    0,
+                    0,
                     0.35
                 );
 
+        }
 
-                /* LEFT CHAIR */
 
-                this.add.circle(
-                    position[0] - 72,
-                    position[1],
-                    18,
-                    0x4e4249
+        .key {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                8px;
+
+            color:
+                #252118;
+
+            background:
+                #ead9ae;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        /* ==================================================
+           NOTIFICATIONS
+        ================================================== */
+
+        #notification {
+
+            position:
+                fixed;
+
+            z-index:
+                300;
+
+            left:
+                50%;
+
+            top:
+                100px;
+
+            transform:
+                translate(
+                    -50%,
+                    -20px
                 );
 
+            max-width:
+                430px;
 
-                /* RIGHT CHAIR */
+            padding:
+                13px 20px;
 
-                this.add.circle(
-                    position[0] + 72,
-                    position[1],
-                    18,
-                    0x4e4249
+            color:
+                #f5efe4;
+
+            background:
+                rgba(
+                    28,
+                    31,
+                    45,
+                    0.97
                 );
 
-
-                const collider =
-                    this.add.zone(
-                        position[0],
-                        position[1],
-                        105,
-                        105
-                    );
-
-
-                this.physics.add.existing(
-                    collider,
-                    true
+            border:
+                1px solid
+                rgba(
+                    183,
+                    161,
+                    211,
+                    0.35
                 );
 
+            border-radius:
+                13px;
 
-                this.tableColliders.push(
-                    collider
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+
+            transition:
+                opacity 0.25s,
+                transform 0.25s;
+
+        }
+
+
+        #notification.show {
+
+            opacity:
+                1;
+
+            transform:
+                translate(
+                    -50%,
+                    0
                 );
-            }
-        );
+
+        }
 
 
-        /* =========================
-           SOCIAL HOUR AREA
-        ========================= */
+        /* ==================================================
+           BOTTOM MENU
+        ================================================== */
 
-        this.add.rectangle(
-            980,
-            470,
-            230,
-            270,
-            0x493d5a
-        )
-        .setStrokeStyle(
-            4,
-            0xb7a1d3,
-            0.70
-        );
+        #bottom-menu {
 
+            position:
+                fixed;
 
-        this.add.text(
-            980,
-            390,
-            "✦",
-            {
-                fontSize:
-                    "36px",
+            z-index:
+                100;
 
-                color:
-                    "#ead9ae"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
+            bottom:
+                16px;
 
+            left:
+                50%;
 
-        this.add.text(
-            980,
-            445,
-            "Cafe Social Hour",
-            {
-                fontFamily:
-                    "Georgia, serif",
+            transform:
+                translateX(-50%);
 
-                fontSize:
-                    "19px",
+            display:
+                flex;
 
-                color:
-                    "#f5efe4"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
+            gap:
+                5px;
 
+            padding:
+                7px;
 
-        this.add.text(
-            980,
-            480,
-            "Meet · Chat · Connect",
-            {
-                fontFamily:
-                    "Georgia, serif",
+            border-radius:
+                16px;
 
-                fontSize:
-                    "11px",
-
-                color:
-                    "#c9c3d0"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
-
-
-        /* =========================
-           OTHER PLAYERS
-        ========================= */
-
-        this.createOtherPlayer(
-            660,
-            250,
-            "Test Player"
-        );
-
-
-        this.createOtherPlayer(
-            850,
-            650,
-            "Cafe Guest"
-        );
-
-
-        /* =========================
-           EXIT
-        ========================= */
-
-        this.add.rectangle(
-            600,
-            785,
-            120,
-            30,
-            0xd6ba7c
-        );
-
-
-        this.add.text(
-            600,
-            745,
-            "EXIT TO DISTRICT",
-            {
-                fontFamily:
-                    "Georgia, serif",
-
-                fontSize:
-                    "11px",
-
-                color:
-                    "#ead9ae"
-            }
-        )
-        .setOrigin(
-            0.5
-        );
-
-
-        /* =========================
-           PLAYER
-        ========================= */
-
-        this.player =
-            createPlayer(
-                this,
-                600,
-                690
-            );
-
-
-        createControls(
-            this
-        );
-
-
-        /* =========================
-           COLLISIONS
-        ========================= */
-
-        this.tableColliders.forEach(
-            collider => {
-
-                this.physics.add.collider(
-                    this.player,
-                    collider
+            background:
+                rgba(
+                    15,
+                    17,
+                    27,
+                    0.89
                 );
-            }
-        );
+
+            border:
+                1px solid
+                rgba(
+                    213,
+                    197,
+                    230,
+                    0.18
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+        }
 
 
-        /* =========================
-           CAMERA FOLLOW
-        ========================= */
+        .menu-button {
 
-        this.cameras.main.startFollow(
-            this.player,
-            true,
-            0.08,
-            0.08
-        );
+            border:
+                0;
 
+            padding:
+                9px 13px;
 
-        /*
-            Force the camera onto the cafe
-            immediately instead of waiting
-            for follow interpolation.
-        */
+            border-radius:
+                10px;
 
-        this.cameras.main.centerOn(
-            this.player.x,
-            this.player.y
-        );
+            color:
+                #c9c3d0;
 
+            background:
+                transparent;
 
-        /* =========================
-           INTERACTIONS
-        ========================= */
+            font-family:
+                inherit;
 
-        this.interactions = [
+            font-size:
+                11px;
 
-            {
-                x: 600,
-                y: 780,
-                radius: 95,
+            cursor:
+                pointer;
 
-                text:
-                    "Leave Moonlight Cafe",
-
-                action:
-                    () => {
-
-                        changeScene(
-                            this,
-                            "MoonlightDistrict",
-                            {
-                                fromCafe:
-                                    true
-                            }
-                        );
-                    }
-            },
+        }
 
 
-            {
-                x: 980,
-                y: 470,
-                radius: 155,
+        .menu-button:hover {
 
-                text:
-                    "Join Cafe Social Hour",
+            color:
+                white;
 
-                action:
-                    () => {
+            background:
+                rgba(
+                    183,
+                    161,
+                    211,
+                    0.12
+                );
 
-                        completeGoal(
-                            "goal-social"
-                        );
-
-                        showMessage(
-                            "Yanola joined Cafe Social Hour ✦"
-                        );
-                    }
-            },
+        }
 
 
-            {
-                x: 660,
-                y: 250,
-                radius: 90,
+        /* ==================================================
+           EMERGENCY RETURN
+        ================================================== */
 
-                text:
-                    "Interact with Test Player",
+        #emergency-return {
 
-                action:
-                    () => {
+            position:
+                fixed;
 
-                        showMessage(
-                            "Test Player · Acquaintance — relationship interactions will connect here."
-                        );
-                    }
-            },
+            right:
+                18px;
 
+            bottom:
+                18px;
 
-            {
-                x: 205,
-                y: 285,
-                radius: 150,
+            z-index:
+                250;
 
-                text:
-                    "Visit Cafe Counter",
+            display:
+                none;
 
-                action:
-                    () => {
+            border:
+                1px solid
+                rgba(
+                    214,
+                    186,
+                    124,
+                    0.35
+                );
 
-                        showMessage(
-                            "Ordering, cafe jobs and purchases will happen here."
-                        );
-                    }
-            }
+            padding:
+                9px 12px;
 
-        ];
+            border-radius:
+                10px;
 
+            color:
+                #d8d1c4;
 
-        /*
-            If you see this notification,
-            we know the cafe scene loaded.
-        */
+            background:
+                rgba(
+                    15,
+                    17,
+                    27,
+                    0.90
+                );
 
-        showMessage(
-            "Entered Moonlight Cafe"
-        );
-    }
+            font-family:
+                inherit;
 
+            font-size:
+                10px;
 
-    createOtherPlayer(
-        x,
-        y,
-        name
-    ) {
+            cursor:
+                pointer;
 
-        this.add.circle(
-            x,
-            y,
-            19,
-            0x8fa594
-        )
-        .setStrokeStyle(
-            3,
-            0xd9e4d5,
-            0.8
-        );
+        }
 
 
-        this.add.text(
-            x,
-            y + 30,
-            name,
-            {
-                fontFamily:
-                    "Georgia, serif",
+        /* ==================================================
+           CONTROLS
+        ================================================== */
 
-                fontSize:
-                    "11px",
+        #controls {
 
-                color:
-                    "#f5efe4",
+            position:
+                fixed;
 
-                backgroundColor:
-                    "#11131dcc",
+            left:
+                18px;
 
-                padding: {
-                    x: 5,
-                    y: 2
-                }
-            }
-        )
-        .setOrigin(
-            0.5,
-            0
-        );
-    }
+            bottom:
+                18px;
+
+            z-index:
+                100;
+
+            color:
+                #9e99aa;
+
+            font-size:
+                10px;
+
+        }
 
 
-    update() {
+        /* ==================================================
+           MOBILE
+        ================================================== */
 
-        updatePlayer(
-            this
-        );
-
-        checkInteractions(
-            this
-        );
-    }
-}
-
-
-/* ==========================================================
-   RETURN TO DISTRICT
-========================================================== */
-
-emergencyReturn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            !currentScene
+        @media (
+            max-width: 760px
         ) {
-            return;
-        }
 
+            #mini-map,
+            #goals {
 
-        if (
-            currentScene.scene.key ===
-            "MoonlightDistrict"
-        ) {
-            return;
-        }
+                display:
+                    none;
 
-
-        hidePrompt();
-
-
-        currentScene.scene.start(
-            "MoonlightDistrict",
-            {
-                fromCafe:
-                    true
             }
-        );
-    }
-);
 
 
-/* ==========================================================
-   PHASER CONFIG
-========================================================== */
+            #player-hud {
 
-const config = {
+                width:
+                    155px;
 
-    type:
-        Phaser.AUTO,
-
-    parent:
-        "everwyn-game",
-
-    width:
-        window.innerWidth,
-
-    height:
-        window.innerHeight,
-
-    backgroundColor:
-        "#10121b",
+            }
 
 
-    physics: {
+            #location-hud {
 
-        default:
-            "arcade",
+                top:
+                    115px;
 
-        arcade: {
+            }
 
-            gravity: {
-                y: 0
-            },
 
-            debug:
-                false
+            #bottom-menu {
+
+                max-width:
+                    94%;
+
+                overflow-x:
+                    auto;
+
+            }
+
+
+            .menu-button {
+
+                white-space:
+                    nowrap;
+
+            }
+
         }
-    },
+
+    </style>
+
+</head>
 
 
-    scale: {
-
-        mode:
-            Phaser.Scale.RESIZE,
-
-        autoCenter:
-            Phaser.Scale.CENTER_BOTH
-    },
+<body>
 
 
-    scene: [
+    <!-- ================================================
+         PHASER GAME
+    ================================================= -->
 
-        MoonlightDistrict,
-        MoonlightCafe
-
-    ]
-};
+    <div id="everwyn-game"></div>
 
 
-/* ==========================================================
-   START EVERWYN
-========================================================== */
+    <!-- ================================================
+         PLAYER HUD
+    ================================================= -->
 
-const game =
-    new Phaser.Game(
-        config
-    );
+    <div
+        id="player-hud"
+        class="hud-panel"
+    >
 
-</script>
+        <div class="player-name">
+            Yanola
+        </div>
+
+
+        <div class="player-level">
+            LEVEL 1 · ONLINE
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+
+                <span>
+                    ENERGY
+                </span>
+
+                <span>
+                    100 / 100
+                </span>
+
+            </div>
+
+
+            <div class="stat-bar">
+
+                <div class="stat-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         LOCATION HUD
+    ================================================= -->
+
+    <div
+        id="location-hud"
+        class="hud-panel"
+    >
+
+        <div id="location-name">
+
+            Moonlight District
+
+        </div>
+
+
+        <div id="location-subtitle">
+
+            EVERWYN · AFTER DUSK
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         MINI MAP
+    ================================================= -->
+
+    <div
+        id="mini-map"
+        class="hud-panel"
+    >
+
+        <div class="mini-title">
+
+            MOONLIGHT DISTRICT
+
+        </div>
+
+
+        <div class="mini-world">
+
+            <div class="mini-marker">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         GOALS
+    ================================================= -->
+
+    <div
+        id="goals"
+        class="hud-panel"
+    >
+
+        <div class="goal-title">
+
+            CURRENT GOALS
+
+        </div>
+
+
+        <div
+            class="goal"
+            id="goal-explore"
+        >
+
+            ◇ Explore Moonlight District
+
+        </div>
+
+
+        <div
+            class="goal"
+            id="goal-cafe"
+        >
+
+            ◇ Enter Moonlight Cafe
+
+        </div>
+
+
+        <div
+            class="goal"
+            id="goal-social"
+        >
+
+            ◇ Find Cafe Social Hour
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         INTERACTION PROMPT
+    ================================================= -->
+
+    <div id="interaction-prompt">
+
+        <span class="key">
+            E
+        </span>
+
+
+        <span id="interaction-text">
+
+            Interact
+
+        </span>
+
+    </div>
+
+
+    <!-- ================================================
+         NOTIFICATION
+    ================================================= -->
+
+    <div id="notification">
+    </div>
+
+
+    <!-- ================================================
+         CONTROLS
+    ================================================= -->
+
+    <div id="controls">
+
+        WASD / ARROWS · MOVE
+        &nbsp;&nbsp;
+        E · INTERACT
+
+    </div>
+
+
+    <!-- ================================================
+         MENU
+    ================================================= -->
+
+    <div id="bottom-menu">
+
+        <button
+            class="menu-button"
+            onclick="
+                showMessage(
+                    'Character customization and progression will connect here.'
+                )
+            "
+        >
+
+            Character
+
+        </button>
+
+
+        <button
+            class="menu-button"
+            onclick="
+                showMessage(
+                    'Yanola’s inventory system is coming next.'
+                )
+            "
+        >
+
+            Inventory
+
+        </button>
+
+
+        <button
+            class="menu-button"
+            onclick="
+                showMessage(
+                    'The full Everwyn world map will open here.'
+                )
+            "
+        >
+
+            Map
+
+        </button>
+
+
+        <button
+            class="menu-button"
+            onclick="
+                showMessage(
+                    'Friendships, romance, rivalries, and other relationships will connect here.'
+                )
+            "
+        >
+
+            Relationships
+
+        </button>
+
+
+        <button
+            class="menu-button"
+            onclick="
+                showMessage(
+                    'Yanola’s quests and discoveries will appear here.'
+                )
+            "
+        >
+
+            Quests
+
+        </button>
+
+    </div>
+
+
+    <!-- ================================================
+         DEVELOPMENT RETURN BUTTON
+    ================================================= -->
+
+    <button
+        id="emergency-return"
+        type="button"
+    >
+
+        Return to District
+
+    </button>
+
+
+    <!-- ================================================
+         PHASER
+    ================================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"
+    ></script>
+
+
+    <!-- ================================================
+         EVERWYN SYSTEMS
+
+         ORDER MATTERS.
+    ================================================= -->
+
+    <script src="js/player.js"></script>
+
+    <script src="js/interactions.js"></script>
+
+
+    <!-- ================================================
+         EVERWYN SCENES
+    ================================================= -->
+
+    <script
+        src="js/scenes/MoonlightDistrict.js"
+    ></script>
+
+    <script
+        src="js/scenes/MoonlightCafe.js"
+    ></script>
+
+
+    <!-- ================================================
+         START GAME LAST
+    ================================================= -->
+
+    <script src="js/game.js"></script>
+
 
 </body>
+
 </html>
