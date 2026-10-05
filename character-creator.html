@@ -272,7 +272,135 @@
 
         .eye.left { left: 51px; }
         .eye.right { right: 51px; }
+/* ===============================================
+   SPECIES VISUAL TRAITS
+=============================================== */
 
+.species-mark {
+    position: absolute;
+    display: none;
+    z-index: 7;
+    pointer-events: none;
+}
+
+
+/* Magical aura behind the character */
+
+.species-aura {
+    position: absolute;
+    display: none;
+    width: 135px;
+    height: 210px;
+    left: 7px;
+    top: 10px;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+/* FAE */
+
+.avatar.species-fae .ear {
+    width: 28px;
+    height: 15px;
+    border-radius: 80% 10% 80% 20%;
+    top: 72px;
+}
+
+.avatar.species-fae .ear.left {
+    left: 13px;
+    transform: rotate(-25deg);
+}
+
+.avatar.species-fae .ear.right {
+    right: 13px;
+    transform: rotate(25deg) scaleX(-1);
+}
+
+
+/* ELF */
+
+.avatar.species-elf .ear {
+    width: 34px;
+    height: 13px;
+    border-radius: 90% 10% 90% 10%;
+    top: 70px;
+}
+
+.avatar.species-elf .ear.left {
+    left: 7px;
+    transform: rotate(-18deg);
+}
+
+.avatar.species-elf .ear.right {
+    right: 7px;
+    transform: rotate(18deg) scaleX(-1);
+}
+
+
+/* WITCHBORN */
+
+.avatar.species-witchborn .species-mark {
+    display: block;
+    width: 9px;
+    height: 9px;
+    left: 71px;
+    top: 55px;
+    border: 2px solid #a58bbb;
+    transform: rotate(45deg);
+    box-shadow:
+        0 0 7px rgba(165,139,187,.9);
+}
+
+
+/* CELESTIAL */
+
+.avatar.species-celestial .species-mark {
+    display: block;
+    width: 15px;
+    height: 15px;
+    left: 68px;
+    top: 50px;
+    border-radius: 50%;
+    border: 2px solid #d8bd79;
+    box-shadow:
+        0 0 9px rgba(216,189,121,.9);
+}
+
+.avatar.species-celestial .species-aura {
+    display: block;
+    box-shadow:
+        0 0 28px rgba(222,199,134,.28),
+        inset 0 0 25px rgba(222,199,134,.12);
+}
+
+
+/* SHADOWKIN */
+
+.avatar.species-shadowkin .species-mark {
+    display: block;
+    width: 22px;
+    height: 5px;
+    left: 64px;
+    top: 55px;
+    border-radius: 50%;
+    background: rgba(109,82,135,.75);
+    box-shadow:
+        0 0 10px rgba(128,91,167,.85);
+}
+
+.avatar.species-shadowkin .species-aura {
+    display: block;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(95,65,125,.10),
+            transparent 68%
+        );
+    box-shadow:
+        0 0 32px rgba(103,70,137,.22);
+}
         .body {
             position: absolute;
             width: 96px;
