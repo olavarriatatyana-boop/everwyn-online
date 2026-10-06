@@ -1,0 +1,3367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Player Hub | Everwyn Online</title>
+
+    <style>
+        :root {
+            --bg-deep: #111827;
+            --bg-night: #182235;
+            --panel: rgba(25, 35, 51, 0.88);
+            --panel-light: rgba(39, 52, 71, 0.92);
+            --panel-soft: rgba(255, 255, 255, 0.055);
+
+            --cream: #f7f0df;
+            --cream-soft: #d9d4c8;
+
+            --sage: #a7c7a2;
+            --sage-dark: #68856a;
+
+            --lavender: #b9a7d8;
+            --blue: #8fb8cf;
+            --gold: #e1c17b;
+            --rose: #dca5ac;
+
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+
+            --radius-lg: 28px;
+            --radius-md: 20px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--cream);
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(143, 184, 207, 0.17),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(185, 167, 216, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 55% 90%,
+                    rgba(167, 199, 162, 0.12),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    145deg,
+                    #0d1420,
+                    #172235 50%,
+                    #111827
+                );
+
+            background-attachment: fixed;
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* -------------------------
+           LOADING SCREEN
+        ------------------------- */
+
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #25334a,
+                    #101722 70%
+                );
+
+            text-align: center;
+        }
+
+        .loading-orb {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+
+            border:
+                2px solid
+                rgba(255, 255, 255, 0.18);
+
+            box-shadow:
+                0 0 50px
+                rgba(185, 167, 216, 0.42);
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    white,
+                    var(--lavender) 25%,
+                    var(--blue) 58%,
+                    transparent 72%
+                );
+
+            animation:
+                pulseOrb 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseOrb {
+            0%,
+            100% {
+                transform: scale(0.92);
+                opacity: 0.75;
+            }
+
+            50% {
+                transform: scale(1.06);
+                opacity: 1;
+            }
+        }
+
+        .loading-title {
+            margin-top: 24px;
+            font-family: Georgia, serif;
+            font-size: 1.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        .loading-text {
+            margin-top: 8px;
+            color: var(--cream-soft);
+        }
+
+        /* -------------------------
+           TOP BAR
+        ------------------------- */
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding:
+                16px
+                clamp(18px, 4vw, 54px);
+
+            background:
+                rgba(10, 16, 25, 0.78);
+
+            backdrop-filter:
+                blur(18px);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+
+            display: grid;
+            place-items: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--lavender),
+                    var(--blue)
+                );
+
+            color: #101722;
+            font-weight: 900;
+
+            box-shadow:
+                0 8px 30px
+                rgba(143, 184, 207, 0.25);
+        }
+
+        .brand-title {
+            font-family: Georgia, serif;
+            font-size: 1.18rem;
+            letter-spacing: 0.04em;
+        }
+
+        .brand-subtitle {
+            margin-top: 2px;
+            color: var(--cream-soft);
+            font-size: 0.76rem;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-button {
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            padding: 10px 15px;
+            border-radius: 999px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease;
+        }
+
+        .top-button:hover {
+            transform: translateY(-1px);
+
+            background:
+                rgba(255, 255, 255, 0.10);
+        }
+
+        /* -------------------------
+           PAGE
+        ------------------------- */
+
+        .page {
+            width:
+                min(
+                    1480px,
+                    calc(100% - 34px)
+                );
+
+            margin: 0 auto;
+            padding: 30px 0 60px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 430px;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.25fr)
+                minmax(300px, 0.75fr);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(45, 64, 78, 0.92),
+                    rgba(39, 45, 67, 0.92)
+                );
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at 75% 25%,
+                    rgba(225, 193, 123, 0.12),
+                    transparent 24%
+                ),
+                radial-gradient(
+                    circle at 30% 80%,
+                    rgba(167, 199, 162, 0.13),
+                    transparent 28%
+                );
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 2;
+
+            padding:
+                clamp(28px, 5vw, 68px);
+        }
+
+        .eyebrow {
+            color: var(--sage);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin:
+                10px 0
+                12px;
+
+            font-family: Georgia, serif;
+
+            font-size:
+                clamp(
+                    2.5rem,
+                    7vw,
+                    5.6rem
+                );
+
+            line-height: 0.95;
+
+            font-weight: 500;
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            color:
+                rgba(247, 240, 223, 0.78);
+
+            font-size: 1.02rem;
+            line-height: 1.7;
+        }
+
+        .identity-row {
+            margin-top: 25px;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .identity-chip {
+            padding:
+                8px 13px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            border:
+                1px solid var(--border);
+
+            color:
+                var(--cream-soft);
+
+            font-size: 0.84rem;
+        }
+
+        .hero-actions {
+            margin-top: 30px;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            border: 0;
+
+            padding:
+                14px 20px;
+
+            border-radius:
+                15px;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        .primary-button {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--sage),
+                    #c8d9ad
+                );
+
+            color: #172018;
+
+            box-shadow:
+                0 10px 30px
+                rgba(167, 199, 162, 0.18);
+        }
+
+        .secondary-button {
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            border:
+                1px solid var(--border);
+
+            color: var(--cream);
+        }
+
+        .primary-button:hover,
+        .secondary-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* -------------------------
+           CHARACTER CARD
+        ------------------------- */
+
+        .character-stage {
+            position: relative;
+            z-index: 2;
+
+            min-height: 430px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+        .character-glow {
+            position: absolute;
+
+            width: 290px;
+            height: 290px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(185, 167, 216, 0.25),
+                    rgba(143, 184, 207, 0.10) 50%,
+                    transparent 72%
+                );
+
+            filter: blur(2px);
+        }
+
+        .character-card {
+            position: relative;
+            z-index: 2;
+
+            width:
+                min(
+                    320px,
+                    100%
+                );
+
+            min-height: 330px;
+
+            padding: 24px;
+
+            border-radius:
+                26px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
+            background:
+                rgba(10, 16, 25, 0.42);
+
+            backdrop-filter:
+                blur(12px);
+
+            text-align: center;
+        }
+
+        .character-portrait {
+            width: 155px;
+            height: 155px;
+
+            margin:
+                8px auto
+                18px;
+
+            border-radius:
+                42% 42% 48% 48%;
+
+            display: grid;
+            place-items: center;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(185, 167, 216, 0.35),
+                    rgba(143, 184, 207, 0.28),
+                    rgba(167, 199, 162, 0.25)
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.16);
+
+            box-shadow:
+                0 18px 50px
+                rgba(0, 0, 0, 0.22);
+        }
+
+        .character-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portrait-symbol {
+            font-size: 4.2rem;
+            opacity: 0.88;
+        }
+
+        .character-name {
+            font-family: Georgia, serif;
+            font-size: 1.75rem;
+        }
+
+        .character-meta {
+            margin-top: 7px;
+            color: var(--cream-soft);
+        }
+
+        /* -------------------------
+           STATS
+        ------------------------- */
+
+        .stats-grid {
+            margin-top: 22px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(0, 1fr)
+                );
+
+            gap: 14px;
+        }
+
+        .stat-card {
+            padding: 20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            background:
+                var(--panel);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.14);
+        }
+
+        .stat-label {
+            color:
+                var(--cream-soft);
+
+            font-size: 0.78rem;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.12em;
+        }
+
+        .stat-value {
+            margin-top: 8px;
+
+            font-family: Georgia, serif;
+
+            font-size:
+                1.75rem;
+        }
+
+        .stat-sub {
+            margin-top: 4px;
+
+            color:
+                rgba(247, 240, 223, 0.58);
+
+            font-size: 0.8rem;
+        }
+
+        /* -------------------------
+           SECTION
+        ------------------------- */
+
+        .section {
+            margin-top: 34px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size:
+                clamp(
+                    1.6rem,
+                    3vw,
+                    2.25rem
+                );
+
+            font-weight: 500;
+        }
+
+        .section-note {
+            color:
+                var(--cream-soft);
+
+            font-size: 0.85rem;
+        }
+
+        /* -------------------------
+           HUB GRID
+        ------------------------- */
+
+        .hub-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(0, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+        .hub-card {
+            position: relative;
+
+            min-height: 180px;
+
+            padding: 21px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(33, 45, 62, 0.94),
+                    rgba(24, 33, 48, 0.94)
+                );
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .hub-card:hover {
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(255, 255, 255, 0.24);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(41, 56, 75, 0.97),
+                    rgba(28, 38, 55, 0.97)
+                );
+        }
+
+        .hub-icon {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius:
+                15px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            font-size: 1.35rem;
+        }
+
+        .hub-card h3 {
+            margin:
+                18px 0
+                6px;
+
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .hub-card p {
+            margin: 0;
+
+            color:
+                rgba(247, 240, 223, 0.62);
+
+            line-height: 1.5;
+
+            font-size: 0.86rem;
+        }
+
+        .hub-card-value {
+            margin-top: 12px;
+
+            color: var(--sage);
+
+            font-weight: 800;
+            font-size: 0.83rem;
+        }
+
+        /* -------------------------
+           FINANCE / PROGRESSION
+        ------------------------- */
+
+        .two-column {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 16px;
+        }
+
+        .large-panel {
+            padding:
+                clamp(
+                    20px,
+                    4vw,
+                    30px
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            background:
+                var(--panel);
+
+            box-shadow:
+                0 14px 35px
+                rgba(0, 0, 0, 0.14);
+        }
+
+        .panel-title {
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size: 1.45rem;
+            font-weight: 500;
+        }
+
+        .money-row,
+        .skill-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 15px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .money-row:last-child,
+        .skill-row:last-child {
+            border-bottom: 0;
+        }
+
+        .money-label,
+        .skill-label {
+            color:
+                var(--cream-soft);
+        }
+
+        .money-value,
+        .skill-value {
+            font-weight: 800;
+        }
+
+        .xp-track {
+            width: 100%;
+            height: 10px;
+
+            margin-top: 18px;
+
+            border-radius:
+                999px;
+
+            overflow: hidden;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .xp-fill {
+            height: 100%;
+            width: 0%;
+
+            border-radius:
+                inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--sage),
+                    var(--blue),
+                    var(--lavender)
+                );
+
+            transition:
+                width 0.5s ease;
+        }
+
+        /* -------------------------
+           ACTIVITY
+        ------------------------- */
+
+        .activity-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+        .activity-card {
+            padding: 20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            background:
+                var(--panel);
+        }
+
+        .activity-title {
+            font-weight: 800;
+        }
+
+        .activity-text {
+            margin-top: 8px;
+
+            color:
+                var(--cream-soft);
+
+            font-size: 0.88rem;
+
+            line-height: 1.55;
+        }
+
+        /* -------------------------
+           MODAL
+        ------------------------- */
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(4, 8, 14, 0.76);
+
+            backdrop-filter:
+                blur(10px);
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            width:
+                min(
+                    560px,
+                    100%
+                );
+
+            max-height:
+                min(
+                    720px,
+                    88vh
+                );
+
+            overflow: auto;
+
+            padding: 28px;
+
+            border-radius:
+                var(--radius-lg);
+
+            border:
+                1px solid var(--border);
+
+            background:
+                #182235;
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .modal-title {
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size: 1.6rem;
+        }
+
+        .close-button {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin-top: 20px;
+
+            color:
+                var(--cream-soft);
+
+            line-height: 1.65;
+        }
+
+        .modal-item {
+            padding: 14px;
+
+            margin-top: 10px;
+
+            border-radius:
+                14px;
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .modal-item strong {
+            color: var(--cream);
+        }
+
+        /* -------------------------
+           TOAST
+        ------------------------- */
+
+        #toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 1000;
+
+            max-width: 360px;
+
+            padding:
+                14px 18px;
+
+            border-radius:
+                14px;
+
+            background:
+                #25334a;
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                var(--shadow);
+
+            opacity: 0;
+            pointer-events: none;
+
+            transform:
+                translateY(15px);
+
+            transition:
+                opacity 0.22s ease,
+                transform 0.22s ease;
+        }
+
+        #toast.show {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        /* -------------------------
+           RESPONSIVE
+        ------------------------- */
+
+        @media (max-width: 1100px) {
+            .hub-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+            }
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .character-stage {
+                min-height: 350px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                width:
+                    min(
+                        100% - 20px,
+                        1480px
+                    );
+
+                padding-top: 14px;
+            }
+
+            .topbar {
+                padding: 12px;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            .top-button span {
+                display: none;
+            }
+
+            .hero-copy {
+                padding: 28px 22px;
+            }
+
+            .hub-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .character-stage {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loadingScreen">
+        <div class="loading-orb"></div>
+
+        <div class="loading-title">
+            Entering Everwyn
+        </div>
+
+        <div
+            class="loading-text"
+            id="loadingText"
+        >
+            Awakening your Lumina...
+        </div>
+    </div>
+
+
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-mark">
+                E
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    Everwyn Online
+                </div>
+
+                <div class="brand-subtitle">
+                    Player Hub
+                </div>
+            </div>
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+                class="top-button"
+                id="notificationsButton"
+                type="button"
+            >
+                🔔
+                <span>
+                    Notifications
+                </span>
+            </button>
+
+            <button
+                class="top-button"
+                id="logoutButton"
+                type="button"
+            >
+                ↪
+                <span>
+                    Log Out
+                </span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="page">
+
+        <section
+            class="hero"
+            id="hero"
+        >
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    Your Everwyn
+                </div>
+
+                <h1 id="welcomeName">
+                    Welcome Home
+                </h1>
+
+                <p class="hero-description">
+                    Your life in Everwyn begins here.
+                    Prepare your character, check your
+                    belongings, visit friends, manage your
+                    home and businesses, or step into the
+                    Realm.
+                </p>
+
+
+                <div class="identity-row">
+
+                    <div
+                        class="identity-chip"
+                        id="usernameChip"
+                    >
+                        @traveler
+                    </div>
+
+                    <div
+                        class="identity-chip"
+                        id="speciesChip"
+                    >
+                        Human
+                    </div>
+
+                    <div
+                        class="identity-chip"
+                        id="levelChip"
+                    >
+                        Level 1
+                    </div>
+
+                </div>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="primary-button"
+                        id="enterWorldButton"
+                        type="button"
+                    >
+                        ✦ Enter World
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        id="luminaButton"
+                        type="button"
+                    >
+                        ◇ Open Lumina
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="character-stage">
+
+                <div class="character-glow"></div>
+
+                <div class="character-card">
+
+                    <div
+                        class="character-portrait"
+                        id="characterPortrait"
+                    >
+                        <div class="portrait-symbol">
+                            ✧
+                        </div>
+                    </div>
+
+                    <div
+                        class="character-name"
+                        id="characterName"
+                    >
+                        Traveler
+                    </div>
+
+                    <div
+                        class="character-meta"
+                        id="characterMeta"
+                    >
+                        Loading character...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Level
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="levelValue"
+                >
+                    1
+                </div>
+
+                <div
+                    class="stat-sub"
+                    id="xpValue"
+                >
+                    0 XP
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Lumen Wallet
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="walletValue"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Available Lumen
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Inventory
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="inventoryCount"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Owned item stacks
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Notifications
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="notificationCount"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Unread
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">
+                        Your Life
+                    </div>
+
+                    <h2 class="section-title">
+                        Player Hub
+                    </h2>
+                </div>
+
+                <div class="section-note">
+                    Everything connected to your Everwyn life.
+                </div>
+            </div>
+
+
+            <div class="hub-grid">
+
+                <article
+                    class="hub-card"
+                    data-panel="inventory"
+                >
+                    <div class="hub-icon">
+                        🎒
+                    </div>
+
+                    <h3>
+                        Inventory
+                    </h3>
+
+                    <p>
+                        View clothing, collectibles,
+                        materials and items you own.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="inventorySummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="wardrobe"
+                >
+                    <div class="hub-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Wardrobe
+                    </h3>
+
+                    <p>
+                        Manage your appearance and
+                        equipped avatar items.
+                    </p>
+
+                    <div class="hub-card-value">
+                        Character connected
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="bank"
+                >
+                    <div class="hub-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        Wallet & Bank
+                    </h3>
+
+                    <p>
+                        Check your Lumen wallet,
+                        checking and savings accounts.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="bankSummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="relationships"
+                >
+                    <div class="hub-icon">
+                        ♡
+                    </div>
+
+                    <h3>
+                        Relationships
+                    </h3>
+
+                    <p>
+                        Friends, connections and
+                        relationships across Everwyn.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="relationshipSummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="home"
+                >
+                    <div class="hub-icon">
+                        ⌂
+                    </div>
+
+                    <h3>
+                        Home
+                    </h3>
+
+                    <p>
+                        Visit and eventually decorate
+                        your personal Everwyn home.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="homeSummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="businesses"
+                >
+                    <div class="hub-icon">
+                        ⚜
+                    </div>
+
+                    <h3>
+                        Businesses
+                    </h3>
+
+                    <p>
+                        Manage the businesses and
+                        storefronts you build.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="businessSummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="achievements"
+                >
+                    <div class="hub-icon">
+                        ★
+                    </div>
+
+                    <h3>
+                        Achievements
+                    </h3>
+
+                    <p>
+                        Track discoveries, milestones
+                        and collections.
+                    </p>
+
+                    <div
+                        class="hub-card-value"
+                        id="achievementSummary"
+                    >
+                        Loading...
+                    </div>
+                </article>
+
+
+                <article
+                    class="hub-card"
+                    data-panel="profile"
+                >
+                    <div class="hub-icon">
+                        ☾
+                    </div>
+
+                    <h3>
+                        Profile & Settings
+                    </h3>
+
+                    <p>
+                        Your identity, Hub preferences
+                        and account settings.
+                    </p>
+
+                    <div class="hub-card-value">
+                        Customize your space
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">
+                        Finances & Growth
+                    </div>
+
+                    <h2 class="section-title">
+                        Your Progress
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="two-column">
+
+                <div class="large-panel">
+
+                    <h3 class="panel-title">
+                        Lumen Banking
+                    </h3>
+
+
+                    <div class="money-row">
+                        <span class="money-label">
+                            Wallet
+                        </span>
+
+                        <span
+                            class="money-value"
+                            id="walletPanelValue"
+                        >
+                            0 Lumen
+                        </span>
+                    </div>
+
+
+                    <div class="money-row">
+                        <span class="money-label">
+                            Checking
+                        </span>
+
+                        <span
+                            class="money-value"
+                            id="checkingValue"
+                        >
+                            0 Lumen
+                        </span>
+                    </div>
+
+
+                    <div class="money-row">
+                        <span class="money-label">
+                            High-Yield Savings
+                        </span>
+
+                        <span
+                            class="money-value"
+                            id="savingsValue"
+                        >
+                            0 Lumen
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="large-panel">
+
+                    <h3 class="panel-title">
+                        Skills
+                    </h3>
+
+
+                    <div class="skill-row">
+                        <span class="skill-label">
+                            Combat
+                        </span>
+
+                        <span
+                            class="skill-value"
+                            id="combatLevel"
+                        >
+                            Lv. 1
+                        </span>
+                    </div>
+
+
+                    <div class="skill-row">
+                        <span class="skill-label">
+                            Exploration
+                        </span>
+
+                        <span
+                            class="skill-value"
+                            id="explorationLevel"
+                        >
+                            Lv. 1
+                        </span>
+                    </div>
+
+
+                    <div class="skill-row">
+                        <span class="skill-label">
+                            Gathering
+                        </span>
+
+                        <span
+                            class="skill-value"
+                            id="gatheringLevel"
+                        >
+                            Lv. 1
+                        </span>
+                    </div>
+
+
+                    <div class="skill-row">
+                        <span class="skill-label">
+                            Crafting
+                        </span>
+
+                        <span
+                            class="skill-value"
+                            id="craftingLevel"
+                        >
+                            Lv. 1
+                        </span>
+                    </div>
+
+
+                    <div class="xp-track">
+                        <div
+                            class="xp-fill"
+                            id="xpFill"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">
+                        At a Glance
+                    </div>
+
+                    <h2 class="section-title">
+                        Around Your Everwyn
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="activity-grid">
+
+                <div class="activity-card">
+                    <div class="activity-title">
+                        ⌂ Your Home
+                    </div>
+
+                    <div
+                        class="activity-text"
+                        id="homeActivity"
+                    >
+                        Loading your property...
+                    </div>
+                </div>
+
+
+                <div class="activity-card">
+                    <div class="activity-title">
+                        ♡ Your Circle
+                    </div>
+
+                    <div
+                        class="activity-text"
+                        id="socialActivity"
+                    >
+                        Loading your relationships...
+                    </div>
+                </div>
+
+
+                <div class="activity-card">
+                    <div class="activity-title">
+                        ⚜ Your Ventures
+                    </div>
+
+                    <div
+                        class="activity-text"
+                        id="businessActivity"
+                    >
+                        Loading your businesses...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div
+        class="modal-backdrop"
+        id="modalBackdrop"
+    >
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <h2
+                    class="modal-title"
+                    id="modalTitle"
+                >
+                    Everwyn
+                </h2>
+
+                <button
+                    class="close-button"
+                    id="modalClose"
+                    type="button"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                class="modal-content"
+                id="modalContent"
+            ></div>
+
+        </div>
+    </div>
+
+
+    <div id="toast"></div>
+
+
+    <script>
+        /* ==========================================
+           EVERWYN ONLINE
+           PLAYER HUB
+        ========================================== */
+
+        const SUPABASE_URL =
+            "https://iajvwhrjutqkqqvbknth.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+
+
+        let ACCESS_TOKEN = null;
+        let CURRENT_PLAYER_ID = null;
+
+        let hubData = {
+            profile: null,
+            character: null,
+            avatar: null,
+            hubSettings: null,
+            progression: null,
+            wallet: null,
+            bankAccounts: [],
+            inventory: [],
+            homes: [],
+            businesses: [],
+            achievements: [],
+            notifications: [],
+            relationships: [],
+            contacts: [],
+            lumina: null
+        };
+
+
+        /* ==========================================
+           BASIC HELPERS
+        ========================================== */
+
+        function authHeaders() {
+            return {
+                "apikey":
+                    SUPABASE_KEY,
+
+                "Authorization":
+                    "Bearer " +
+                    ACCESS_TOKEN,
+
+                "Content-Type":
+                    "application/json"
+            };
+        }
+
+
+        function formatSpecies(value) {
+
+            if (!value) {
+                return "Traveler";
+            }
+
+            return value
+                .replaceAll("_", " ")
+                .replace(
+                    /\b\w/g,
+                    letter =>
+                        letter.toUpperCase()
+                );
+        }
+
+
+        function formatLumen(value) {
+
+            const number =
+                Number(value || 0);
+
+            return number.toLocaleString();
+        }
+
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+            toast.textContent =
+                message;
+
+            toast.classList.add(
+                "show"
+            );
+
+            clearTimeout(
+                window.everwynToastTimer
+            );
+
+            window.everwynToastTimer =
+                setTimeout(
+                    () => {
+                        toast.classList.remove(
+                            "show"
+                        );
+                    },
+                    2600
+                );
+        }
+
+
+        function openModal(
+            title,
+            html
+        ) {
+
+            document.getElementById(
+                "modalTitle"
+            ).textContent =
+                title;
+
+            document.getElementById(
+                "modalContent"
+            ).innerHTML =
+                html;
+
+            document.getElementById(
+                "modalBackdrop"
+            ).classList.add(
+                "open"
+            );
+        }
+
+
+        function closeModal() {
+
+            document.getElementById(
+                "modalBackdrop"
+            ).classList.remove(
+                "open"
+            );
+        }
+
+
+        async function supabaseGet(
+            path
+        ) {
+
+            const response =
+                await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/" +
+                    path,
+                    {
+                        headers:
+                            authHeaders()
+                    }
+                );
+
+            if (!response.ok) {
+
+                const text =
+                    await response.text();
+
+                throw new Error(
+                    text ||
+                    "Everwyn could not load data."
+                );
+            }
+
+            return await response.json();
+        }
+
+
+        /* ==========================================
+           SESSION
+        ========================================== */
+
+        function loadSession() {
+
+            ACCESS_TOKEN =
+                localStorage.getItem(
+                    "everwyn_access_token"
+                );
+
+            if (!ACCESS_TOKEN) {
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+        async function resolvePlayer() {
+
+            const response =
+                await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/rpc/ensure_player_for_profile",
+                    {
+                        method: "POST",
+
+                        headers:
+                            authHeaders(),
+
+                        body: "{}"
+                    }
+                );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Everwyn could not identify your player."
+                );
+            }
+
+            CURRENT_PLAYER_ID =
+                await response.json();
+
+            localStorage.setItem(
+                "everwyn_player_id",
+                String(
+                    CURRENT_PLAYER_ID
+                )
+            );
+        }
+
+
+        /* ==========================================
+           LOAD HUB DATA
+        ========================================== */
+
+        async function loadHubData() {
+
+            const playerId =
+                encodeURIComponent(
+                    CURRENT_PLAYER_ID
+                );
+
+
+            const results =
+                await Promise.allSettled([
+
+                    supabaseGet(
+                        "profile_players" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=profile_id"
+                    ),
+
+                    supabaseGet(
+                        "player_characters" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_avatars" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_hub_settings" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_progression" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_wallets" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_bank_accounts" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_inventory" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_homes" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_businesses" +
+                        "?owner_player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_achievements" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_notifications" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_relationships" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "player_contacts" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    ),
+
+                    supabaseGet(
+                        "lumina_devices" +
+                        "?player_id=eq." +
+                        playerId +
+                        "&select=*"
+                    )
+                ]);
+
+
+            const value =
+                index => {
+
+                    const result =
+                        results[index];
+
+                    if (
+                        result.status ===
+                        "fulfilled"
+                    ) {
+                        return result.value;
+                    }
+
+                    console.warn(
+                        "Everwyn Hub request failed:",
+                        result.reason
+                    );
+
+                    return [];
+                };
+
+
+            const profileLinks =
+                value(0);
+
+            hubData.character =
+                value(1)[0] || null;
+
+            hubData.avatar =
+                value(2)[0] || null;
+
+            hubData.hubSettings =
+                value(3)[0] || null;
+
+            hubData.progression =
+                value(4)[0] || null;
+
+            hubData.wallet =
+                value(5)[0] || null;
+
+            hubData.bankAccounts =
+                value(6);
+
+            hubData.inventory =
+                value(7);
+
+            hubData.homes =
+                value(8);
+
+            hubData.businesses =
+                value(9);
+
+            hubData.achievements =
+                value(10);
+
+            hubData.notifications =
+                value(11);
+
+            hubData.relationships =
+                value(12);
+
+            hubData.contacts =
+                value(13);
+
+            hubData.lumina =
+                value(14)[0] || null;
+
+
+            if (
+                profileLinks.length > 0
+            ) {
+
+                const profileId =
+                    encodeURIComponent(
+                        profileLinks[0]
+                            .profile_id
+                    );
+
+                const profiles =
+                    await supabaseGet(
+                        "profiles" +
+                        "?id=eq." +
+                        profileId +
+                        "&select=*"
+                    );
+
+                hubData.profile =
+                    profiles[0] || null;
+            }
+        }
+
+
+        /* ==========================================
+           RENDER
+        ========================================== */
+
+        function renderHub() {
+
+            const profile =
+                hubData.profile || {};
+
+            const character =
+                hubData.character || {};
+
+            const avatar =
+                hubData.avatar || {};
+
+            const progression =
+                hubData.progression || {};
+
+            const wallet =
+                hubData.wallet || {};
+
+
+            const characterName =
+                character.character_name ||
+                avatar.avatar_name ||
+                profile.display_name ||
+                "Traveler";
+
+
+            const username =
+                profile.username ||
+                "traveler";
+
+
+            const species =
+                formatSpecies(
+                    character.species
+                );
+
+
+            const gender =
+                character.gender
+                    ? formatSpecies(
+                        character.gender
+                    )
+                    : null;
+
+
+            document.getElementById(
+                "welcomeName"
+            ).textContent =
+                "Welcome, " +
+                characterName;
+
+
+            document.getElementById(
+                "characterName"
+            ).textContent =
+                characterName;
+
+
+            document.getElementById(
+                "usernameChip"
+            ).textContent =
+                "@" + username;
+
+
+            document.getElementById(
+                "speciesChip"
+            ).textContent =
+                species;
+
+
+            document.getElementById(
+                "characterMeta"
+            ).textContent =
+                gender
+                    ? species +
+                      " • " +
+                      gender
+                    : species;
+
+
+            const level =
+                progression.level || 1;
+
+            const currentXP =
+                progression.current_xp || 0;
+
+
+            document.getElementById(
+                "levelChip"
+            ).textContent =
+                "Level " + level;
+
+
+            document.getElementById(
+                "levelValue"
+            ).textContent =
+                level;
+
+
+            document.getElementById(
+                "xpValue"
+            ).textContent =
+                formatLumen(
+                    currentXP
+                ) +
+                " XP";
+
+
+            const lumen =
+                wallet.lumen_balance || 0;
+
+
+            document.getElementById(
+                "walletValue"
+            ).textContent =
+                formatLumen(
+                    lumen
+                );
+
+
+            document.getElementById(
+                "walletPanelValue"
+            ).textContent =
+                formatLumen(
+                    lumen
+                ) +
+                " Lumen";
+
+
+            const checking =
+                hubData.bankAccounts.find(
+                    account =>
+                        account.account_type ===
+                        "checking"
+                );
+
+
+            const savings =
+                hubData.bankAccounts.find(
+                    account =>
+                        account.account_type ===
+                        "high_yield_savings"
+                );
+
+
+            document.getElementById(
+                "checkingValue"
+            ).textContent =
+                formatLumen(
+                    checking?.balance
+                ) +
+                " Lumen";
+
+
+            document.getElementById(
+                "savingsValue"
+            ).textContent =
+                formatLumen(
+                    savings?.balance
+                ) +
+                " Lumen";
+
+
+            document.getElementById(
+                "bankSummary"
+            ).textContent =
+                hubData.bankAccounts.length +
+                " bank accounts";
+
+
+            document.getElementById(
+                "inventoryCount"
+            ).textContent =
+                hubData.inventory.length;
+
+
+            document.getElementById(
+                "inventorySummary"
+            ).textContent =
+                hubData.inventory.length +
+                (
+                    hubData.inventory.length ===
+                    1
+                        ? " item stack"
+                        : " item stacks"
+                );
+
+
+            const unreadNotifications =
+                hubData.notifications.filter(
+                    notification =>
+                        notification.is_read !==
+                        true
+                ).length;
+
+
+            document.getElementById(
+                "notificationCount"
+            ).textContent =
+                unreadNotifications;
+
+
+            document.getElementById(
+                "relationshipSummary"
+            ).textContent =
+                hubData.relationships.length +
+                (
+                    hubData.relationships.length ===
+                    1
+                        ? " relationship"
+                        : " relationships"
+                );
+
+
+            document.getElementById(
+                "achievementSummary"
+            ).textContent =
+                hubData.achievements.length +
+                (
+                    hubData.achievements.length ===
+                    1
+                        ? " achievement"
+                        : " achievements"
+                );
+
+
+            document.getElementById(
+                "businessSummary"
+            ).textContent =
+                hubData.businesses.length ===
+                0
+                    ? "No businesses yet"
+                    : hubData.businesses.length +
+                      " owned";
+
+
+            const primaryHome =
+                hubData.homes.find(
+                    home =>
+                        home.is_primary ===
+                        true
+                ) ||
+                hubData.homes[0];
+
+
+            document.getElementById(
+                "homeSummary"
+            ).textContent =
+                primaryHome
+                    ? primaryHome.home_name
+                    : "No home found";
+
+
+            document.getElementById(
+                "homeActivity"
+            ).textContent =
+                primaryHome
+                    ? primaryHome.home_name +
+                      " • " +
+                      formatSpecies(
+                          primaryHome.home_type
+                      ) +
+                      " • " +
+                      formatSpecies(
+                          primaryHome.property_status
+                      )
+                    : "Your Everwyn home will appear here.";
+
+
+            document.getElementById(
+                "socialActivity"
+            ).textContent =
+                hubData.contacts.length +
+                " contacts • " +
+                hubData.relationships.length +
+                " relationships";
+
+
+            document.getElementById(
+                "businessActivity"
+            ).textContent =
+                hubData.businesses.length ===
+                0
+                    ? "You have not opened a business yet."
+                    : hubData.businesses.length +
+                      " business ventures";
+
+
+            document.getElementById(
+                "combatLevel"
+            ).textContent =
+                "Lv. " +
+                (
+                    progression.combat_level ||
+                    1
+                );
+
+
+            document.getElementById(
+                "explorationLevel"
+            ).textContent =
+                "Lv. " +
+                (
+                    progression.exploration_level ||
+                    1
+                );
+
+
+            document.getElementById(
+                "gatheringLevel"
+            ).textContent =
+                "Lv. " +
+                (
+                    progression.gathering_level ||
+                    1
+                );
+
+
+            document.getElementById(
+                "craftingLevel"
+            ).textContent =
+                "Lv. " +
+                (
+                    progression.crafting_level ||
+                    1
+                );
+
+
+            /*
+                Temporary XP visualization.
+
+                Once Everwyn has an official
+                XP-per-level formula, this can
+                use that formula directly.
+            */
+
+            const xpPercent =
+                Math.min(
+                    Number(currentXP) % 100,
+                    100
+                );
+
+
+            document.getElementById(
+                "xpFill"
+            ).style.width =
+                xpPercent + "%";
+
+
+            if (
+                avatar.avatar_image_url
+            ) {
+
+                document.getElementById(
+                    "characterPortrait"
+                ).innerHTML =
+                    '<img alt="Character avatar" src="' +
+                    escapeHTML(
+                        avatar.avatar_image_url
+                    ) +
+                    '">';
+            }
+
+
+            applyHubBackground();
+        }
+
+
+        function applyHubBackground() {
+
+            const settings =
+                hubData.hubSettings;
+
+            if (!settings) {
+                return;
+            }
+
+
+            if (
+                settings.background_image_url
+            ) {
+
+                const hero =
+                    document.getElementById(
+                        "hero"
+                    );
+
+                hero.style.backgroundImage =
+                    "linear-gradient(" +
+                    "135deg," +
+                    "rgba(17,24,39,.78)," +
+                    "rgba(39,45,67,.80)" +
+                    ")," +
+                    "url('" +
+                    settings.background_image_url +
+                    "')";
+
+                hero.style.backgroundSize =
+                    "cover";
+
+                hero.style.backgroundPosition =
+                    "center";
+            }
+        }
+
+
+        /* ==========================================
+           MODAL CONTENT
+        ========================================== */
+
+        function renderList(
+            items,
+            formatter,
+            emptyText
+        ) {
+
+            if (!items.length) {
+
+                return (
+                    "<div class='modal-item'>" +
+                    escapeHTML(
+                        emptyText
+                    ) +
+                    "</div>"
+                );
+            }
+
+            return items
+                .map(
+                    formatter
+                )
+                .join("");
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+        }
+
+
+        function openPanel(
+            panel
+        ) {
+
+            switch (panel) {
+
+                case "inventory":
+
+                    openModal(
+                        "Inventory",
+
+                        renderList(
+                            hubData.inventory,
+
+                            item =>
+                                "<div class='modal-item'>" +
+                                "<strong>Item #" +
+                                escapeHTML(
+                                    item.item_id
+                                ) +
+                                "</strong><br>" +
+                                "Quantity: " +
+                                escapeHTML(
+                                    item.quantity
+                                ) +
+                                "</div>",
+
+                            "Your inventory is currently empty."
+                        )
+                    );
+
+                    break;
+
+
+                case "wardrobe":
+
+                    openModal(
+                        "Wardrobe",
+
+                        "<div class='modal-item'>" +
+                        "<strong>" +
+                        escapeHTML(
+                            hubData.avatar
+                                ?.avatar_name ||
+                            hubData.character
+                                ?.character_name ||
+                            "Character"
+                        ) +
+                        "</strong><br>" +
+                        "Your character and avatar records are connected. " +
+                        "The illustrated wardrobe interface will use this system." +
+                        "</div>" +
+
+                        "<div class='modal-item'>" +
+                        "Body: " +
+                        escapeHTML(
+                            hubData.avatar
+                                ?.body_type ||
+                            "Default"
+                        ) +
+                        "<br>" +
+                        "Hair: " +
+                        escapeHTML(
+                            hubData.avatar
+                                ?.hair_style ||
+                            "Default"
+                        ) +
+                        "</div>"
+                    );
+
+                    break;
+
+
+                case "bank":
+
+                    openModal(
+                        "Wallet & Bank",
+
+                        "<div class='modal-item'>" +
+                        "<strong>Wallet</strong><br>" +
+                        formatLumen(
+                            hubData.wallet
+                                ?.lumen_balance
+                        ) +
+                        " Lumen" +
+                        "</div>" +
+
+                        renderList(
+                            hubData.bankAccounts,
+
+                            account =>
+                                "<div class='modal-item'>" +
+                                "<strong>" +
+                                escapeHTML(
+                                    account.account_name
+                                ) +
+                                "</strong><br>" +
+                                formatLumen(
+                                    account.balance
+                                ) +
+                                " Lumen" +
+                                "</div>",
+
+                            "No bank accounts found."
+                        )
+                    );
+
+                    break;
+
+
+                case "relationships":
+
+                    openModal(
+                        "Relationships",
+
+                        renderList(
+                            hubData.relationships,
+
+                            relationship =>
+                                "<div class='modal-item'>" +
+                                "<strong>" +
+                                escapeHTML(
+                                    formatSpecies(
+                                        relationship
+                                            .relationship_type
+                                    )
+                                ) +
+                                "</strong><br>" +
+                                "Relationship level: " +
+                                escapeHTML(
+                                    relationship
+                                        .relationship_level ??
+                                    0
+                                ) +
+                                "</div>",
+
+                            "You have not formed any relationships yet."
+                        )
+                    );
+
+                    break;
+
+
+                case "home":
+
+                    openModal(
+                        "Your Home",
+
+                        renderList(
+                            hubData.homes,
+
+                            home =>
+                                "<div class='modal-item'>" +
+                                "<strong>" +
+                                escapeHTML(
+                                    home.home_name
+                                ) +
+                                "</strong><br>" +
+                                formatSpecies(
+                                    home.home_type
+                                ) +
+                                " • " +
+                                formatSpecies(
+                                    home.property_status
+                                ) +
+                                "<br>" +
+                                "Access: " +
+                                formatSpecies(
+                                    home.access_type
+                                ) +
+                                "</div>",
+
+                            "No home was found."
+                        )
+                    );
+
+                    break;
+
+
+                case "businesses":
+
+                    openModal(
+                        "Businesses",
+
+                        renderList(
+                            hubData.businesses,
+
+                            business =>
+                                "<div class='modal-item'>" +
+                                "<strong>" +
+                                escapeHTML(
+                                    business.business_name
+                                ) +
+                                "</strong><br>" +
+                                escapeHTML(
+                                    formatSpecies(
+                                        business.business_type
+                                    )
+                                ) +
+                                "<br>" +
+                                "Level " +
+                                escapeHTML(
+                                    business.business_level
+                                ) +
+                                "</div>",
+
+                            "You have not opened a business yet. Business creation will become part of Everwyn's economy."
+                        )
+                    );
+
+                    break;
+
+
+                case "achievements":
+
+                    openModal(
+                        "Achievements",
+
+                        renderList(
+                            hubData.achievements,
+
+                            achievement =>
+                                "<div class='modal-item'>" +
+                                "<strong>" +
+                                escapeHTML(
+                                    achievement
+                                        .achievement_name
+                                ) +
+                                "</strong><br>" +
+                                escapeHTML(
+                                    achievement
+                                        .description ||
+                                    "Achievement unlocked."
+                                ) +
+                                "</div>",
+
+                            "Your achievements will appear here as you explore Everwyn."
+                        )
+                    );
+
+                    break;
+
+
+                case "profile":
+
+                    openModal(
+                        "Profile & Settings",
+
+                        "<div class='modal-item'>" +
+                        "<strong>Username</strong><br>@" +
+                        escapeHTML(
+                            hubData.profile
+                                ?.username ||
+                            "traveler"
+                        ) +
+                        "</div>" +
+
+                        "<div class='modal-item'>" +
+                        "<strong>Hub Background</strong><br>" +
+                        escapeHTML(
+                            hubData.hubSettings
+                                ?.background_key ||
+                            "everwyn_default"
+                        ) +
+                        "</div>" +
+
+                        "<div class='modal-item'>" +
+                        "Full Hub customization controls will connect to your existing player_hub_settings record." +
+                        "</div>"
+                    );
+
+                    break;
+            }
+        }
+
+
+        function openNotifications() {
+
+            openModal(
+                "Notifications",
+
+                renderList(
+                    hubData.notifications,
+
+                    notification =>
+                        "<div class='modal-item'>" +
+                        "<strong>" +
+                        escapeHTML(
+                            notification.title
+                        ) +
+                        "</strong><br>" +
+                        escapeHTML(
+                            notification.message
+                        ) +
+                        "</div>",
+
+                    "You have no notifications."
+                )
+            );
+        }
+
+
+        function openLumina() {
+
+            const device =
+                hubData.lumina;
+
+
+            openModal(
+                "Lumina",
+
+                device
+                    ? (
+                        "<div class='modal-item'>" +
+                        "<strong>" +
+                        escapeHTML(
+                            device.device_name ||
+                            "Lumina"
+                        ) +
+                        "</strong><br>" +
+                        escapeHTML(
+                            device.device_model ||
+                            "Lumina Standard"
+                        ) +
+                        "</div>" +
+
+                        "<div class='modal-item'>" +
+                        "Your Lumina is connected. " +
+                        "Direct messages, group chat, friend activity and invitations will live here as the social interface is completed." +
+                        "</div>"
+                    )
+                    : (
+                        "<div class='modal-item'>" +
+                        "Your Lumina is still awakening." +
+                        "</div>"
+                    )
+            );
+        }
+
+
+        /* ==========================================
+           EVENTS
+        ========================================== */
+
+        document.querySelectorAll(
+            ".hub-card"
+        ).forEach(
+            card => {
+
+                card.addEventListener(
+                    "click",
+                    () => {
+
+                        openPanel(
+                            card.dataset.panel
+                        );
+                    }
+                );
+            }
+        );
+
+
+        document.getElementById(
+            "enterWorldButton"
+        ).addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "world-map.html";
+            }
+        );
+
+
+        document.getElementById(
+            "luminaButton"
+        ).addEventListener(
+            "click",
+            openLumina
+        );
+
+
+        document.getElementById(
+            "notificationsButton"
+        ).addEventListener(
+            "click",
+            openNotifications
+        );
+
+
+        document.getElementById(
+            "modalClose"
+        ).addEventListener(
+            "click",
+            closeModal
+        );
+
+
+        document.getElementById(
+            "modalBackdrop"
+        ).addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target.id ===
+                    "modalBackdrop"
+                ) {
+                    closeModal();
+                }
+            }
+        );
+
+
+        document.getElementById(
+            "logoutButton"
+        ).addEventListener(
+            "click",
+            () => {
+
+                localStorage.removeItem(
+                    "everwyn_access_token"
+                );
+
+                localStorage.removeItem(
+                    "everwyn_refresh_token"
+                );
+
+                localStorage.removeItem(
+                    "everwyn_user_id"
+                );
+
+                localStorage.removeItem(
+                    "everwyn_player_id"
+                );
+
+                window.location.href =
+                    "login.html";
+            }
+        );
+
+
+        /* ==========================================
+           START EVERWYN HUB
+        ========================================== */
+
+        async function startHub() {
+
+            try {
+
+                if (!loadSession()) {
+                    return;
+                }
+
+
+                document.getElementById(
+                    "loadingText"
+                ).textContent =
+                    "Finding your Everwyn identity...";
+
+
+                await resolvePlayer();
+
+
+                document.getElementById(
+                    "loadingText"
+                ).textContent =
+                    "Preparing your Player Hub...";
+
+
+                await loadHubData();
+
+
+                if (
+                    !hubData.character ||
+                    hubData.character
+                        .character_creation_complete !==
+                        true
+                ) {
+
+                    window.location.href =
+                        "character-creator.html";
+
+                    return;
+                }
+
+
+                renderHub();
+
+
+                document.getElementById(
+                    "loadingScreen"
+                ).classList.add(
+                    "hidden"
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Everwyn Player Hub error:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "loadingText"
+                ).textContent =
+                    "Everwyn could not load your Hub.";
+
+
+                setTimeout(
+                    () => {
+
+                        showToast(
+                            "Your session may have expired. Please log in again."
+                        );
+
+                    },
+                    300
+                );
+            }
+        }
+
+
+        startHub();
+    </script>
+
+</body>
+</html>
