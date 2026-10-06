@@ -520,19 +520,19 @@
 }
 /* FAE */
 
-.avatar.species-fae .ear {
+.avatar.species-fae:not([class*="ear-"]) .ear {
     width: 28px;
     height: 15px;
     border-radius: 80% 10% 80% 20%;
     top: 72px;
 }
 
-.avatar.species-fae .ear.left {
+.avatar.species-fae:not([class*="ear-"]) .ear.left {
     left: 13px;
     transform: rotate(-25deg);
 }
 
-.avatar.species-fae .ear.right {
+.avatar.species-fae:not([class*="ear-"]) .ear.right {
     right: 13px;
     transform: rotate(25deg) scaleX(-1);
 }
