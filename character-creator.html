@@ -457,23 +457,6 @@
         0 0 45px rgba(91, 61, 119, .42),
         inset 0 0 32px rgba(91, 61, 119, .18);
 }
-
-
-/* ARCANE */
-
-.avatar.aura-arcane_01 .species-aura {
-    display: block;
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(154, 111, 190, .18),
-            transparent 65%
-        );
-    box-shadow:
-        0 0 48px rgba(165, 119, 205, .48),
-        inset 0 0 30px rgba(165, 119, 205, .20);
-}
-
 /* FAE */
 
 .avatar.species-fae .ear {
@@ -543,7 +526,7 @@
         0 0 9px rgba(216,189,121,.9);
 }
 
-.avatar.species-celestial .species-aura {
+.avatar.species-celestial:not([class*="aura-"]) .species-aura {
     display: block;
     box-shadow:
         0 0 28px rgba(222,199,134,.28),
@@ -565,9 +548,8 @@
         0 0 10px rgba(128,91,167,.85);
 }
 
-.avatar.species-shadowkin .species-aura {
+.avatar.species-shadowkin:not([class*="aura-"]) .species-aura {
     display: block;
-    background:
         radial-gradient(
             ellipse,
             rgba(95,65,125,.10),
