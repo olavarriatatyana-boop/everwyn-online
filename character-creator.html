@@ -540,19 +540,19 @@
 
 /* ELF */
 
-.avatar.species-elf .ear {
+.avatar.species-elf:not([class*="ear-"]) .ear {
     width: 34px;
     height: 13px;
     border-radius: 90% 10% 90% 10%;
     top: 70px;
 }
 
-.avatar.species-elf .ear.left {
+.avatar.species-elf:not([class*="ear-"]) .ear.left {
     left: 7px;
     transform: rotate(-18deg);
 }
 
-.avatar.species-elf .ear.right {
+.avatar.species-elf:not([class*="ear-"]) .ear.right {
     right: 7px;
     transform: rotate(18deg) scaleX(-1);
 }
