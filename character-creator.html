@@ -2867,15 +2867,48 @@ const SUPABASE_KEY =
 
 
 /* =====================================================
-   DEVELOPMENT PLAYER
+   CURRENT LOGGED-IN PLAYER
+========================================================= */
+let CURRENT_PLAYER_ID = null;
+async function loadCurrentPlayer() {
+    try {
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/rpc/ensure_player_for_profile",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": "Bearer " + localStorage.getItem("everwyn_access_token"),
+                    "Content-Type": "application/json"
+                },
+                body: "{}"
+            }
+        );
 
-   Temporary while we build authentication.
-   Yanola currently belongs to player 3.
-===================================================== */
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
 
-const CURRENT_PLAYER_ID = 3;
+        CURRENT_PLAYER_ID = await response.json();
 
+        console.log(
+            "Everwyn player loaded:",
+            CURRENT_PLAYER_ID
+        );
 
+        return CURRENT_PLAYER_ID;
+
+    } catch (error) {
+        console.error(
+            "Could not load Everwyn player:",
+            error
+        );
+
+        return null;
+    }
+}
+loadCurrentPlayer();
 /* =====================================================
    SAVE CHARACTER TO SUPABASE
 ===================================================== */
@@ -2930,7 +2963,27 @@ async function saveCharacter() {
 
 
     try {
+        /* -------------------------------------------
+           MAKE SURE PLAYER IS LOADED
+        -------------------------------------------- */
 
+        if (!CURRENT_PLAYER_ID) {
+
+            saveNote.textContent =
+                "Connecting your Everwyn profile...";
+
+            await loadCurrentPlayer();
+
+        }
+
+
+        if (!CURRENT_PLAYER_ID) {
+
+            throw new Error(
+                "Your Everwyn player profile could not be loaded."
+            );
+
+        }
         /* -------------------------------------------
            DATA WE WANT TO SAVE
         -------------------------------------------- */
@@ -2969,12 +3022,30 @@ async function saveCharacter() {
 
         };
 
-
         /* -------------------------------------------
-           UPDATE PLAYER 3'S CHARACTER
+           CREATE OR UPDATE CURRENT PLAYER CHARACTER
         -------------------------------------------- */
 
-        const response =
+        const accessToken =
+            localStorage.getItem(
+                "everwyn_access_token"
+            );
+
+
+        if (!accessToken) {
+
+            throw new Error(
+                "Your login session could not be found. Please log in again."
+            );
+
+        }
+
+
+        /* -------------------------------------------
+           CHECK FOR EXISTING CHARACTER
+        -------------------------------------------- */
+
+        const checkResponse =
             await fetch(
 
                 SUPABASE_URL +
@@ -2982,12 +3053,10 @@ async function saveCharacter() {
                 "?player_id=eq." +
                 encodeURIComponent(
                     CURRENT_PLAYER_ID
-                ),
+                ) +
+                "&select=id",
 
                 {
-
-                    method:
-                        "PATCH",
 
                     headers: {
 
@@ -2996,24 +3065,140 @@ async function saveCharacter() {
 
                         "Authorization":
                             "Bearer " +
-                            SUPABASE_KEY,
+                            accessToken
 
-                        "Content-Type":
-                            "application/json",
-
-                        "Prefer":
-                            "return=representation"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            characterUpdate
-                        )
+                    }
 
                 }
 
             );
+
+
+        if (!checkResponse.ok) {
+
+            const errorText =
+                await checkResponse.text();
+
+            throw new Error(
+                "Could not check your character. " +
+                "HTTP " +
+                checkResponse.status +
+                " — " +
+                errorText
+            );
+
+        }
+
+
+        const existingCharacters =
+            await checkResponse.json();
+
+
+        let response;
+
+
+        /* -------------------------------------------
+           UPDATE EXISTING CHARACTER
+        -------------------------------------------- */
+
+        if (
+            existingCharacters &&
+            existingCharacters.length > 0
+        ) {
+
+            response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/player_characters" +
+                    "?player_id=eq." +
+                    encodeURIComponent(
+                        CURRENT_PLAYER_ID
+                    ),
+
+                    {
+
+                        method:
+                            "PATCH",
+
+                        headers: {
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                "Bearer " +
+                                accessToken,
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Prefer":
+                                "return=representation"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                characterUpdate
+                            )
+
+                    }
+
+                );
+
+        }
+
+
+        /* -------------------------------------------
+           CREATE NEW CHARACTER
+        -------------------------------------------- */
+
+        else {
+
+            response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/player_characters",
+
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                "Bearer " +
+                                accessToken,
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Prefer":
+                                "return=representation"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                player_id:
+                                    CURRENT_PLAYER_ID,
+
+                                ...characterUpdate
+
+                            })
+
+                    }
+
+                );
+
+        }
 
 
         if (!response.ok) {
@@ -3043,7 +3228,7 @@ async function saveCharacter() {
         ) {
 
             throw new Error(
-                "No character record was updated."
+                "No character record was saved."
             );
 
         }
@@ -3051,14 +3236,6 @@ async function saveCharacter() {
 
         const savedCharacter =
             savedCharacters[0];
-
-
-        console.log(
-            "Everwyn character saved:",
-            savedCharacter
-        );
-
-
         /* -------------------------------------------
            REMEMBER PLAYER FOR THE GAME
         -------------------------------------------- */
@@ -3080,7 +3257,7 @@ async function saveCharacter() {
         -------------------------------------------- */
 
         window.location.href =
-            "play.html";
+    "world-map.html";
 
     }
 
