@@ -3039,7 +3039,23 @@ async function saveCharacter() {
                 true
 
         };
+        /* -------------------------------------------
+           GET LOGGED-IN SESSION TOKEN
+        -------------------------------------------- */
 
+        const accessToken =
+            localStorage.getItem(
+                "everwyn_access_token"
+            );
+
+
+        if (!accessToken) {
+
+            throw new Error(
+                "Your login session could not be found. Please log in again."
+            );
+
+        }
         /* -------------------------------------------
            CHECK FOR EXISTING CHARACTER
         -------------------------------------------- */
