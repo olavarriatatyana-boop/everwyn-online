@@ -272,6 +272,36 @@
 
         .eye.left { left: 51px; }
         .eye.right { right: 51px; }
+        /* ===============================================
+   GENDER VISUAL TRAITS
+=============================================== */
+
+/* FEMALE */
+.avatar.gender-female .head {
+    width: 88px;
+    height: 103px;
+    left: 31px;
+    border-radius: 48% 48% 46% 46%;
+}
+
+.avatar.gender-female .neck {
+    width: 30px;
+    left: 60px;
+}
+
+
+/* MALE */
+.avatar.gender-male .head {
+    width: 94px;
+    height: 101px;
+    left: 28px;
+    border-radius: 46% 46% 43% 43%;
+}
+
+.avatar.gender-male .neck {
+    width: 34px;
+    left: 58px;
+}
 /* ===============================================
    SPECIES VISUAL TRAITS
 =============================================== */
@@ -2004,7 +2034,19 @@ document
 
                 character.gender =
                     button.dataset.value;
+const avatar =
+    document.querySelector(
+        ".avatar"
+    );
 
+avatar.classList.remove(
+    "gender-female",
+    "gender-male"
+);
+
+avatar.classList.add(
+    "gender-" + character.gender
+);
             }
         );
 
@@ -2541,7 +2583,14 @@ function applyAura(
 /* =====================================================
    INITIAL SPECIES + TRAITS
 ===================================================== */
+const initialAvatar =
+    document.querySelector(
+        ".avatar"
+    );
 
+initialAvatar.classList.add(
+    "gender-" + character.gender
+);
 applySpeciesAppearance(
     character.species
 );
