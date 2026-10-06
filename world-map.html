@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>World Map | Everwyn Online</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+            overflow: hidden;
+
+            background:
+                #10151b;
+
+            color:
+                #f4eee5;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+        }
+
+
+        /* =====================================================
+           WORLD
+        ===================================================== */
+
+        #everwyn-world {
+
+            position: relative;
+
+            width: 100vw;
+            height: 100vh;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 48% 45%,
+                    rgba(117, 137, 116, 0.18),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(74, 103, 89, 0.28),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 78% 28%,
+                    rgba(107, 91, 132, 0.22),
+                    transparent 27%
+                ),
+
+                radial-gradient(
+                    circle at 70% 80%,
+                    rgba(63, 104, 121, 0.24),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #17231f,
+                    #1d2930 48%,
+                    #151a25
+                );
+
+        }
+
+
+        /* =====================================================
+           MAP TEXTURE
+        ===================================================== */
+
+        #everwyn-world::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.24;
+
+            background-image:
+
+                radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                32px 32px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .world-header {
+
+            position: absolute;
+
+            z-index: 100;
+
+            top: 28px;
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            text-align: center;
+
+            pointer-events: none;
+
+        }
+
+
+        .world-eyebrow {
+
+            color:
+                #d8bd82;
+
+            font-size:
+                10px;
+
+            letter-spacing:
+                0.32em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .world-header h1 {
+
+            margin:
+                6px 0 5px;
+
+            font-size:
+                clamp(
+                    28px,
+                    4vw,
+                    48px
+                );
+
+            font-weight:
+                normal;
+
+            letter-spacing:
+                0.04em;
+
+        }
+
+
+        .world-header p {
+
+            margin: 0;
+
+            color:
+                #bdb6c3;
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* =====================================================
+           REGION
+        ===================================================== */
+
+        .region {
+
+            position: absolute;
+
+            z-index: 10;
+
+            width: 190px;
+            min-height: 110px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 18px;
+
+            border:
+
+                1px solid
+                rgba(
+                    230,
+                    218,
+                    190,
+                    0.25
+                );
+
+            border-radius:
+                48% 52% 44% 56% /
+                55% 44% 56% 45%;
+
+            color:
+                #f7f0e7;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 35%,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        0.09
+                    ),
+                    transparent 50%
+                ),
+
+                rgba(
+                    34,
+                    45,
+                    42,
+                    0.88
+                );
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.24
+                ),
+
+                inset 0 0 35px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.025
+                );
+
+            text-align:
+                center;
+
+            cursor:
+                pointer;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .region:hover {
+
+            transform:
+                translateY(-5px)
+                scale(1.03);
+
+            border-color:
+                rgba(
+                    224,
+                    194,
+                    128,
+                    0.70
+                );
+
+            box-shadow:
+
+                0 20px 45px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.34
+                ),
+
+                0 0 25px
+                rgba(
+                    190,
+                    163,
+                    214,
+                    0.12
+                );
+
+        }
+
+
+        .region-symbol {
+
+            margin-bottom:
+                8px;
+
+            color:
+                #ddc58e;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .region-name {
+
+            font-size:
+                16px;
+
+            letter-spacing:
+                0.04em;
+
+        }
+
+
+        .region-type {
+
+            margin-top:
+                5px;
+
+            color:
+                #aaa5b2;
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                0.12em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           REGION POSITIONS
+        ===================================================== */
+
+        #lumen-city {
+
+            top: 31%;
+            left: 41%;
+
+            background:
+                rgba(
+                    52,
+                    52,
+                    66,
+                    0.92
+                );
+
+        }
+
+
+        #willowmere {
+
+            top: 57%;
+            left: 21%;
+
+            background:
+                rgba(
+                    52,
+                    74,
+                    57,
+                    0.92
+                );
+
+        }
+
+
+        #silverleaf {
+
+            top: 22%;
+            left: 17%;
+
+            background:
+                rgba(
+                    60,
+                    78,
+                    72,
+                    0.92
+                );
+
+        }
+
+
+        #moonwood {
+
+            top: 58%;
+            left: 47%;
+
+            background:
+                rgba(
+                    39,
+                    66,
+                    55,
+                    0.94
+                );
+
+        }
+
+
+        #azure-coast {
+
+            top: 49%;
+            left: 72%;
+
+            background:
+                rgba(
+                    45,
+                    70,
+                    82,
+                    0.94
+                );
+
+        }
+
+
+        #arcana {
+
+            top: 19%;
+            left: 70%;
+
+            background:
+                rgba(
+                    68,
+                    53,
+                    82,
+                    0.94
+                );
+
+        }
+
+
+        /* =====================================================
+           MAP DECORATIONS
+        ===================================================== */
+
+        .map-moon {
+
+            position: absolute;
+
+            z-index: 1;
+
+            width: 160px;
+            height: 160px;
+
+            right: 8%;
+            top: 7%;
+
+            border-radius:
+                50%;
+
+            background:
+
+                radial-gradient(
+                    circle at 35% 35%,
+                    #fff8df,
+                    #d7c89e 65%,
+                    #aa9d7c
+                );
+
+            opacity:
+                0.10;
+
+            box-shadow:
+                0 0 80px
+                rgba(
+                    224,
+                    203,
+                    150,
+                    0.15
+                );
+
+        }
+
+
+        .map-label {
+
+            position: absolute;
+
+            z-index: 2;
+
+            color:
+                rgba(
+                    224,
+                    216,
+                    205,
+                    0.22
+                );
+
+            font-size:
+                10px;
+
+            letter-spacing:
+                0.30em;
+
+            text-transform:
+                uppercase;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .north-label {
+
+            top: 17%;
+            left: 44%;
+
+        }
+
+
+        .south-label {
+
+            bottom: 8%;
+            left: 42%;
+
+        }
+
+
+        /* =====================================================
+           PLAYER
+        ===================================================== */
+
+        .player-marker {
+
+            position: absolute;
+
+            z-index: 50;
+
+            top: 48%;
+            left: 48%;
+
+            width: 18px;
+            height: 18px;
+
+            transform:
+                rotate(45deg);
+
+            background:
+                #e7cf98;
+
+            border:
+                3px solid
+                #fff4d8;
+
+            box-shadow:
+                0 0 18px
+                rgba(
+                    231,
+                    207,
+                    152,
+                    0.85
+                );
+
+        }
+
+
+        /* =====================================================
+           BOTTOM HUD
+        ===================================================== */
+
+        .world-hud {
+
+            position: absolute;
+
+            z-index: 100;
+
+            left: 50%;
+            bottom: 20px;
+
+            transform:
+                translateX(-50%);
+
+            padding:
+                10px 18px;
+
+            border:
+                1px solid
+                rgba(
+                    230,
+                    218,
+                    190,
+                    0.18
+                );
+
+            border-radius:
+                14px;
+
+            color:
+                #bdb6c3;
+
+            background:
+                rgba(
+                    13,
+                    16,
+                    23,
+                    0.88
+                );
+
+            font-size:
+                10px;
+
+            letter-spacing:
+                0.08em;
+
+            backdrop-filter:
+                blur(12px);
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (
+            max-width: 800px
+        ) {
+
+            body {
+                overflow:
+                    auto;
+            }
+
+
+            #everwyn-world {
+
+                min-height:
+                    1000px;
+
+                height:
+                    auto;
+
+            }
+
+
+            .region {
+
+                width:
+                    150px;
+
+                min-height:
+                    95px;
+
+            }
+
+
+            #silverleaf {
+                top: 18%;
+                left: 5%;
+            }
+
+
+            #lumen-city {
+                top: 32%;
+                left: 48%;
+            }
+
+
+            #arcana {
+                top: 18%;
+                left: 53%;
+            }
+
+
+            #willowmere {
+                top: 51%;
+                left: 7%;
+            }
+
+
+            #moonwood {
+                top: 67%;
+                left: 40%;
+            }
+
+
+            #azure-coast {
+                top: 50%;
+                left: 55%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main id="everwyn-world">
+
+
+        <div class="map-moon"></div>
+
+
+        <!-- WORLD TITLE -->
+
+        <header class="world-header">
+
+            <div class="world-eyebrow">
+                Everwyn Online
+            </div>
+
+            <h1>
+                The Realm of Everwyn
+            </h1>
+
+            <p>
+                Choose where your story continues.
+            </p>
+
+        </header>
+
+
+        <!-- MAP LABELS -->
+
+        <div class="map-label north-label">
+            Northern Everwyn
+        </div>
+
+        <div class="map-label south-label">
+            Southern Everwyn
+        </div>
+
+
+        <!-- SILVERLEAF -->
+
+        <button
+            class="region"
+            id="silverleaf"
+            type="button"
+            data-region="Silverleaf Countryside"
+        >
+
+            <span class="region-symbol">
+                ❧
+            </span>
+
+            <span class="region-name">
+                Silverleaf Countryside
+            </span>
+
+            <span class="region-type">
+                Countryside
+            </span>
+
+        </button>
+
+
+        <!-- LUMEN CITY -->
+
+        <button
+            class="region"
+            id="lumen-city"
+            type="button"
+            data-region="Lumen City"
+        >
+
+            <span class="region-symbol">
+                ✦
+            </span>
+
+            <span class="region-name">
+                Lumen City
+            </span>
+
+            <span class="region-type">
+                Metropolitan Region
+            </span>
+
+        </button>
+
+
+        <!-- ARCANA -->
+
+        <button
+            class="region"
+            id="arcana"
+            type="button"
+            data-region="Arcana District"
+        >
+
+            <span class="region-symbol">
+                ◇
+            </span>
+
+            <span class="region-name">
+                Arcana District
+            </span>
+
+            <span class="region-type">
+                Magical Quarter
+            </span>
+
+        </button>
+
+
+        <!-- WILLOWMERE -->
+
+        <button
+            class="region"
+            id="willowmere"
+            type="button"
+            data-region="Willowmere Farmlands"
+        >
+
+            <span class="region-symbol">
+                ❦
+            </span>
+
+            <span class="region-name">
+                Willowmere Farmlands
+            </span>
+
+            <span class="region-type">
+                Farmlands
+            </span>
+
+        </button>
+
+
+        <!-- MOONWOOD -->
+
+        <button
+            class="region"
+            id="moonwood"
+            type="button"
+            data-region="Moonwood Forest"
+        >
+
+            <span class="region-symbol">
+                ☾
+            </span>
+
+            <span class="region-name">
+                Moonwood Forest
+            </span>
+
+            <span class="region-type">
+                Enchanted Forest
+            </span>
+
+        </button>
+
+
+        <!-- AZURE COAST -->
+
+        <button
+            class="region"
+            id="azure-coast"
+            type="button"
+            data-region="Azure Coast"
+        >
+
+            <span class="region-symbol">
+                ≋
+            </span>
+
+            <span class="region-name">
+                Azure Coast
+            </span>
+
+            <span class="region-type">
+                Coastal Region
+            </span>
+
+        </button>
+
+
+        <!-- CURRENT PLAYER -->
+
+        <div
+            class="player-marker"
+            title="Your current location"
+        ></div>
+
+
+        <!-- HUD -->
+
+        <div class="world-hud">
+            ✦ YANOLA · WORLD MAP · SELECT A REGION
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        /* =====================================================
+           REGION SELECTION
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".region"
+            )
+            .forEach(
+                region => {
+
+                    region.addEventListener(
+                        "click",
+                        () => {
+
+                            const regionName =
+                                region.dataset.region;
+
+                            console.log(
+                                "Selected region:",
+                                regionName
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    </script>
+
+
+</body>
+
+</html>
