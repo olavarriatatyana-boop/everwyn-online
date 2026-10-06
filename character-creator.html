@@ -3242,6 +3242,15 @@ async function saveCharacter() {
 
 
         if (!accessToken) {
+               if (!accessToken) {
+
+            throw new Error(
+                "Your login session could not be found. Please log in again."
+            );
+
+        }
+
+
         /* -------------------------------------------
            SAVE PROFILE USERNAME
         -------------------------------------------- */
@@ -3388,11 +3397,11 @@ async function saveCharacter() {
             );
 
         }
-            throw new Error(
-                "Your login session could not be found. Please log in again."
-            );
 
-        }
+
+        /* -------------------------------------------
+           CHECK FOR EXISTING CHARACTER
+        -------------------------------------------- */
         /* -------------------------------------------
            CHECK FOR EXISTING CHARACTER
         -------------------------------------------- */
