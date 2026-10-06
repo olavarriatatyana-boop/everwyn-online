@@ -277,13 +277,35 @@
 =============================================== */
 
 /* FEMALE */
-.avatar.gender-female .head {
-    width: 88px;
-    height: 103px;
-    left: 31px;
-    border-radius: 48% 48% 46% 46%;
-}
+.avatar.gender-female .body {
+    width: 90px;
+    height: 105px;
+    left: 30px;
 
+    border-radius:
+        32px 32px
+        24px 24px;
+
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+
+        94% 28%,
+        82% 48%,
+
+        76% 62%,
+        88% 78%,
+
+        100% 100%,
+        0% 100%,
+
+        12% 78%,
+        24% 62%,
+
+        18% 48%,
+        6% 28%
+    );
+}
 .avatar.gender-female .neck {
     width: 30px;
     left: 60px;
