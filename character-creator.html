@@ -1590,7 +1590,7 @@
     ===================================================== */
 
     const character = {
-
+    gender: "female",
     character_name: "Traveler",
 
     species: "human",
@@ -1757,7 +1757,31 @@
 
         }
     );
+<div class="option-section">
 
+    <h3>Gender</h3>
+
+    <div class="choice-grid">
+
+        <button
+            type="button"
+            class="gender-choice selected"
+            data-value="female"
+        >
+            Female
+        </button>
+
+        <button
+            type="button"
+            class="gender-choice"
+            data-value="male"
+        >
+            Male
+        </button>
+
+    </div>
+
+</div>
 /* =====================================================
    PROFILE USERNAME
 ===================================================== */
@@ -1935,6 +1959,41 @@ usernameInput.addEventListener(
 
     }
 );
+    /* =====================================================
+   GENDER
+===================================================== */
+
+document
+    .querySelectorAll(".gender-choice")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".gender-choice")
+                    .forEach(choice => {
+
+                        choice.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                character.gender =
+                    button.dataset.value;
+
+            }
+        );
+
+    });
     /* =====================================================
        SPECIES
     ===================================================== */
@@ -3184,7 +3243,8 @@ async function saveCharacter() {
 
             character_name:
                 cleanName,
-
+             gender:
+                character.gender,
             species:
                 character.species,
 
