@@ -283,7 +283,68 @@
     pointer-events: none;
 }
 
+/* ===============================================
+   CUSTOM EAR STYLES
+=============================================== */
 
+/* SOFT POINT */
+
+.avatar.ear-ear_soft_01 .ear {
+    width: 28px;
+    height: 15px;
+    border-radius: 80% 10% 80% 20%;
+    top: 72px;
+}
+
+.avatar.ear-ear_soft_01 .ear.left {
+    left: 13px;
+    transform: rotate(-25deg);
+}
+
+.avatar.ear-ear_soft_01 .ear.right {
+    right: 13px;
+    transform: rotate(25deg) scaleX(-1);
+}
+
+
+/* LONG POINT */
+
+.avatar.ear-ear_long_01 .ear {
+    width: 39px;
+    height: 13px;
+    border-radius: 90% 8% 90% 8%;
+    top: 69px;
+}
+
+.avatar.ear-ear_long_01 .ear.left {
+    left: 2px;
+    transform: rotate(-18deg);
+}
+
+.avatar.ear-ear_long_01 .ear.right {
+    right: 2px;
+    transform: rotate(18deg) scaleX(-1);
+}
+
+
+/* SWEPT */
+
+.avatar.ear-ear_swept_01 .ear {
+    width: 34px;
+    height: 14px;
+    border-radius: 85% 10% 85% 15%;
+    top: 74px;
+}
+
+.avatar.ear-ear_swept_01 .ear.left {
+    left: 5px;
+    transform: rotate(-38deg);
+}
+
+.avatar.ear-ear_swept_01 .ear.right {
+    right: 5px;
+    transform: rotate(38deg) scaleX(-1);
+}
 /* ===============================================
    CUSTOM MAGICAL MARKINGS
 =============================================== */
@@ -1721,6 +1782,9 @@ character.aura_style = null;
 applyMagicalMarking(
     null
 );
+                applyEarStyle(
+    null
+);
 applyAura(
     null
 );
@@ -2036,7 +2100,17 @@ if (
     applyMagicalMarking(
         value
     );
+/* Apply visual ear style */
 
+if (
+    trait === "ear_style"
+) {
+
+    applyEarStyle(
+        value
+    );
+
+}
 }
 /* Apply visual aura */
 
@@ -2059,7 +2133,42 @@ if (
         );
 
     });
+/* =====================================================
+   APPLY EAR STYLE
+===================================================== */
 
+function applyEarStyle(
+    earStyle
+) {
+
+    const avatar =
+        document.querySelector(
+            ".avatar"
+        );
+
+    if (!avatar) {
+        return;
+    }
+
+    /* Remove previous custom ear style */
+
+    avatar.classList.remove(
+        "ear-ear_soft_01",
+        "ear-ear_long_01",
+        "ear-ear_swept_01"
+    );
+
+    /* Apply selected ear style */
+
+    if (earStyle) {
+
+        avatar.classList.add(
+            "ear-" + earStyle
+        );
+
+    }
+
+}
 /* =====================================================
    APPLY MAGICAL MARKING
 ===================================================== */
