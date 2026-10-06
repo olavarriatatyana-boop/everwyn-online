@@ -2050,8 +2050,6 @@ function updateFantasyTraits(
     }
 
 }
-
-
 /* =====================================================
    FANTASY TRAIT BUTTONS
 ===================================================== */
@@ -2091,38 +2089,47 @@ document
 
                 character[trait] =
                     value;
-/* Apply visual fantasy trait */
 
-if (
-    trait === "marking_style"
-) {
 
-    applyMagicalMarking(
-        value
-    );
-/* Apply visual ear style */
+                /* Apply visual magical marking */
 
-if (
-    trait === "ear_style"
-) {
+                if (
+                    trait === "marking_style"
+                ) {
 
-    applyEarStyle(
-        value
-    );
+                    applyMagicalMarking(
+                        value
+                    );
 
-}
-}
-/* Apply visual aura */
+                }
 
-if (
-    trait === "aura_style"
-) {
 
-    applyAura(
-        value
-    );
+                /* Apply visual ear style */
 
-}
+                if (
+                    trait === "ear_style"
+                ) {
+
+                    applyEarStyle(
+                        value
+                    );
+
+                }
+
+
+                /* Apply visual aura */
+
+                if (
+                    trait === "aura_style"
+                ) {
+
+                    applyAura(
+                        value
+                    );
+
+                }
+
+
                 console.log(
                     "Fantasy trait selected:",
                     trait,
@@ -2133,6 +2140,8 @@ if (
         );
 
     });
+
+
 /* =====================================================
    APPLY EAR STYLE
 ===================================================== */
@@ -2150,6 +2159,7 @@ function applyEarStyle(
         return;
     }
 
+
     /* Remove previous custom ear style */
 
     avatar.classList.remove(
@@ -2157,6 +2167,7 @@ function applyEarStyle(
         "ear-long_01",
         "ear-swept_01"
     );
+
 
     /* Apply selected ear style */
 
