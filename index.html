@@ -1,217 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Explore Everwyn | Everwyn Online</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>Everwyn Online</title>
 
-<body>
+    <style>
 
-    <header>
-        <h1>Explore Everwyn</h1>
-        <p>
-            Discover places, people, activities, and hidden corners of the world.
-        </p>
-    </header>
+        * {
+            box-sizing: border-box;
+        }
 
-    <main>
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
 
-        <section>
-            <h2>World Regions</h2>
+        body {
+            min-height: 100vh;
 
-            <div id="regions">
-                <p>Loading Everwyn...</p>
-            </div>
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        </section>
+            overflow: hidden;
 
-        <section>
-            <a href="game.html">← Back to Game</a>
-        </section>
+            color: #f5efe6;
 
-    </main>
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-    <script>
+            background:
+                radial-gradient(
+                    circle at 50% 35%,
+                    rgba(158, 131, 184, 0.20),
+                    transparent 30%
+                ),
 
-        const SUPABASE_URL =
-            "https://iajvwhrjutqkqqvbknth.supabase.co";
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(71, 112, 89, 0.18),
+                    transparent 32%
+                ),
 
-        const SUPABASE_KEY =
-            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+                radial-gradient(
+                    circle at 85% 70%,
+                    rgba(68, 103, 124, 0.18),
+                    transparent 32%
+                ),
 
-        const regionsContainer =
-            document.getElementById("regions");
-
-
-        function escapeHtml(value) {
-
-            const div =
-                document.createElement("div");
-
-            div.textContent =
-                value ?? "";
-
-            return div.innerHTML;
+                linear-gradient(
+                    145deg,
+                    #10151b,
+                    #171b28 52%,
+                    #10141b
+                );
         }
 
 
-        async function loadRegions() {
+        /* ===============================================
+           BACKGROUND
+        =============================================== */
 
-            regionsContainer.innerHTML =
-                "<p>Exploring Everwyn...</p>";
+        .world-background {
+            position: fixed;
+            inset: 0;
 
-            try {
+            overflow: hidden;
 
-                const response =
-                    await fetch(
-
-                        SUPABASE_URL +
-                        "/rest/v1/world_regions" +
-                        "?is_active=eq.true" +
-                        "&is_unlocked=eq.true" +
-                        "&order=id.asc" +
-                        "&apikey=" +
-                        encodeURIComponent(SUPABASE_KEY),
-
-                        {
-                            method: "GET",
-                            mode: "cors"
-                        }
-
-                    );
+            pointer-events: none;
+        }
 
 
-                if (!response.ok) {
+        .world-background::before {
+            content: "";
 
-                    throw new Error(
-                        "Supabase returned HTTP " +
-                        response.status
-                    );
+            position: absolute;
+            inset: 0;
 
-                }
+            opacity: 0.35;
 
-
-                const regions =
-                    await response.json();
-
-
-                if (!regions.length) {
-
-                    regionsContainer.innerHTML =
-                        "<p>No regions are currently available.</p>";
-
-                    return;
-                }
-
-
-                regionsContainer.innerHTML = "";
-
-
-                regions.forEach(region => {
-
-                    const card =
-                        document.createElement("article");
-
-                    card.className =
-                        "region-card";
-
-
-                    card.innerHTML = `
-
-                        <h3>
-                            ${escapeHtml(region.name)}
-                        </h3>
-
-                        <p>
-                            ${escapeHtml(
-                                region.description ||
-                                "A mysterious part of Everwyn waiting to be explored."
-                            )}
-                        </p>
-
-                        <p>
-                            <strong>Type:</strong>
-                            ${escapeHtml(
-                                region.region_type ||
-                                "Unknown"
-                            )}
-                        </p>
-
-                        <button
-                            type="button"
-                            onclick="enterRegion(${region.id})">
-
-                            Explore ${escapeHtml(region.name)}
-
-                        </button>
-
-                    `;
-
-
-                    regionsContainer.appendChild(card);
-
-                });
-
-
-            } catch (error) {
-
-                console.error(
-                    "Everwyn region loading error:",
-                    error
+            background-image:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,0.13) 1px,
+                    transparent 1px
                 );
 
+            background-size:
+                46px 46px;
+        }
 
-                regionsContainer.innerHTML = `
 
-                    <div class="error-message">
+        .moon {
+            position: absolute;
 
-                        <h3>
-                            Everwyn could not load the regions.
-                        </h3>
+            width: 330px;
+            height: 330px;
 
-                        <p>
-                            The world server could not be reached
-                            from this page.
-                        </p>
+            top: -90px;
+            right: -60px;
 
-                        <p>
-                            Error:
-                            ${escapeHtml(error.message)}
-                        </p>
+            border-radius: 50%;
 
-                        <button
-                            type="button"
-                            onclick="loadRegions()">
+            opacity: 0.17;
 
-                            Try Again
+            background:
+                radial-gradient(
+                    circle at 35% 35%,
+                    #fff7dc,
+                    #d6c79f 62%,
+                    #81775f
+                );
 
-                        </button>
+            box-shadow:
+                0 0 100px
+                rgba(232, 211, 159, 0.22);
+        }
 
-                    </div>
 
-                `;
+        .mist {
+            position: absolute;
 
+            width: 700px;
+            height: 300px;
+
+            left: -180px;
+            bottom: -120px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(104, 138, 120, 0.10);
+
+            filter: blur(60px);
+        }
+
+
+        /* ===============================================
+           LANDING CONTENT
+        =============================================== */
+
+        .landing {
+            position: relative;
+            z-index: 10;
+
+            width: min(850px, 90%);
+
+            padding: 60px 35px;
+
+            text-align: center;
+        }
+
+
+        .eyebrow {
+            margin-bottom: 18px;
+
+            color: #d9c18b;
+
+            font-size: 11px;
+
+            letter-spacing: 0.38em;
+
+            text-transform: uppercase;
+        }
+
+
+        h1 {
+            margin: 0;
+
+            font-size:
+                clamp(
+                    52px,
+                    9vw,
+                    105px
+                );
+
+            font-weight: normal;
+
+            line-height: 0.95;
+
+            letter-spacing: 0.025em;
+
+            text-shadow:
+                0 12px 35px
+                rgba(0,0,0,0.38);
+        }
+
+
+        .subtitle {
+            margin:
+                24px auto 0;
+
+            max-width: 600px;
+
+            color: #c5bec9;
+
+            font-size:
+                clamp(
+                    15px,
+                    2vw,
+                    19px
+                );
+
+            line-height: 1.7;
+        }
+
+
+        .divider {
+            width: 90px;
+            height: 1px;
+
+            margin:
+                31px auto;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #d8bd82,
+                    transparent
+                );
+        }
+
+
+        /* ===============================================
+           ENTER BUTTON
+        =============================================== */
+
+        .enter-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 220px;
+
+            padding:
+                15px 28px;
+
+            border:
+                1px solid
+                rgba(222, 197, 141, 0.52);
+
+            border-radius: 12px;
+
+            color: #171717;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ead9ae,
+                    #c8ae78
+                );
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            letter-spacing: 0.16em;
+
+            text-decoration: none;
+
+            text-transform: uppercase;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0,0,0,0.30);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .enter-button:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 17px 40px
+                rgba(0,0,0,0.40);
+        }
+
+
+        .discover {
+            margin-top: 25px;
+
+            color: #8f8997;
+
+            font-size: 10px;
+
+            letter-spacing: 0.18em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* ===============================================
+           DECORATION
+        =============================================== */
+
+        .sigil {
+            margin-bottom: 24px;
+
+            color: #d9c18b;
+
+            font-size: 30px;
+
+            opacity: 0.85;
+        }
+
+
+        .corner {
+            position: fixed;
+
+            width: 70px;
+            height: 70px;
+
+            opacity: 0.24;
+
+            pointer-events: none;
+        }
+
+
+        .corner.top-left {
+            top: 25px;
+            left: 25px;
+
+            border-top:
+                1px solid #d8bd82;
+
+            border-left:
+                1px solid #d8bd82;
+        }
+
+
+        .corner.bottom-right {
+            right: 25px;
+            bottom: 25px;
+
+            border-right:
+                1px solid #d8bd82;
+
+            border-bottom:
+                1px solid #d8bd82;
+        }
+
+
+        /* ===============================================
+           MOBILE
+        =============================================== */
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .landing {
+                padding:
+                    45px 20px;
+            }
+
+            .moon {
+                width: 220px;
+                height: 220px;
+            }
+
+            .subtitle {
+                line-height: 1.55;
             }
 
         }
 
+    </style>
 
-        function enterRegion(regionId) {
-
-            window.location.href =
-                "region.html?id=" +
-                encodeURIComponent(regionId);
-
-        }
+</head>
 
 
-        loadRegions();
+<body>
 
-    </script>
+
+    <div
+        class="world-background"
+        aria-hidden="true"
+    >
+
+        <div class="moon"></div>
+
+        <div class="mist"></div>
+
+    </div>
+
+
+    <div
+        class="corner top-left"
+        aria-hidden="true"
+    ></div>
+
+    <div
+        class="corner bottom-right"
+        aria-hidden="true"
+    ></div>
+
+
+    <main class="landing">
+
+
+        <div class="sigil">
+            ✦
+        </div>
+
+
+        <div class="eyebrow">
+            A Living Modern Fantasy World
+        </div>
+
+
+        <h1>
+            Everwyn
+        </h1>
+
+
+        <p class="subtitle">
+
+            Beyond the familiar lies a world
+            shaped by magic, ambition,
+            friendship, mystery, and the lives
+            of those who call it home.
+
+        </p>
+
+
+        <div class="divider"></div>
+
+
+        <a
+            class="enter-button"
+            href="character-creator.html"
+        >
+            Enter Everwyn
+        </a>
+
+
+        <div class="discover">
+            Your story begins here
+        </div>
+
+
+    </main>
+
 
 </body>
+
 </html>
