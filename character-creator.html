@@ -3242,7 +3242,152 @@ async function saveCharacter() {
 
 
         if (!accessToken) {
+        /* -------------------------------------------
+           SAVE PROFILE USERNAME
+        -------------------------------------------- */
 
+        const cleanUsername =
+            usernameInput.value.trim();
+
+
+        if (!cleanUsername) {
+
+            throw new Error(
+                "Choose a username before entering Everwyn."
+            );
+
+        }
+
+
+        if (cleanUsername.length < 3) {
+
+            throw new Error(
+                "Your username must be at least 3 characters."
+            );
+
+        }
+
+
+        if (!usernameAvailable) {
+
+            throw new Error(
+                "Choose an available username before entering Everwyn."
+            );
+
+        }
+
+
+        const userId =
+            localStorage.getItem(
+                "everwyn_user_id"
+            );
+
+
+        if (!userId) {
+
+            throw new Error(
+                "Your Everwyn account could not be identified. Please log in again."
+            );
+
+        }
+
+
+        const profileResponse =
+            await fetch(
+
+                SUPABASE_URL +
+                "/rest/v1/profiles" +
+                "?id=eq." +
+                encodeURIComponent(
+                    userId
+                ),
+
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            accessToken,
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Prefer":
+                            "return=representation"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            username:
+                                cleanUsername
+
+                        })
+
+                }
+
+            );
+
+
+        if (!profileResponse.ok) {
+
+            const errorText =
+                await profileResponse.text();
+
+
+            if (
+                profileResponse.status === 409 ||
+                errorText.includes(
+                    "profiles_username"
+                )
+            ) {
+
+                usernameAvailable =
+                    false;
+
+                usernameMessage.textContent =
+                    "That username is already taken. Choose another.";
+
+                throw new Error(
+                    "That username was just taken. Choose another username."
+                );
+
+            }
+
+
+            throw new Error(
+                "Everwyn could not save your username. " +
+                "HTTP " +
+                profileResponse.status +
+                " — " +
+                errorText
+            );
+
+        }
+
+
+        const savedProfiles =
+            await profileResponse.json();
+
+
+        if (
+            !savedProfiles ||
+            savedProfiles.length === 0
+        ) {
+
+            throw new Error(
+                "Your username could not be saved."
+            );
+
+        }
             throw new Error(
                 "Your login session could not be found. Please log in again."
             );
