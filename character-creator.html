@@ -991,60 +991,103 @@
     </p>
 
 </div>
-        <div class="tab-content" data-content="identity">
+       <div class="tab-content" data-content="identity">
 
-            <div class="option-section">
+    <div class="option-section">
 
-                <h3>Character Name</h3>
+        <h3>Gender</h3>
 
-                <input
-                    id="character-name"
-                    class="name-input"
-                    maxlength="20"
-                    value="Traveler"
-                    placeholder="Enter a name"
-                >
+        <div class="choice-grid">
 
-            </div>
+            <button
+                type="button"
+                class="choice gender-choice selected"
+                data-value="female"
+            >
+                Female
+            </button>
 
-
-            <div class="option-section">
-
-                <h3>Species</h3>
-
-                <div class="choice-grid">
-
-                    <button class="choice species-choice selected" data-value="human">
-                        Human
-                    </button>
-
-                    <button class="choice species-choice" data-value="fae">
-                        Fae
-                    </button>
-
-                    <button class="choice species-choice" data-value="elf">
-                        Elf
-                    </button>
-
-                    <button class="choice species-choice" data-value="witchborn">
-                        Witchborn
-                    </button>
-
-                    <button class="choice species-choice" data-value="celestial">
-                        Celestial
-                    </button>
-
-                    <button class="choice species-choice" data-value="shadowkin">
-                        Shadowkin
-                    </button>
-
-                </div>
-
-            </div>
+            <button
+                type="button"
+                class="choice gender-choice"
+                data-value="male"
+            >
+                Male
+            </button>
 
         </div>
 
+    </div>
 
+
+    <div class="option-section">
+
+        <h3>Character Name</h3>
+
+        <input
+            id="character-name"
+            class="name-input"
+            maxlength="20"
+            value="Traveler"
+            placeholder="Enter a name"
+        >
+
+    </div>
+
+
+    <div class="option-section">
+
+        <h3>Species</h3>
+
+        <div class="choice-grid">
+
+            <button
+                class="choice species-choice selected"
+                data-value="human"
+            >
+                Human
+            </button>
+
+            <button
+                class="choice species-choice"
+                data-value="fae"
+            >
+                Fae
+            </button>
+
+            <button
+                class="choice species-choice"
+                data-value="elf"
+            >
+                Elf
+            </button>
+
+            <button
+                class="choice species-choice"
+                data-value="witchborn"
+            >
+                Witchborn
+            </button>
+
+            <button
+                class="choice species-choice"
+                data-value="celestial"
+            >
+                Celestial
+            </button>
+
+            <button
+                class="choice species-choice"
+                data-value="shadowkin"
+            >
+                Shadowkin
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
         <!-- BODY -->
 
         <div class="tab-content" data-content="body" hidden>
@@ -1757,34 +1800,6 @@
 
         }
     );
-<div class="option-section">
-
-    <h3>Gender</h3>
-
-    <div class="choice-grid">
-
-        <button
-            type="button"
-            class="gender-choice selected"
-            data-value="female"
-        >
-            Female
-        </button>
-
-        <button
-            type="button"
-            class="gender-choice"
-            data-value="male"
-        >
-            Male
-        </button>
-
-    </div>
-
-</div>
-/* =====================================================
-   PROFILE USERNAME
-===================================================== */
 
 /* =====================================================
    PROFILE USERNAME
