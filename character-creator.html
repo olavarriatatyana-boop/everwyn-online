@@ -2988,7 +2988,7 @@ async function saveCharacter() {
            DATA WE WANT TO SAVE
         -------------------------------------------- */
 
-        const characterUpdate = {
+               const characterUpdate = {
 
             character_name:
                 cleanName,
@@ -3017,29 +3017,28 @@ async function saveCharacter() {
             shoes_item:
                 character.shoes_item,
 
+            ear_style:
+                character.ear_style,
+
+            horn_style:
+                character.horn_style,
+
+            wing_style:
+                character.wing_style,
+
+            tail_style:
+                character.tail_style,
+
+            marking_style:
+                character.marking_style,
+
+            aura_style:
+                character.aura_style,
+
             character_creation_complete:
                 true
 
         };
-
-        /* -------------------------------------------
-           CREATE OR UPDATE CURRENT PLAYER CHARACTER
-        -------------------------------------------- */
-
-        const accessToken =
-            localStorage.getItem(
-                "everwyn_access_token"
-            );
-
-
-        if (!accessToken) {
-
-            throw new Error(
-                "Your login session could not be found. Please log in again."
-            );
-
-        }
-
 
         /* -------------------------------------------
            CHECK FOR EXISTING CHARACTER
