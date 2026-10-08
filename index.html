@@ -1,467 +1,341 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Everwyn Online</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            min-height: 100%;
-        }
-
-        body {
-            min-height: 100vh;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            color: #f5efe6;
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            background:
-                radial-gradient(
-                    circle at 50% 35%,
-                    rgba(158, 131, 184, 0.20),
-                    transparent 30%
-                ),
-
-                radial-gradient(
-                    circle at 20% 80%,
-                    rgba(71, 112, 89, 0.18),
-                    transparent 32%
-                ),
-
-                radial-gradient(
-                    circle at 85% 70%,
-                    rgba(68, 103, 124, 0.18),
-                    transparent 32%
-                ),
-
-                linear-gradient(
-                    145deg,
-                    #10151b,
-                    #171b28 52%,
-                    #10141b
-                );
-        }
-
-
-        /* ===============================================
-           BACKGROUND
-        =============================================== */
-
-        .world-background {
-            position: fixed;
-            inset: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
-        }
-
-
-        .world-background::before {
-            content: "";
-
-            position: absolute;
-            inset: 0;
-
-            opacity: 0.35;
-
-            background-image:
-                radial-gradient(
-                    circle,
-                    rgba(255,255,255,0.13) 1px,
-                    transparent 1px
-                );
-
-            background-size:
-                46px 46px;
-        }
-
-
-        .moon {
-            position: absolute;
-
-            width: 330px;
-            height: 330px;
-
-            top: -90px;
-            right: -60px;
-
-            border-radius: 50%;
-
-            opacity: 0.17;
-
-            background:
-                radial-gradient(
-                    circle at 35% 35%,
-                    #fff7dc,
-                    #d6c79f 62%,
-                    #81775f
-                );
-
-            box-shadow:
-                0 0 100px
-                rgba(232, 211, 159, 0.22);
-        }
-
-
-        .mist {
-            position: absolute;
-
-            width: 700px;
-            height: 300px;
-
-            left: -180px;
-            bottom: -120px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(104, 138, 120, 0.10);
-
-            filter: blur(60px);
-        }
-
-
-        /* ===============================================
-           LANDING CONTENT
-        =============================================== */
-
-        .landing {
-            position: relative;
-            z-index: 10;
-
-            width: min(850px, 90%);
-
-            padding: 60px 35px;
-
-            text-align: center;
-        }
-
-
-        .eyebrow {
-            margin-bottom: 18px;
-
-            color: #d9c18b;
-
-            font-size: 11px;
-
-            letter-spacing: 0.38em;
-
-            text-transform: uppercase;
-        }
-
-
-        h1 {
-            margin: 0;
-
-            font-size:
-                clamp(
-                    52px,
-                    9vw,
-                    105px
-                );
-
-            font-weight: normal;
-
-            line-height: 0.95;
-
-            letter-spacing: 0.025em;
-
-            text-shadow:
-                0 12px 35px
-                rgba(0,0,0,0.38);
-        }
-
-
-        .subtitle {
-            margin:
-                24px auto 0;
-
-            max-width: 600px;
-
-            color: #c5bec9;
-
-            font-size:
-                clamp(
-                    15px,
-                    2vw,
-                    19px
-                );
-
-            line-height: 1.7;
-        }
-
-
-        .divider {
-            width: 90px;
-            height: 1px;
-
-            margin:
-                31px auto;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    #d8bd82,
-                    transparent
-                );
-        }
-
-
-        /* ===============================================
-           ENTER BUTTON
-        =============================================== */
-
-        .enter-button {
-            display: inline-flex;
-
-            align-items: center;
-            justify-content: center;
-
-            min-width: 220px;
-
-            padding:
-                15px 28px;
-
-            border:
-                1px solid
-                rgba(222, 197, 141, 0.52);
-
-            border-radius: 12px;
-
-            color: #171717;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ead9ae,
-                    #c8ae78
-                );
-
-            font-family: inherit;
-
-            font-size: 12px;
-
-            font-weight: bold;
-
-            letter-spacing: 0.16em;
-
-            text-decoration: none;
-
-            text-transform: uppercase;
-
-            box-shadow:
-                0 12px 35px
-                rgba(0,0,0,0.30);
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-
-        .enter-button:hover {
-            transform:
-                translateY(-3px);
-
-            box-shadow:
-                0 17px 40px
-                rgba(0,0,0,0.40);
-        }
-
-
-        .discover {
-            margin-top: 25px;
-
-            color: #8f8997;
-
-            font-size: 10px;
-
-            letter-spacing: 0.18em;
-
-            text-transform: uppercase;
-        }
-
-
-        /* ===============================================
-           DECORATION
-        =============================================== */
-
-        .sigil {
-            margin-bottom: 24px;
-
-            color: #d9c18b;
-
-            font-size: 30px;
-
-            opacity: 0.85;
-        }
-
-
-        .corner {
-            position: fixed;
-
-            width: 70px;
-            height: 70px;
-
-            opacity: 0.24;
-
-            pointer-events: none;
-        }
-
-
-        .corner.top-left {
-            top: 25px;
-            left: 25px;
-
-            border-top:
-                1px solid #d8bd82;
-
-            border-left:
-                1px solid #d8bd82;
-        }
-
-
-        .corner.bottom-right {
-            right: 25px;
-            bottom: 25px;
-
-            border-right:
-                1px solid #d8bd82;
-
-            border-bottom:
-                1px solid #d8bd82;
-        }
-
-
-        /* ===============================================
-           MOBILE
-        =============================================== */
-
-        @media (
-            max-width: 600px
-        ) {
-
-            .landing {
-                padding:
-                    45px 20px;
-            }
-
-            .moon {
-                width: 220px;
-                height: 220px;
-            }
-
-            .subtitle {
-                line-height: 1.55;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#161a30">
+<title>Everwyn Online | Your Story Begins Here</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    color: #fff4e8;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    background: #161a30;
+    overflow-x: hidden;
+}
+
+.world-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,12,28,.35) 0%,
+            rgba(10,12,28,.12) 35%,
+            rgba(10,12,28,.48) 100%
+        ),
+        url("assets/backgrounds/everwyn-welcome.webp")
+        center center / cover no-repeat;
+}
+
+.site-header {
+    width: 100%;
+    padding: 25px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.brand {
+    color: #ffe5c7;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    text-shadow: 0 3px 15px #000;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 7px;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.navigation a {
+    color: #fff4e8;
+    text-decoration: none;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    transition: color .3s;
+}
+
+.navigation a:hover {
+    color: #f4c99f;
+}
+
+.header-login {
+    border: 1px solid #d8ae83;
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: #fff4e8;
+    text-decoration: none;
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    background: rgba(14,18,36,.65);
+}
+
+.landing {
+    min-height: calc(100svh - 110px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 65px 20px 100px;
+}
+
+.hero-content {
+    max-width: 1000px;
+    animation: appear 1.2s ease both;
+}
+
+.sigil {
+    font-size: 43px;
+    color: #ffdcac;
+    text-shadow: 0 0 25px #f5b77c;
+}
+
+.eyebrow {
+    margin: 15px 0;
+    font-family: "Cinzel", serif;
+    font-size: clamp(13px, 2vw, 20px);
+    letter-spacing: 7px;
+    text-shadow: 0 3px 12px #000;
+}
+
+h1 {
+    margin: 0;
+    color: #ffe5ce;
+    font-size: clamp(65px, 11vw, 150px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-shadow:
+        0 4px 4px rgba(0,0,0,.5),
+        0 0 30px rgba(241,161,135,.5);
+}
+
+.online {
+    margin: 0;
+    font-family: "Cinzel", serif;
+    font-size: clamp(14px, 2.5vw, 27px);
+    letter-spacing: 13px;
+}
+
+.subtitle {
+    margin: 27px auto 35px;
+    font-family: "Cinzel", serif;
+    font-size: clamp(10px, 1.5vw, 15px);
+    letter-spacing: 3px;
+    line-height: 2;
+    text-shadow: 0 3px 10px #000;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.hero-button {
+    min-width: 240px;
+    padding: 18px 25px;
+    border: 1px solid #e8b78c;
+    border-radius: 35px;
+    font-family: "Cinzel", serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transition:
+        transform .3s,
+        box-shadow .3s;
+}
+
+.hero-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px rgba(255,203,166,.45);
+}
+
+.enter-button {
+    color: #281d32;
+    background: linear-gradient(
+        120deg,
+        #fff0df,
+        #e8b9c9,
+        #f5d8b1
+    );
+}
+
+.create-button {
+    color: #fff1e2;
+    background: rgba(13,18,35,.82);
+}
+
+.site-footer {
+    position: relative;
+    text-align: center;
+    padding: 20px;
+    color: #f5ddc5;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px #000;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .navigation {
+        gap: 15px;
+    }
+
+    .navigation a {
+        font-size: 9px;
+    }
+
+    .header-login {
+        padding: 10px 20px;
+    }
+
+    .landing {
+        min-height: auto;
+        padding: 85px 15px 110px;
+    }
+
+    h1 {
+        font-size: clamp(53px, 13vw, 90px);
+    }
+
+    .eyebrow {
+        letter-spacing: 4px;
+    }
+
+    .online {
+        letter-spacing: 8px;
+    }
+
+    .hero-button {
+        width: min(100%, 320px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-content {
+        animation: none;
+    }
+
+    .hero-button {
+        transition: none;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<div class="world-background" aria-hidden="true"></div>
 
-    <div
-        class="world-background"
-        aria-hidden="true"
-    >
+<header class="site-header">
 
-        <div class="moon"></div>
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
 
-        <div class="mist"></div>
+    <nav class="navigation" aria-label="Main navigation">
+        <a href="index.html">HOME</a>
+        <a href="#welcome">WORLD</a>
+        <a href="#welcome">FEATURES</a>
+        <a href="#welcome">COMMUNITY</a>
+        <a href="#welcome">ABOUT</a>
+    </nav>
+
+    <a href="login.html" class="header-login">
+        ✦ LOG IN
+    </a>
+
+</header>
+
+<main class="landing" id="welcome">
+
+    <div class="hero-content">
+
+        <div class="sigil">✧</div>
+
+        <p class="eyebrow">WELCOME TO</p>
+
+        <h1>Everwyn</h1>
+
+        <p class="online">ONLINE</p>
+
+        <p class="subtitle">
+            YOUR STORY BEGINS BEYOND THE ORDINARY
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="login.html"
+               class="hero-button enter-button">
+                ✦ ENTER EVERWYN ✦
+            </a>
+
+            <a href="login.html"
+               class="hero-button create-button">
+                ✧ CREATE YOUR STORY ✧
+            </a>
+
+        </div>
 
     </div>
 
+</main>
 
-    <div
-        class="corner top-left"
-        aria-hidden="true"
-    ></div>
-
-    <div
-        class="corner bottom-right"
-        aria-hidden="true"
-    ></div>
-
-
-    <main class="landing">
-
-
-        <div class="sigil">
-            ✦
-        </div>
-
-
-        <div class="eyebrow">
-            A Living Modern Fantasy World
-        </div>
-
-
-        <h1>
-            Everwyn
-        </h1>
-
-
-        <p class="subtitle">
-
-            Beyond the familiar lies a world
-            shaped by magic, ambition,
-            friendship, mystery, and the lives
-            of those who call it home.
-
-        </p>
-
-
-        <div class="divider"></div>
-
-
-        <a
-            class="enter-button"
-            href="login.html"
-        >
-            Enter Everwyn
-        </a>
-
-
-        <div class="discover">
-            Your story begins here
-        </div>
-
-
-    </main>
-
+<footer class="site-footer">
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
 
 </body>
-
 </html>
