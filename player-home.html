@@ -2084,7 +2084,61 @@ function showLuminaApp(
             "</div>";
     }
 
+/* BUSINESSES */
 
+else if (app === "businesses") {
+
+    html =
+        "<h2>My Businesses</h2>" +
+        list(
+            hubData.businesses,
+
+            business =>
+                "<div class='panel-card'>" +
+                "<strong>" +
+                escapeHTML(business.business_name) +
+                "</strong><br>" +
+                pretty(business.business_type) +
+                "</div>",
+
+            "You haven't opened a business yet."
+        );
+}
+
+
+/* ACHIEVEMENTS */
+
+else if (app === "achievements") {
+
+    html =
+        "<h2>Achievements</h2>" +
+        list(
+            hubData.achievements,
+
+            achievement =>
+                "<div class='panel-card'>" +
+                "<strong>" +
+                escapeHTML(achievement.achievement_name) +
+                "</strong><br>" +
+                escapeHTML(achievement.description || "") +
+                "</div>",
+
+            "You haven't unlocked any achievements yet."
+        );
+}
+
+
+/* TRAVEL BAG */
+
+else if (app === "travel-bag") {
+
+    html =
+        "<h2>Travel Bag</h2>" +
+        "<div class='panel-card'>" +
+        "Your portable inventory is being prepared. " +
+        "Your belongings are currently stored in your home inventory." +
+        "</div>";
+}
     else if (
         app ===
         "settings"
