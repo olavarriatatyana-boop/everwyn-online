@@ -1,0 +1,773 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17172b">
+
+<title>Features | Everwyn Online</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================
+   GENERAL WEBSITE SETTINGS
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #fff4e8;
+    background: #17172b;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.site-header {
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    background: #161a30;
+    border-bottom: 1px solid rgba(231,188,141,0.3);
+}
+
+.brand {
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffe5c7;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.navigation a {
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: #fff4e8;
+    transition: color 0.3s ease;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    color: #f4c99f;
+}
+
+/* =========================================
+   FEATURES PAGE BACKGROUND
+========================================= */
+
+.features-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 100px 5% 115px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(157,105,145,0.30),
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 85% 65%,
+            rgba(90,80,137,0.20),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #171a30 0%,
+            #29213c 45%,
+            #171a2c 100%
+        );
+}
+
+.features-container {
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.features-intro {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 65px;
+}
+
+.section-kicker {
+    font-family: "Cinzel", serif;
+    color: #eac49e;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.features-intro h1 {
+    margin: 18px 0 25px;
+    color: #ffe4c8;
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 500;
+    line-height: 1.1;
+
+    text-shadow:
+        0 4px 15px rgba(0,0,0,0.6),
+        0 0 30px rgba(235,167,157,0.25);
+}
+
+.features-intro p {
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.7;
+    color: #f4e7dd;
+    margin: 0 auto;
+}
+
+/* =========================================
+   DECORATIVE DIVIDER
+========================================= */
+
+.ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    max-width: 600px;
+    margin: 0 auto 70px;
+    color: #eac49e;
+    font-size: 23px;
+}
+
+.ornament::before,
+.ornament::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(234,196,158,0.7)
+        );
+}
+
+.ornament::after {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   FEATURE CARDS
+========================================= */
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.feature-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    padding: 38px 30px;
+
+    border: 1px solid rgba(231,188,141,0.38);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(189,128,165,0.15),
+            transparent 60%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(65,49,79,0.96),
+            rgba(22,29,48,0.97)
+        );
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(249,206,158,0.8);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.35),
+        0 0 25px rgba(234,196,158,0.10);
+}
+
+.feature-icon {
+    font-size: 39px;
+    color: #f4cba4;
+    margin-bottom: 24px;
+    line-height: 1;
+    text-shadow: 0 0 18px rgba(243,193,157,0.3);
+}
+
+.feature-card h2 {
+    margin: 0 0 15px;
+    font-family: "Cinzel", serif;
+    color: #ffe1c3;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+}
+
+.feature-card p {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.55;
+    color: #eddfd6;
+}
+
+/* =========================================
+   FEATURE CATEGORY LABELS
+========================================= */
+
+.feature-category {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 7px 13px;
+    border: 1px solid rgba(231,188,141,0.25);
+    border-radius: 30px;
+    color: #eac49e;
+    font-family: "Cinzel", serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   CLOSING SECTION
+========================================= */
+
+.features-closing {
+    max-width: 850px;
+    margin: 100px auto 0;
+    text-align: center;
+}
+
+.features-closing h2 {
+    color: #ffe0c1;
+    font-size: clamp(39px, 5vw, 65px);
+    font-weight: 500;
+    margin: 18px 0 22px;
+}
+
+.features-closing p {
+    font-size: 24px;
+    line-height: 1.7;
+    color: #f1e1d4;
+    margin: 0;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.site-footer {
+    padding: 26px 20px;
+    background: #111625;
+    text-align: center;
+    color: #f5ddc5;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .site-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .navigation {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .navigation a {
+        font-size: 9px;
+    }
+
+    .features-page {
+        padding: 75px 18px 85px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        min-height: auto;
+        padding: 30px 25px;
+    }
+
+    .features-intro {
+        margin-bottom: 45px;
+    }
+
+    .ornament {
+        margin-bottom: 50px;
+    }
+
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .feature-card {
+        transition: none;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================
+     WEBSITE NAVIGATION
+========================================= -->
+
+<header class="site-header">
+
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
+
+    <nav class="navigation" aria-label="Main navigation">
+
+        <a href="world.html">WORLD</a>
+
+        <a
+            href="features.html"
+            class="active"
+            aria-current="page">
+            FEATURES
+        </a>
+
+        <a href="community.html">COMMUNITY</a>
+
+        <a href="about.html">ABOUT</a>
+
+    </nav>
+
+</header>
+
+<!-- =========================================
+     FEATURES PAGE
+========================================= -->
+
+<main class="features-page">
+
+<div class="features-container">
+
+    <!-- INTRODUCTION -->
+
+    <div class="features-intro">
+
+        <div class="section-kicker">
+            ✦ DISCOVER THE POSSIBILITIES ✦
+        </div>
+
+        <h1>Live Your Own Story</h1>
+
+        <p>
+            In Everwyn, your journey is yours to create.
+            Shape your identity, build the life you imagine,
+            forge unforgettable connections, and discover
+            extraordinary possibilities in a world
+            where magic meets modern living.
+            <br><br>
+            Explore the experiences envisioned for
+            Everwyn Online.
+        </p>
+
+    </div>
+
+    <div class="ornament" aria-hidden="true">✧</div>
+
+    <!-- FEATURE CARDS -->
+
+    <div class="features-grid">
+
+        <!-- CHARACTER CUSTOMIZATION -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Character Creation
+            </div>
+
+            <div class="feature-icon">✧</div>
+
+            <h2>Create Your Identity</h2>
+
+            <p>
+                Design a character that feels uniquely
+                yours. Customize facial features,
+                hairstyles, body types, skin tones,
+                clothing, and accessories to create
+                your own personal style.
+            </p>
+
+        </article>
+
+        <!-- SPECIES -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Fantasy Species
+            </div>
+
+            <div class="feature-icon">☾</div>
+
+            <h2>Choose Your Path</h2>
+
+            <p>
+                Experience Everwyn as a human,
+                vampire, mermaid, or traveler.
+                Explore distinctive cultures,
+                communities, lifestyles, and
+                opportunities connected to
+                your character's identity.
+            </p>
+
+        </article>
+
+        <!-- HOUSING -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Homes & Lifestyle
+            </div>
+
+            <div class="feature-icon">⌂</div>
+
+            <h2>A Place to Call Home</h2>
+
+            <p>
+                Find your dream home, collect
+                furniture, customize interiors,
+                and decorate your personal
+                living space. Create a home
+                that reflects your personality
+                and lifestyle.
+            </p>
+
+        </article>
+
+        <!-- RELATIONSHIPS -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Social Relationships
+            </div>
+
+            <div class="feature-icon">♡</div>
+
+            <h2>Meaningful Connections</h2>
+
+            <p>
+                Meet other players and build
+                friendships, romances, rivalries,
+                mentorships, and lifelong bonds.
+                Relationships evolve through
+                your choices and interactions.
+            </p>
+
+        </article>
+
+        <!-- BUSINESSES -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Careers & Commerce
+            </div>
+
+            <div class="feature-icon">✦</div>
+
+            <h2>Build Your Dream Business</h2>
+
+            <p>
+                Open shops, cafés, boutiques,
+                magical workshops, and other
+                player-owned businesses.
+                Develop your career, trade
+                with others, and contribute
+                to Everwyn's economy.
+            </p>
+
+        </article>
+
+        <!-- FARMING -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Farming & Crafting
+            </div>
+
+            <div class="feature-icon">❀</div>
+
+            <h2>Grow Something Wonderful</h2>
+
+            <p>
+                Plant crops, tend gardens,
+                gather resources, and discover
+                the satisfaction of creating
+                something from the ground up.
+                Build a peaceful countryside
+                lifestyle in Everwyn.
+            </p>
+
+        </article>
+
+        <!-- EXPLORATION -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                World Exploration
+            </div>
+
+            <div class="feature-icon">✺</div>
+
+            <h2>Explore the Extraordinary</h2>
+
+            <p>
+                Journey through illuminated
+                cities, enchanted forests,
+                magical marketplaces, and
+                beautiful coastal communities.
+                Discover hidden locations
+                and new experiences.
+            </p>
+
+        </article>
+
+        <!-- SOCIAL PLATFORM -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Social & Community
+            </div>
+
+            <div class="feature-icon">✉</div>
+
+            <h2>Stay Connected</h2>
+
+            <p>
+                Share stories, send messages,
+                follow friends, and participate
+                in a connected virtual society.
+                Create memories through social
+                activities and interactions.
+            </p>
+
+        </article>
+
+        <!-- PROGRESSION -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Growth & Progression
+            </div>
+
+            <div class="feature-icon">✵</div>
+
+            <h2>Write Your Legacy</h2>
+
+            <p>
+                Develop new skills, earn
+                experience, pursue personal
+                goals, and unlock new
+                opportunities. Shape your
+                character's journey through
+                the choices you make.
+            </p>
+
+        </article>
+
+        <!-- BANKING -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Economy & Banking
+            </div>
+
+            <div class="feature-icon">◇</div>
+
+            <h2>Manage Your Fortune</h2>
+
+            <p>
+                Earn credits, manage your
+                wallet, transfer funds,
+                and build your savings.
+                Experience a virtual
+                economy connected to
+                everyday life in Everwyn.
+            </p>
+
+        </article>
+
+        <!-- PLAYER TRADING -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Marketplace & Trading
+            </div>
+
+            <div class="feature-icon">⚖</div>
+
+            <h2>Trade & Collect</h2>
+
+            <p>
+                Discover unique clothing,
+                furniture, resources, and
+                collectibles. Exchange items
+                with other players and
+                explore a marketplace shaped
+                by its community.
+            </p>
+
+        </article>
+
+        <!-- ACTIVITIES -->
+
+        <article class="feature-card">
+
+            <div class="feature-category">
+                Activities & Experiences
+            </div>
+
+            <div class="feature-icon">✩</div>
+
+            <h2>Make Every Day an Adventure</h2>
+
+            <p>
+                Enjoy shared activities,
+                explore entertainment venues,
+                discover seasonal experiences,
+                and spend time with friends.
+                Make everyday life in Everwyn
+                feel extraordinary.
+            </p>
+
+        </article>
+
+    </div>
+
+    <!-- CLOSING -->
+
+    <div class="features-closing">
+
+        <div class="section-kicker">
+            ✦ YOUR WORLD · YOUR CHOICES ✦
+        </div>
+
+        <h2>A Life Beyond the Ordinary</h2>
+
+        <p>
+            Whether you dream of building a
+            flourishing business, finding love,
+            creating a beautiful home, or
+            uncovering ancient mysteries,
+            Everwyn is a place where countless
+            stories can unfold.
+            <br><br>
+            There is no single path to follow.
+            Only the one you choose to create.
+        </p>
+
+    </div>
+
+</div>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer class="site-footer">
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
+
+</body>
+</html>
