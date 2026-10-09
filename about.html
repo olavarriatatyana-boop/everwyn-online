@@ -1,7 +1,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#171a30">
@@ -10,9 +12,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
+/* GENERAL */
+
 * {
     box-sizing: border-box;
 }
@@ -30,7 +36,7 @@ body {
     overflow-x: hidden;
 }
 
-/* HEADER */
+/* NAVIGATION */
 
 .site-header {
     padding: 25px 5%;
@@ -77,7 +83,7 @@ body {
     color: #f4c99f;
 }
 
-/* ABOUT PAGE */
+/* ABOUT PAGE BACKGROUND */
 
 .about-page {
     min-height: 100vh;
@@ -107,6 +113,8 @@ body {
     margin: 0 auto;
 }
 
+/* INTRODUCTION */
+
 .intro {
     max-width: 850px;
     margin: 0 auto 75px;
@@ -127,6 +135,7 @@ body {
     font-size: clamp(48px, 7vw, 90px);
     font-weight: 500;
     line-height: 1.1;
+
     text-shadow:
         0 4px 15px rgba(0,0,0,0.6),
         0 0 30px rgba(235,167,157,0.25);
@@ -138,7 +147,7 @@ body {
     color: #f4e7dd;
 }
 
-/* DECORATION */
+/* DECORATIVE DIVIDER */
 
 .ornament {
     display: flex;
@@ -167,7 +176,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* ABOUT CONTENT */
+/* ABOUT PANELS */
 
 .about-panel {
     padding: clamp(30px, 5vw, 65px);
@@ -233,7 +242,7 @@ body {
     margin-bottom: 0;
 }
 
-/* PHILOSOPHY CARDS */
+/* GAME VALUES */
 
 .values-grid {
     display: grid;
@@ -271,7 +280,7 @@ body {
     margin: 0;
 }
 
-/* QUOTE */
+/* CREATOR QUOTE */
 
 .creator-quote {
     max-width: 800px;
@@ -323,9 +332,10 @@ footer {
     color: #f5ddc5;
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 
 @media (max-width: 700px) {
+
     .site-header {
         flex-direction: column;
         gap: 18px;
@@ -358,12 +368,13 @@ footer {
         scroll-behavior: auto;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
+<!-- WEBSITE HEADER -->
 
 <header class="site-header">
 
@@ -373,9 +384,17 @@ footer {
     </a>
 
     <nav class="navigation" aria-label="Main navigation">
+
         <a href="world.html">WORLD</a>
+
         <a href="features.html">FEATURES</a>
-        <a href="about.html" class="active" aria-current="page">ABOUT</a>
+
+        <a href="community.html">COMMUNITY</a>
+
+        <a href="about.html"
+           class="active"
+           aria-current="page">ABOUT</a>
+
     </nav>
 
 </header>
