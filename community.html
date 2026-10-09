@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community | Everwyn Online</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #171a30;
+    color: #fff0e4;
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 25px 5%;
+    background: #161a30;
+    border-bottom: 1px solid #745c70;
+}
+
+.brand {
+    color: #ffe5c7;
+    text-decoration: none;
+    font-family: "Cinzel", serif;
+    font-size: 25px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 6px;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #fff0e4;
+    text-decoration: none;
+    font: 11px "Cinzel", serif;
+    letter-spacing: 2px;
+}
+
+nav a:hover,
+nav a.active {
+    color: #f4c99f;
+}
+
+main {
+    min-height: 85vh;
+    padding: 100px 20px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse at top, #66436a55, transparent 60%),
+        linear-gradient(#171a30, #30223c, #151827);
+}
+
+.eyebrow {
+    font: 12px "Cinzel", serif;
+    letter-spacing: 4px;
+    color: #e9c39d;
+}
+
+h1 {
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 500;
+    color: #ffe0c1;
+    margin: 20px 0;
+}
+
+.description {
+    max-width: 720px;
+    margin: 0 auto 60px;
+    font-size: 25px;
+    line-height: 1.6;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 850px;
+    gap: 25px;
+    margin: auto;
+}
+
+.social-card {
+    display: block;
+    padding: 45px 25px;
+    background: linear-gradient(145deg, #49334f, #20243d);
+    border: 1px solid #ac8293;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #fff0e4;
+    transition: transform .3s, border-color .3s;
+}
+
+.social-card:hover {
+    transform: translateY(-6px);
+    border-color: #ffe0c1;
+}
+
+.social-icon {
+    font-size: 44px;
+    color: #f6cda8;
+}
+
+.social-card h2 {
+    font: 22px "Cinzel", serif;
+    color: #ffe0c1;
+}
+
+.social-card p {
+    font-size: 21px;
+    line-height: 1.5;
+}
+
+.social-card .action {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 22px;
+    border: 1px solid #dcb68f;
+    border-radius: 30px;
+    font: 11px "Cinzel", serif;
+    letter-spacing: 1px;
+}
+
+.closing {
+    margin: 70px auto 0;
+    font-size: 25px;
+    color: #f5d4b8;
+    font-style: italic;
+}
+
+footer {
+    background: #111625;
+    padding: 25px;
+    text-align: center;
+    color: #eac49e;
+    font: 10px "Cinzel", serif;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 700px) {
+    header { justify-content: center; }
+    nav { justify-content: center; gap: 15px; }
+    nav a { font-size: 9px; }
+    main { padding: 70px 18px; }
+    .social-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+        <a href="world.html">WORLD</a>
+        <a href="features.html">FEATURES</a>
+        <a href="community.html" class="active">COMMUNITY</a>
+        <a href="about.html">ABOUT</a>
+    </nav>
+</header>
+
+<main>
+    <div class="eyebrow">✦ BEYOND THE WORLD ✦</div>
+
+    <h1>Join Our Community</h1>
+
+    <p class="description">
+        The magic of Everwyn is just beginning.
+        Follow our journey as we bring a world of
+        imagination, adventure, and endless
+        possibilities to life.
+        <br><br>
+        Discover exclusive sneak peeks,
+        development updates, character reveals,
+        and everything coming to Everwyn Online.
+    </p>
+
+    <div class="social-grid">
+
+        <a class="social-card"
+           href="https://www.tiktok.com/@everwyn.online"
+           target="_blank"
+           rel="noopener noreferrer">
+
+            <div class="social-icon">✦</div>
+            <h2>TikTok</h2>
+            <p>@everwyn.online</p>
+            <p>
+                Watch the magic unfold through
+                cinematic previews, character
+                reveals, and behind-the-scenes
+                development.
+            </p>
+            <span class="action">FOLLOW ON TIKTOK ↗</span>
+        </a>
+
+        <a class="social-card"
+           href="https://www.instagram.com/everwynonline/"
+           target="_blank"
+           rel="noopener noreferrer">
+
+            <div class="social-icon">♡</div>
+            <h2>Instagram</h2>
+            <p>@everwynonline</p>
+            <p>
+                Explore artwork, worldbuilding,
+                announcements, and beautiful
+                glimpses into the future of
+                Everwyn.
+            </p>
+            <span class="action">FOLLOW ON INSTAGRAM ↗</span>
+        </a>
+
+    </div>
+
+    <p class="closing">
+        ✧ Every extraordinary story begins somewhere. ✧
+    </p>
+</main>
+
+<footer>
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
+
+</body>
+</html>
