@@ -1423,25 +1423,21 @@ async function get(path) {
 /* ==========================================
    SESSION
 ========================================== */
-
 function loadSession() {
 
     ACCESS_TOKEN =
-        localStorage.getItem(
-            "everwyn_access_token"
-        );
+        sessionStorage.getItem("everwyn_access_token") ||
+        localStorage.getItem("everwyn_access_token");
 
     if (!ACCESS_TOKEN) {
 
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
 
         return false;
     }
 
     return true;
 }
-
 
 async function resolvePlayer() {
 
@@ -1624,14 +1620,18 @@ async function loadData() {
         };
 
 
-    const links = value(0);
+   const links = value(0);
 
-    hubData.character =
-        value(1)[0] || null;
+const playerCharacters = value(1);
 
-    hubData.avatar =
-        value(2)[0] || null;
+hubData.character =
+    playerCharacters.find(
+        character =>
+            character.character_creation_complete === true
+    ) || playerCharacters[0] || null;
 
+hubData.avatar =
+    value(2)[0] || null;
     hubData.progression =
         value(3)[0] || null;
 
