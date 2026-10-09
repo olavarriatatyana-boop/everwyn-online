@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171a30">
+
+<title>About | Everwyn Online</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #171a30;
+    color: #fff4e8;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    overflow-x: hidden;
+}
+
+/* HEADER */
+
+.site-header {
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    background: #161a30;
+    border-bottom: 1px solid rgba(231,188,141,0.3);
+}
+
+.brand {
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffe5c7;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.navigation a {
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: #fff4e8;
+    transition: color 0.3s ease;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    color: #f4c99f;
+}
+
+/* ABOUT PAGE */
+
+.about-page {
+    min-height: 100vh;
+    padding: 95px 5% 110px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(157,105,145,0.3),
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 85% 70%,
+            rgba(91,79,141,0.2),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #171a30 0%,
+            #29213c 48%,
+            #151827 100%
+        );
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.intro {
+    max-width: 850px;
+    margin: 0 auto 75px;
+    text-align: center;
+}
+
+.kicker {
+    font-family: "Cinzel", serif;
+    color: #eac49e;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.intro h1 {
+    margin: 18px 0 22px;
+    color: #ffe4c8;
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 500;
+    line-height: 1.1;
+    text-shadow:
+        0 4px 15px rgba(0,0,0,0.6),
+        0 0 30px rgba(235,167,157,0.25);
+}
+
+.intro p {
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.65;
+    color: #f4e7dd;
+}
+
+/* DECORATION */
+
+.ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    max-width: 550px;
+    margin: 0 auto 65px;
+    color: #eac49e;
+    font-size: 25px;
+}
+
+.ornament::before,
+.ornament::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(234,196,158,0.7)
+    );
+}
+
+.ornament::after {
+    transform: rotate(180deg);
+}
+
+/* ABOUT CONTENT */
+
+.about-panel {
+    padding: clamp(30px, 5vw, 65px);
+    margin-bottom: 55px;
+    border: 1px solid rgba(231,188,141,0.4);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(189,128,165,0.13),
+            transparent 65%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(61,48,77,0.93),
+            rgba(22,29,48,0.97)
+        );
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.panel-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.panel-icon {
+    font-size: 36px;
+    color: #f4cba4;
+    margin-bottom: 20px;
+}
+
+.panel-heading h2 {
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 500;
+    color: #ffe0c1;
+    margin: 0 0 15px;
+}
+
+.panel-heading .subtitle {
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #eac49e;
+}
+
+.panel-content {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.panel-content p {
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.75;
+    color: #f0e0d6;
+    margin: 0 0 25px;
+}
+
+.panel-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* PHILOSOPHY CARDS */
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 40px 0 5px;
+}
+
+.value-card {
+    padding: 27px 20px;
+    text-align: center;
+    border: 1px solid rgba(231,188,141,0.25);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.035);
+}
+
+.value-icon {
+    color: #f3cfa5;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.value-card h3 {
+    font-family: "Cinzel", serif;
+    color: #ffe0c1;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+}
+
+.value-card p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #e9d9cf;
+    margin: 0;
+}
+
+/* QUOTE */
+
+.creator-quote {
+    max-width: 800px;
+    margin: 45px auto 10px;
+    padding: 30px 25px;
+    border-top: 1px solid rgba(231,188,141,0.35);
+    border-bottom: 1px solid rgba(231,188,141,0.35);
+    text-align: center;
+}
+
+.creator-quote p {
+    color: #ffe0c1;
+    font-size: clamp(25px, 3vw, 36px);
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* CLOSING */
+
+.closing {
+    max-width: 800px;
+    margin: 75px auto 0;
+    text-align: center;
+}
+
+.closing h2 {
+    font-size: clamp(38px, 5vw, 60px);
+    font-weight: 500;
+    color: #ffe0c1;
+    margin: 15px 0;
+}
+
+.closing p {
+    font-size: 23px;
+    line-height: 1.65;
+    color: #f1e1d4;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 25px;
+    background: #111625;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #f5ddc5;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+    .site-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .navigation {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .navigation a {
+        font-size: 9px;
+    }
+
+    .about-page {
+        padding: 70px 18px 85px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-panel {
+        padding: 30px 23px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header class="site-header">
+
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
+
+    <nav class="navigation" aria-label="Main navigation">
+        <a href="world.html">WORLD</a>
+        <a href="features.html">FEATURES</a>
+        <a href="about.html" class="active" aria-current="page">ABOUT</a>
+    </nav>
+
+</header>
+
+<main class="about-page">
+
+<div class="container">
+
+    <!-- INTRODUCTION -->
+
+    <section class="intro">
+
+        <div class="kicker">
+            ✦ THE STORY BEHIND THE MAGIC ✦
+        </div>
+
+        <h1>About Everwyn</h1>
+
+        <p>
+            Every extraordinary world begins
+            with an idea.
+            <br><br>
+            Discover the vision behind Everwyn Online,
+            the world we're creating,
+            and the imagination that brought
+            it to life.
+        </p>
+
+    </section>
+
+    <div class="ornament" aria-hidden="true">✧</div>
+
+    <!-- ABOUT THE GAME -->
+
+    <section class="about-panel" id="about-game">
+
+        <div class="panel-heading">
+
+            <div class="panel-icon">✦</div>
+
+            <div class="subtitle">
+                A WORLD BEYOND THE ORDINARY
+            </div>
+
+            <h2>About the Game</h2>
+
+        </div>
+
+        <div class="panel-content">
+
+            <p>
+                Everwyn Online is an evolving
+                modern-fantasy virtual world
+                designed around creativity,
+                self-expression, exploration,
+                and meaningful connections.
+            </p>
+
+            <p>
+                Set in a universe where the
+                extraordinary exists alongside
+                everyday life, Everwyn brings
+                together the wonder of fantasy
+                and the freedom of life simulation.
+                From vibrant city neighborhoods
+                and peaceful countryside villages
+                to enchanted forests and coastal
+                communities, every location
+                offers a new opportunity
+                to imagine a different life.
+            </p>
+
+            <p>
+                The vision for Everwyn is to
+                give players the freedom to
+                create their own characters,
+                design beautiful homes,
+                pursue careers, open businesses,
+                form relationships, explore
+                magical locations, and build
+                personal stories that grow
+                through their choices.
+            </p>
+
+            <p>
+                Whether you're drawn to
+                adventure, creativity,
+                friendship, romance,
+                entrepreneurship, or simply
+                finding a place to belong,
+                Everwyn is being designed
+                to offer a world where
+                different paths can coexist.
+            </p>
+
+            <div class="values-grid">
+
+                <div class="value-card">
+                    <div class="value-icon">✧</div>
+                    <h3>CREATIVITY</h3>
+                    <p>
+                        Express your individuality
+                        and shape your own story.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">♡</div>
+                    <h3>CONNECTION</h3>
+                    <p>
+                        Build relationships and
+                        discover a shared world.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">✦</div>
+                    <h3>POSSIBILITY</h3>
+                    <p>
+                        Explore new opportunities
+                        and create your own path.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT THE CREATOR -->
+
+    <section class="about-panel" id="about-creator">
+
+        <div class="panel-heading">
+
+            <div class="panel-icon">✧</div>
+
+            <div class="subtitle">
+                THE IMAGINATION BEHIND EVERWYN
+            </div>
+
+            <h2>About the Creator</h2>
+
+        </div>
+
+        <div class="panel-content">
+
+            <p>
+                Everwyn Online began with
+                a creative vision:
+                to build a virtual world
+                where imagination, individuality,
+                and possibility come together.
+            </p>
+
+            <p>
+                Behind Everwyn is an independent
+                creator bringing together
+                storytelling, worldbuilding,
+                visual design, and technology
+                to develop a unique
+                modern-fantasy experience.
+            </p>
+
+            <p>
+                Every region, district,
+                character concept, and
+                gameplay idea is part of
+                a larger vision — creating
+                a place that feels alive,
+                welcoming, and full of
+                opportunities for players
+                to express themselves.
+            </p>
+
+            <p>
+                Everwyn is a growing project.
+                Its world, features, and
+                experiences are being developed
+                step by step, with the goal
+                of building something
+                imaginative and memorable.
+            </p>
+
+            <div class="creator-quote">
+
+                <p>
+                    "A world of endless possibilities,
+                    where every story begins
+                    with you."
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CLOSING -->
+
+    <section class="closing">
+
+        <div class="kicker">
+            ✦ THE JOURNEY IS JUST BEGINNING ✦
+        </div>
+
+        <h2>Welcome to the Possibilities</h2>
+
+        <p>
+            Everwyn Online is more than
+            a destination.
+            It's a world in the making,
+            shaped by imagination and
+            the stories waiting to unfold.
+        </p>
+
+    </section>
+
+</div>
+
+</main>
+
+<footer>
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
+
+</body>
+</html>
