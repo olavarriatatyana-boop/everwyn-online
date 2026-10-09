@@ -16,57 +16,51 @@
 
 <style>
 
-/* =========================================
-   GENERAL WEBSITE SETTINGS
-========================================= */
+/* GENERAL SETTINGS */
 
 * {
     box-sizing: border-box;
 }
 
 html {
-    min-height: 100%;
     scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-    min-height: 100svh;
+    background: #161a30;
     color: #fff4e8;
     font-family: "Cormorant Garamond", Georgia, serif;
-    background: #161a30;
     overflow-x: hidden;
 }
 
-/* =========================================
-   CINEMATIC WELCOME BACKGROUND
-========================================= */
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* WELCOME BACKGROUND */
 
 .world-background {
     position: fixed;
     inset: 0;
     z-index: -1;
-
     background:
         linear-gradient(
             180deg,
-            rgba(10,12,28,0.35) 0%,
+            rgba(10,12,28,0.35),
             rgba(10,12,28,0.12) 35%,
-            rgba(10,12,28,0.48) 100%
+            rgba(10,12,28,0.48)
         ),
         url("assets/backgrounds/everwyn-welcome.webp")
         center center / cover no-repeat;
 }
 
-/* =========================================
-   HEADER AND BRANDING
-========================================= */
+/* HEADER */
 
 .site-header {
     width: 100%;
     padding: 25px 5%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -77,11 +71,9 @@ body {
     color: #ffe5c7;
     text-decoration: none;
     text-align: center;
-
     font-family: "Cinzel", serif;
     font-size: 27px;
     letter-spacing: 3px;
-
     text-shadow: 0 3px 15px rgba(0,0,0,0.85);
 }
 
@@ -91,9 +83,7 @@ body {
     letter-spacing: 7px;
 }
 
-/* =========================================
-   TOP NAVIGATION
-========================================= */
+/* NAVIGATION */
 
 .navigation {
     display: flex;
@@ -110,7 +100,6 @@ body {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 2px;
-
     text-shadow: 0 2px 8px rgba(0,0,0,0.95);
     transition: color 0.3s ease;
 }
@@ -119,17 +108,13 @@ body {
     color: #f4c99f;
 }
 
-/* =========================================
-   MAIN WELCOME SCREEN
-========================================= */
+/* MAIN WELCOME SCREEN */
 
 .landing {
     min-height: calc(100svh - 110px);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     text-align: center;
     padding: 65px 20px 100px;
 }
@@ -155,12 +140,10 @@ body {
 h1 {
     margin: 0;
     color: #ffe3c9;
-
     font-size: clamp(65px, 11vw, 150px);
     font-weight: 500;
     line-height: 1.1;
     letter-spacing: 3px;
-
     text-shadow:
         0 3px 2px rgba(40,20,35,0.95),
         0 7px 16px rgba(0,0,0,0.85),
@@ -186,15 +169,12 @@ h1 {
 .online,
 .subtitle {
     color: #fff3e5;
-
     text-shadow:
         0 2px 5px rgba(0,0,0,0.95),
         0 4px 15px rgba(0,0,0,0.85);
 }
 
-/* =========================================
-   ENTER EVERWYN BUTTON
-========================================= */
+/* ENTER EVERWYN BUTTON */
 
 .hero-buttons {
     display: flex;
@@ -207,18 +187,14 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     min-width: 240px;
     padding: 18px 25px;
-
     border: 1px solid #e8b78c;
     border-radius: 35px;
-
     font-family: "Cinzel", serif;
     font-size: 12px;
     letter-spacing: 2px;
     text-decoration: none;
-
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
@@ -232,7 +208,6 @@ h1 {
 .enter-button {
     color: #302038;
     font-weight: 600;
-
     background:
         linear-gradient(
             120deg,
@@ -240,44 +215,24 @@ h1 {
             #e5b1c6,
             #f2cda9
         );
-
     box-shadow:
         0 5px 20px rgba(0,0,0,0.45),
         0 0 18px rgba(255,205,180,0.25);
 }
 
-/* =========================================
-   WORLD SECTION
-========================================= */
+/* SHARED SECTION DESIGN */
 
-.world-section {
+.world-section,
+.features-section {
     position: relative;
     padding: 100px 5% 115px;
-
-    background:
-        radial-gradient(
-            ellipse at top,
-            rgba(102,72,107,0.35),
-            transparent 65%
-        ),
-        linear-gradient(
-            180deg,
-            #171a30 0%,
-            #25223b 48%,
-            #121827 100%
-        );
-
-    border-top: 1px solid rgba(231,188,141,0.35);
 }
 
-.world-container {
+.world-container,
+.features-container {
     max-width: 1350px;
     margin: 0 auto;
 }
-
-/* =========================================
-   WORLD INTRODUCTION
-========================================= */
 
 .section-intro {
     text-align: center;
@@ -296,11 +251,9 @@ h1 {
 .section-title {
     margin: 18px 0 20px;
     color: #ffe4c8;
-
     font-size: clamp(43px, 6vw, 80px);
     font-weight: 500;
     line-height: 1.1;
-
     text-shadow:
         0 4px 15px rgba(0,0,0,0.6),
         0 0 25px rgba(235,167,157,0.2);
@@ -313,19 +266,33 @@ h1 {
     margin: 0 auto;
 }
 
-/* =========================================
-   OFFICIAL EVERWYN ISLAND MAP
-========================================= */
+/* WORLD SECTION */
+
+.world-section {
+    background:
+        radial-gradient(
+            ellipse at top,
+            rgba(102,72,107,0.35),
+            transparent 65%
+        ),
+        linear-gradient(
+            180deg,
+            #171a30 0%,
+            #25223b 48%,
+            #121827 100%
+        );
+    border-top: 1px solid rgba(231,188,141,0.35);
+}
+
+/* OFFICIAL EVERWYN MAP */
 
 .map-frame {
     position: relative;
     max-width: 1280px;
     margin: 0 auto;
     padding: 8px;
-
     border: 1px solid rgba(231,186,134,0.75);
     border-radius: 17px;
-
     background:
         linear-gradient(
             135deg,
@@ -333,7 +300,6 @@ h1 {
             #76566c,
             #d6b28a
         );
-
     box-shadow:
         0 25px 75px rgba(0,0,0,0.55),
         0 0 40px rgba(231,169,131,0.13);
@@ -349,18 +315,14 @@ h1 {
 .map-caption {
     text-align: center;
     margin: 22px auto 75px;
-
     color: #e2c7b1;
-
     font-family: "Cinzel", serif;
     font-size: 11px;
     letter-spacing: 2px;
     line-height: 2;
 }
 
-/* =========================================
-   REGIONS INTRODUCTION
-========================================= */
+/* REGION HEADINGS */
 
 .regions-heading {
     text-align: center;
@@ -382,9 +344,7 @@ h1 {
     margin: 0;
 }
 
-/* =========================================
-   REGION CARDS
-========================================= */
+/* REGION CARDS */
 
 .regions-grid {
     display: grid;
@@ -394,17 +354,14 @@ h1 {
 
 .region-card {
     padding: 31px 28px;
-
     border: 1px solid rgba(225,184,145,0.4);
     border-radius: 16px;
-
     background:
         linear-gradient(
             145deg,
             rgba(64,52,80,0.92),
             rgba(22,28,48,0.96)
         );
-
     box-shadow: 0 12px 35px rgba(0,0,0,0.22);
 }
 
@@ -454,9 +411,7 @@ h1 {
     border-bottom: none;
 }
 
-/* =========================================
-   WORLD INVITATION
-========================================= */
+/* WORLD ENDING — NO BUTTON */
 
 .world-invitation {
     text-align: center;
@@ -475,31 +430,121 @@ h1 {
     font-size: 22px;
     line-height: 1.6;
     color: #f1e1d4;
-    margin: 0 0 28px;
+    margin: 0;
 }
 
-/* =========================================
-   FOOTER
-========================================= */
+/* NEW FEATURES SECTION */
+
+.features-section {
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(137,95,136,0.25),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #121827 0%,
+            #262039 50%,
+            #151827 100%
+        );
+    border-top: 1px solid rgba(231,188,141,0.35);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.feature-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 290px;
+    padding: 38px 30px;
+    border: 1px solid rgba(231,188,141,0.38);
+    border-radius: 18px;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(189,128,165,0.15),
+            transparent 60%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(61,48,77,0.96),
+            rgba(22,29,48,0.97)
+        );
+    box-shadow: 0 15px 40px rgba(0,0,0,0.22);
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(249,206,158,0.8);
+}
+
+.feature-icon {
+    font-size: 37px;
+    color: #f4cba4;
+    margin-bottom: 23px;
+    line-height: 1;
+}
+
+.feature-card h3 {
+    margin: 0 0 15px;
+    font-family: "Cinzel", serif;
+    color: #ffe1c3;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+}
+
+.feature-card p {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.55;
+    color: #eddfd6;
+}
+
+.features-closing {
+    max-width: 850px;
+    margin: 85px auto 0;
+    text-align: center;
+}
+
+.features-closing h3 {
+    font-size: clamp(37px, 5vw, 59px);
+    font-weight: 500;
+    color: #ffe0c1;
+    margin: 0 0 20px;
+}
+
+.features-closing p {
+    font-size: 23px;
+    line-height: 1.7;
+    color: #f1e1d4;
+    margin: 0;
+}
+
+/* FOOTER */
 
 .site-footer {
     position: relative;
     text-align: center;
     padding: 24px 20px;
-
     color: #f5ddc5;
     background: #111625;
-
     font-family: "Cinzel", serif;
     font-size: 10px;
     letter-spacing: 2px;
-
     text-shadow: 0 2px 8px #000;
 }
 
-/* =========================================
-   ANIMATIONS
-========================================= */
+/* ANIMATION */
 
 @keyframes appear {
     from {
@@ -513,19 +558,16 @@ h1 {
     }
 }
 
-/* =========================================
-   TABLET
-========================================= */
+/* TABLET */
 
 @media (max-width: 1000px) {
-    .regions-grid {
+    .regions-grid,
+    .features-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+/* MOBILE */
 
 @media (max-width: 700px) {
 
@@ -563,7 +605,8 @@ h1 {
         width: min(100%, 320px);
     }
 
-    .world-section {
+    .world-section,
+    .features-section {
         padding: 75px 18px 85px;
     }
 
@@ -576,7 +619,8 @@ h1 {
         border-radius: 6px;
     }
 
-    .regions-grid {
+    .regions-grid,
+    .features-grid {
         grid-template-columns: 1fr;
     }
 
@@ -584,17 +628,19 @@ h1 {
         padding: 25px;
     }
 
+    .feature-card {
+        min-height: auto;
+        padding: 30px 25px;
+    }
+
     .map-caption {
         margin-bottom: 55px;
     }
 }
 
-/* =========================================
-   ACCESSIBILITY
-========================================= */
+/* ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
-
     html {
         scroll-behavior: auto;
     }
@@ -603,7 +649,8 @@ h1 {
         animation: none;
     }
 
-    .hero-button {
+    .hero-button,
+    .feature-card {
         transition: none;
     }
 }
@@ -613,14 +660,11 @@ h1 {
 
 <body>
 
-<!-- CINEMATIC BACKGROUND -->
+<!-- BACKGROUND -->
 
 <div class="world-background" aria-hidden="true"></div>
 
-<!-- =========================================
-     WEBSITE HEADER
-     HOME AND LOG IN REMOVED
-========================================= -->
+<!-- HEADER -->
 
 <header class="site-header">
 
@@ -630,15 +674,10 @@ h1 {
     </a>
 
     <nav class="navigation" aria-label="Main navigation">
-
         <a href="#world">WORLD</a>
-
-        <a href="#welcome">FEATURES</a>
-
+        <a href="#features">FEATURES</a>
         <a href="#welcome">COMMUNITY</a>
-
         <a href="#welcome">ABOUT</a>
-
     </nav>
 
 </header>
@@ -655,21 +694,17 @@ h1 {
 
         <div class="sigil">✧</div>
 
-        <p class="eyebrow">
-            WELCOME TO
-        </p>
+        <p class="eyebrow">WELCOME TO</p>
 
         <h1>Everwyn</h1>
 
-        <p class="online">
-            ONLINE
-        </p>
+        <p class="online">ONLINE</p>
 
         <p class="subtitle">
             YOUR STORY BEGINS BEYOND THE ORDINARY
         </p>
 
-        <!-- KEEP THIS ENTER EVERWYN BUTTON -->
+        <!-- ONLY ENTER EVERWYN BUTTON -->
 
         <div class="hero-buttons">
 
@@ -692,8 +727,6 @@ h1 {
 <section class="world-section" id="world">
 
 <div class="world-container">
-
-    <!-- WORLD INTRODUCTION -->
 
     <div class="section-intro">
 
@@ -724,13 +757,13 @@ h1 {
 
     </div>
 
-    <!-- OFFICIAL ISLAND MAP -->
+    <!-- ISLAND MAP -->
 
     <div class="map-frame">
 
         <img
             src="assets/maps/everwyn-island-map.webp"
-            alt="Official illustrated map of Everwyn's starting island, featuring Lumen City, Willowmere Farmlands, Silverleaf Countryside, Moonwood Forest, Azure Coast and Arcana District."
+            alt="Illustrated map of Everwyn's starting island and its six regions."
             loading="lazy"
             width="1536"
             height="1024"
@@ -744,8 +777,6 @@ h1 {
         SIX REGIONS · TWENTY-FIVE DISTRICTS
     </p>
 
-    <!-- REGIONS INTRODUCTION -->
-
     <div class="regions-heading">
 
         <h3>Discover the Six Regions</h3>
@@ -758,8 +789,6 @@ h1 {
         </p>
 
     </div>
-
-    <!-- REGION CARDS -->
 
     <div class="regions-grid">
 
@@ -947,7 +976,7 @@ h1 {
 
     </div>
 
-    <!-- WORLD SECTION INVITATION -->
+    <!-- WORLD ENDING WITHOUT ENTER BUTTON -->
 
     <div class="world-invitation">
 
@@ -961,11 +990,231 @@ h1 {
             your own story in Everwyn.
         </p>
 
-        <a
-            href="login.html"
-            class="hero-button enter-button">
-            ✦ ENTER EVERWYN ✦
-        </a>
+    </div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+     NEW FEATURES SECTION
+========================================= -->
+
+<section class="features-section" id="features">
+
+<div class="features-container">
+
+    <div class="section-intro">
+
+        <p class="section-kicker">
+            ✦ A WORLD OF POSSIBILITIES ✦
+        </p>
+
+        <h2 class="section-title">
+            Live Your Own Story
+        </h2>
+
+        <p class="section-description">
+            In Everwyn, your journey is yours to create.
+            Shape your identity, build the life you imagine,
+            forge unforgettable connections, and discover
+            extraordinary possibilities in a world
+            where magic meets modern living.
+            <br><br>
+            Explore the experiences envisioned for
+            Everwyn Online.
+        </p>
+
+    </div>
+
+    <div class="features-grid">
+
+        <!-- CHARACTER CREATION -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">✧</div>
+
+            <h3>Create Your Identity</h3>
+
+            <p>
+                Design a character that feels uniquely
+                yours. Customize appearances, explore
+                different body types, choose your style,
+                and express yourself through an
+                evolving wardrobe and identity.
+            </p>
+
+        </article>
+
+        <!-- FANTASY SPECIES -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">☾</div>
+
+            <h3>Choose Your Path</h3>
+
+            <p>
+                Experience Everwyn as a human,
+                vampire, mermaid, or traveler.
+                Discover different cultures,
+                communities, abilities, and
+                opportunities shaped by your
+                character's place in the world.
+            </p>
+
+        </article>
+
+        <!-- HOMES -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">⌂</div>
+
+            <h3>A Place to Call Home</h3>
+
+            <p>
+                Find your perfect home, collect
+                beautiful furnishings, decorate
+                your personal space, and create
+                a sanctuary that reflects your
+                character's personality and lifestyle.
+            </p>
+
+        </article>
+
+        <!-- RELATIONSHIPS -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">♡</div>
+
+            <h3>Meaningful Connections</h3>
+
+            <p>
+                Meet other players and develop
+                friendships, romances, rivalries,
+                and unforgettable relationships.
+                Every interaction can become
+                part of your evolving story.
+            </p>
+
+        </article>
+
+        <!-- BUSINESSES -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">✦</div>
+
+            <h3>Build Your Dream Business</h3>
+
+            <p>
+                Turn creativity into opportunity.
+                Open shops, cafés, magical
+                boutiques, and other businesses.
+                Trade with players and help
+                shape Everwyn's growing economy.
+            </p>
+
+        </article>
+
+        <!-- FARMING -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">❀</div>
+
+            <h3>Grow Something Wonderful</h3>
+
+            <p>
+                Experience countryside life
+                through farming, gardening,
+                harvesting, and crafting.
+                Cultivate your land and discover
+                the rewards of building something
+                from the ground up.
+            </p>
+
+        </article>
+
+        <!-- EXPLORATION -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">✺</div>
+
+            <h3>Explore the Extraordinary</h3>
+
+            <p>
+                Travel between bustling cities,
+                enchanted forests, coastal
+                hideaways, and magical districts.
+                Uncover hidden locations,
+                discover new activities, and
+                experience the world around you.
+            </p>
+
+        </article>
+
+        <!-- SOCIAL COMMUNITY -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">✉</div>
+
+            <h3>Stay Connected</h3>
+
+            <p>
+                Share your adventures through
+                social posts, private messages,
+                friendships, and community
+                interactions. Make memories
+                with people throughout Everwyn.
+            </p>
+
+        </article>
+
+        <!-- PERSONAL PROGRESSION -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">✵</div>
+
+            <h3>Write Your Legacy</h3>
+
+            <p>
+                Develop new skills, pursue
+                personal goals, earn rewards,
+                and shape your character's
+                future. Every choice brings
+                new opportunities to grow.
+            </p>
+
+        </article>
+
+    </div>
+
+    <div class="features-closing">
+
+        <p class="section-kicker">
+            ✦ YOUR WORLD · YOUR CHOICES ✦
+        </p>
+
+        <h3>A Life Beyond the Ordinary</h3>
+
+        <p>
+            Whether you dream of building a
+            flourishing business, finding love,
+            creating a beautiful home, or
+            uncovering ancient mysteries,
+            Everwyn is a place where countless
+            stories can unfold.
+            <br><br>
+            There is no single path to follow.
+            Only the one you choose to create.
+        </p>
 
     </div>
 
