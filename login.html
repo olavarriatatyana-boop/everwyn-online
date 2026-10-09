@@ -1,1089 +1,1066 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Enter Everwyn | Everwyn Online</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        :root {
-            --night: #11131b;
-            --panel: rgba(25, 28, 37, 0.94);
-            --cream: #f2eadf;
-            --muted: #aaa2ad;
-            --gold: #c9aa72;
-            --lavender: #a58bbb;
-            --border: rgba(255,255,255,0.11);
-            --danger: #e2a5a5;
-            --success: #a8cfb5;
-        }
-
-        html,
-        body {
-            margin: 0;
-            min-height: 100%;
-        }
-
-        body {
-            min-height: 100vh;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 30px 18px;
-
-            color: var(--cream);
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #3a3144 0%,
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 85% 60%,
-                    #26362f 0%,
-                    transparent 30%
-                ),
-                linear-gradient(
-                    145deg,
-                    #11131b,
-                    #171a21 60%,
-                    #101219
-                );
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        .auth-shell {
-            width: min(460px, 100%);
-        }
-
-        .brand {
-            margin-bottom: 28px;
-            text-align: center;
-        }
-
-        .brand-mark {
-            margin-bottom: 13px;
-
-            color: var(--gold);
-
-            font-size: 25px;
-        }
-
-        .brand h1 {
-            margin: 0;
-
-            font-size: 2.1rem;
-            font-weight: normal;
-
-            letter-spacing: .18em;
-        }
-
-        .brand span {
-            display: block;
-
-            margin-top: 7px;
-
-            color: var(--gold);
-
-            font-size: .68rem;
-
-            letter-spacing: .32em;
-        }
-
-        .auth-card {
-            overflow: hidden;
-
-            border:
-                1px solid
-                var(--border);
-
-            border-radius: 18px;
-
-            background:
-                var(--panel);
-
-            box-shadow:
-                0 25px 70px
-                rgba(0,0,0,.35);
-
-            backdrop-filter:
-                blur(16px);
-        }
-
-        .auth-tabs {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            border-bottom:
-                1px solid
-                var(--border);
-        }
-
-        .auth-tab {
-            padding: 18px 15px;
-
-            border: 0;
-
-            color: #85808a;
-
-            background: transparent;
-
-            cursor: pointer;
-
-            letter-spacing: .08em;
-
-            transition: .2s;
-        }
-
-        .auth-tab:hover {
-            color: white;
-
-            background:
-                rgba(255,255,255,.03);
-        }
-
-        .auth-tab.active {
-            color: #f5ecdf;
-
-            background:
-                rgba(165,139,187,.12);
-
-            box-shadow:
-                inset 0 -2px
-                var(--gold);
-        }
-
-        .auth-content {
-            padding: 34px;
-        }
-
-        .auth-content h2 {
-            margin:
-                0 0 9px;
-
-            font-weight: normal;
-
-            font-size: 1.65rem;
-        }
-
-        .description {
-            margin:
-                0 0 28px;
-
-            color: var(--muted);
-
-            font-size: .86rem;
-
-            line-height: 1.6;
-        }
-
-        .form-group {
-            margin-bottom: 19px;
-        }
-
-        label {
-            display: block;
-
-            margin-bottom: 8px;
-
-            color: #c8c0ca;
-
-            font-size: .72rem;
-
-            letter-spacing: .08em;
-
-            text-transform: uppercase;
-        }
-
-        input {
-            width: 100%;
-
-            padding:
-                13px 14px;
-
-            border:
-                1px solid
-                var(--border);
-
-            border-radius: 10px;
-
-            outline: none;
-
-            color: white;
-
-            background:
-                rgba(255,255,255,.055);
-        }
-
-        input:focus {
-            border-color:
-                rgba(201,170,114,.7);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(201,170,114,.08);
-        }
-
-        .submit-button {
-            width: 100%;
-
-            margin-top: 8px;
-
-            padding: 14px;
-
-            border:
-                1px solid
-                #d2b476;
-
-            border-radius: 10px;
-
-            color: #fff9ed;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #806a45,
-                    #a98b57
-                );
-
-            cursor: pointer;
-
-            letter-spacing: .09em;
-
-            text-transform: uppercase;
-        }
-
-        .submit-button:hover {
-            filter:
-                brightness(1.1);
-        }
-
-        .submit-button:disabled {
-            opacity: .55;
-            cursor: wait;
-        }
-
-        .message {
-            display: none;
-
-            margin-top: 20px;
-
-            padding: 12px 14px;
-
-            border-radius: 9px;
-
-            font-size: .8rem;
-
-            line-height: 1.5;
-        }
-
-        .message.error {
-            display: block;
-
-            color: var(--danger);
-
-            background:
-                rgba(176,75,75,.12);
-
-            border:
-                1px solid
-                rgba(226,165,165,.2);
-        }
-
-        .message.success {
-            display: block;
-
-            color: var(--success);
-
-            background:
-                rgba(75,150,98,.12);
-
-            border:
-                1px solid
-                rgba(168,207,181,.2);
-        }
-
-        .back-link {
-            display: block;
-
-            margin-top: 23px;
-
-            text-align: center;
-
-            color: #8f8997;
-
-            font-size: .72rem;
-
-            letter-spacing: .08em;
-
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: var(--cream);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 500px) {
-
-            .auth-content {
-                padding:
-                    28px 22px;
-            }
-
-            .brand h1 {
-                font-size: 1.7rem;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17172b">
+<title>Enter Everwyn | Everwyn Online</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --gold: #f1c995;
+    --light-gold: #ffe6bc;
+    --cream: #fff3e7;
+    --lavender: #e2c9ef;
+    --muted: #ddc9db;
+    --danger: #ffd0d0;
+    --success: #c5f2d4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--cream);
+    background-color: #19192e;
+    background-image:
+        linear-gradient(
+            rgba(21, 16, 39, 0.12),
+            rgba(20, 15, 37, 0.38)
+        ),
+        url("assets/backgrounds/everwyn-login.webp");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 35px 24px 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 27px;
+    text-shadow: 0 4px 15px rgba(0,0,0,.75);
+}
+
+.brand-symbol {
+    color: var(--light-gold);
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.brand h1 {
+    font-family: "Cinzel", serif;
+    font-size: clamp(32px, 4vw, 53px);
+    letter-spacing: 5px;
+    font-weight: 500;
+    color: #ffe3b9;
+    margin: 0;
+}
+
+.brand .online {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 12px;
+    letter-spacing: 9px;
+    color: #ffe5c3;
+    margin-top: 5px;
+}
+
+.brand .tagline {
+    margin-top: 15px;
+    color: #fff2e8;
+    font-size: 23px;
+    font-style: italic;
+}
+
+/* TWO CENTERED PANELS */
+
+.auth-layout {
+    width: min(990px, 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* ORNATE FRAMES */
+
+.fantasy-panel {
+    position: relative;
+    padding: 9px;
+    border: 2px solid #e7ba7e;
+    border-radius: 18px;
+    background: rgba(25, 20, 48, .82);
+    box-shadow:
+        0 20px 65px rgba(0,0,0,.55),
+        0 0 30px rgba(243,177,128,.12),
+        inset 0 0 15px rgba(245,193,120,.12);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+}
+
+.fantasy-panel::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgba(255,215,151,.45);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.panel-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 27px 29px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 26px;
+    letter-spacing: 12px;
+    margin-bottom: 8px;
+}
+
+.panel-title {
+    margin: 0;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-weight: 500;
+    font-size: clamp(21px, 2.5vw, 29px);
+    line-height: 1.5;
+    color: var(--light-gold);
+    text-shadow: 0 2px 10px rgba(0,0,0,.55);
+}
+
+.panel-subtitle {
+    text-align: center;
+    color: #f3d8e7;
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 8px 0 25px;
+}
+
+.gold-divider {
+    height: 1px;
+    width: 100%;
+    margin-bottom: 23px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #e5b982,
+        transparent
+    );
+}
+
+/* FORM FIELDS */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--light-gold);
+    margin-bottom: 9px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid rgba(231,185,126,.65);
+    border-radius: 6px;
+    outline: none;
+    color: white;
+    background: rgba(14,15,35,.72);
+    font-family: Georgia, serif;
+    font-size: 14px;
+}
+
+.form-group input::placeholder {
+    color: #b9abc2;
+}
+
+.form-group input:focus {
+    border-color: #ffe4b7;
+    box-shadow: 0 0 0 3px rgba(255,215,161,.13);
+}
+
+/* BUTTONS */
+
+.gold-button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 15px 18px;
+    border: 1px solid #ffe0a6;
+    border-radius: 6px;
+    color: #33243a;
+    background: linear-gradient(
+        180deg,
+        #ffe8b8,
+        #e2b677 55%,
+        #c99761
+    );
+    font-family: "Cinzel", serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: filter .2s, transform .2s;
+}
+
+.gold-button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.gold-button:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+.outline-button {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 15px;
+    border: 1px solid #e5b982;
+    border-radius: 6px;
+    background: rgba(40,29,65,.55);
+    color: #ffe1b4;
+    font-family: "Cinzel", serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-align: center;
+}
+
+.outline-button:hover {
+    background: rgba(114,79,117,.45);
+}
+
+.small-link {
+    border: none;
+    background: none;
+    color: #ffe0b5;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.small-link:hover {
+    color: white;
+}
+
+.form-footer {
+    margin-top: 14px;
+    text-align: right;
+}
+
+/* SECOND PANEL */
+
+.story-description {
+    font-size: 22px;
+    line-height: 1.55;
+    color: #f7e5e7;
+    text-align: center;
+    margin: 0 0 24px;
+}
+
+.story-features {
+    margin: 0 0 26px;
+    padding: 0;
+    list-style: none;
+}
+
+.story-features li {
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(233,188,142,.18);
+    color: #f7e4e4;
+    font-size: 20px;
+}
+
+.story-features li::before {
+    content: "✦";
+    margin-right: 12px;
+    color: #f4c892;
+}
+
+.story-actions {
+    margin-top: auto;
+}
+
+.story-note {
+    text-align: center;
+    color: #dec9d9;
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 16px;
+}
+
+/* MESSAGES */
+
+.message {
+    display: none;
+    padding: 12px 14px;
+    margin: 16px 0 0;
+    border-radius: 7px;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.message.error {
+    display: block;
+    color: var(--danger);
+    background: rgba(128,37,48,.38);
+    border: 1px solid rgba(255,170,170,.4);
+}
+
+.message.success {
+    display: block;
+    color: var(--success);
+    background: rgba(32,102,67,.4);
+    border: 1px solid rgba(170,235,190,.4);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* FOOTER */
+
+.return-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #fff0df;
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-shadow: 0 2px 10px black;
+}
+
+.return-link:hover {
+    color: #ffe0ad;
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+    .page {
+        padding: 35px 15px 45px;
+        justify-content: flex-start;
+    }
+
+    .auth-layout {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+    }
+
+    .panel-inner {
+        padding: 23px 19px 26px;
+    }
+
+    .brand h1 {
+        letter-spacing: 3px;
+    }
+
+    body {
+        background-attachment: scroll;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gold-button {
+        transition: none;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <main class="auth-shell">
+<main class="page">
 
-        <div class="brand">
+    <!-- EVERWYN BRAND -->
 
-            <div class="brand-mark">
-                ✦
-            </div>
-
-            <h1>EVERWYN</h1>
-
-            <span>ONLINE</span>
-
+    <div class="brand">
+        <div class="brand-symbol">✧ ✦ ✧</div>
+        <h1>EVERWYN</h1>
+        <span class="online">ONLINE</span>
+        <div class="tagline">
+            A world of endless possibilities awaits.
         </div>
+    </div>
 
+    <!-- TWO PANELS -->
 
-        <section class="auth-card">
+    <div class="auth-layout">
 
-            <div class="auth-tabs">
+        <!-- LOGIN PANEL -->
 
-                <button
-                    type="button"
-                    class="auth-tab active"
-                    data-mode="login"
-                >
-                    LOG IN
-                </button>
+        <section class="fantasy-panel" id="login-section">
 
-                <button
-                    type="button"
-                    class="auth-tab"
-                    data-mode="signup"
-                >
-                    CREATE ACCOUNT
-                </button>
+            <div class="panel-inner">
 
-            </div>
+                <div class="ornament">✦</div>
 
+                <h2 class="panel-title">
+                    Welcome Back,<br>Wanderer
+                </h2>
 
-            <div class="auth-content">
+                <p class="panel-subtitle">
+                    Your story awaits beyond the stars.
+                </p>
 
-                <!-- LOG IN -->
+                <div class="gold-divider"></div>
 
-                <div id="login-panel">
+                <form id="login-form">
 
-                    <h2>
-                        Welcome Back
-                    </h2>
-
-                    <p class="description">
-                        Return to Everwyn and continue
-                        your story.
-                    </p>
-
-                    <form id="login-form">
-
-                        <div class="form-group">
-
-                            <label for="login-email">
-                                Email
-                            </label>
-
-                            <input
-                                id="login-email"
-                                type="email"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="login-password">
-                                Password
-                            </label>
-
-                            <input
-                                id="login-password"
-                                type="password"
-                                autocomplete="current-password"
-                                required
-                            >
-
-                        </div>
-
-
-                        <button
-                            id="login-button"
-                            class="submit-button"
-                            type="submit"
+                    <div class="form-group">
+                        <label for="login-email">
+                            EMAIL ADDRESS
+                        </label>
+                        <input
+                            id="login-email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="Enter your email"
+                            required
                         >
-                            Enter Everwyn
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">
+                            PASSWORD
+                        </label>
+                        <input
+                            id="login-password"
+                            type="password"
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <button
+                        class="gold-button"
+                        id="login-button"
+                        type="submit"
+                    >
+                        ✦ ENTER EVERWYN ✦
+                    </button>
+
+                    <div class="form-footer">
+                        <button
+                            type="button"
+                            class="small-link"
+                            id="forgot-password-button"
+                        >
+                            Forgot Password?
                         </button>
+                    </div>
 
-                    </form>
-
-                </div>
-
-
-                <!-- CREATE ACCOUNT -->
+                </form>
 
                 <div
-                    id="signup-panel"
-                    class="hidden"
-                >
-
-                    <h2>
-                        Begin Your Story
-                    </h2>
-
-                    <p class="description">
-                        Create an Everwyn account.
-                        Your adventures, character,
-                        and progress will belong to
-                        this account.
-                    </p>
-
-                    <form id="signup-form">
-
-                        <div class="form-group">
-
-                            <label for="signup-email">
-                                Email
-                            </label>
-
-                            <input
-                                id="signup-email"
-                                type="email"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="signup-password">
-                                Password
-                            </label>
-
-                            <input
-                                id="signup-password"
-                                type="password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="signup-confirm-password">
-                                Confirm Password
-                            </label>
-
-                            <input
-                                id="signup-confirm-password"
-                                type="password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                        </div>
-
-
-                        <button
-                            id="signup-button"
-                            class="submit-button"
-                            type="submit"
-                        >
-                            Create Account
-                        </button>
-
-                    </form>
-
-                </div>
-
-
-                <div
-                    id="auth-message"
                     class="message"
+                    id="login-message"
+                    role="status"
+                    aria-live="polite"
                 ></div>
 
             </div>
 
         </section>
 
+        <!-- BEGIN YOUR STORY PANEL -->
 
-        <a
-            href="index.html"
-            class="back-link"
+        <section class="fantasy-panel" id="story-section">
+
+            <div class="panel-inner">
+
+                <div class="ornament">✧</div>
+
+                <h2 class="panel-title">
+                    Begin Your Story
+                </h2>
+
+                <p class="panel-subtitle">
+                    Every extraordinary journey
+                    begins with a single step.
+                </p>
+
+                <div class="gold-divider"></div>
+
+                <p class="story-description">
+                    Enter a world where magic
+                    meets possibility, and every
+                    choice becomes part of
+                    your own story.
+                </p>
+
+                <ul class="story-features">
+                    <li>Create your unique character</li>
+                    <li>Explore the world of Everwyn</li>
+                    <li>Build a life of your own</li>
+                    <li>Discover friendships and adventures</li>
+                </ul>
+
+                <div class="story-actions">
+
+                    <button
+                        type="button"
+                        class="gold-button"
+                        id="show-signup"
+                    >
+                        ✦ CREATE ACCOUNT ✦
+                    </button>
+
+                    <p class="story-note">
+                        Your adventure begins here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- REGISTRATION PANEL -->
+
+        <section
+            class="fantasy-panel hidden"
+            id="signup-section"
         >
-            ← Return to Everwyn
-        </a>
 
-    </main>
+            <div class="panel-inner">
 
+                <div class="ornament">✧</div>
 
-    <script>
+                <h2 class="panel-title">
+                    Create Your Account
+                </h2>
 
-        /* =============================================
-           SUPABASE
-        ============================================= */
+                <p class="panel-subtitle">
+                    A new story is waiting to be written.
+                </p>
 
-        const SUPABASE_URL =
-            "https://iajvwhrjutqkqqvbknth.supabase.co";
+                <div class="gold-divider"></div>
 
-        const SUPABASE_KEY =
-            "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
+                <form id="signup-form">
 
+                    <div class="form-group">
+                        <label for="signup-email">
+                            EMAIL ADDRESS
+                        </label>
+                        <input
+                            id="signup-email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
 
-        /* =============================================
-           ELEMENTS
-        ============================================= */
+                    <div class="form-group">
+                        <label for="signup-password">
+                            PASSWORD
+                        </label>
+                        <input
+                            id="signup-password"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            placeholder="Create a password"
+                            required
+                        >
+                    </div>
 
-        const tabs =
-            document.querySelectorAll(
-                ".auth-tab"
-            );
+                    <div class="form-group">
+                        <label for="signup-confirm-password">
+                            CONFIRM PASSWORD
+                        </label>
+                        <input
+                            id="signup-confirm-password"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            placeholder="Confirm your password"
+                            required
+                        >
+                    </div>
 
-        const loginPanel =
-            document.getElementById(
-                "login-panel"
-            );
+                    <button
+                        class="gold-button"
+                        id="signup-button"
+                        type="submit"
+                    >
+                        ✦ CREATE ACCOUNT ✦
+                    </button>
 
-        const signupPanel =
-            document.getElementById(
-                "signup-panel"
-            );
+                </form>
 
-        const message =
-            document.getElementById(
-                "auth-message"
-            );
+                <div
+                    class="message"
+                    id="signup-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
 
+                <button
+                    type="button"
+                    class="outline-button"
+                    id="back-to-story"
+                >
+                    ← BACK
+                </button>
 
-        /* =============================================
-           TAB SWITCHING
-        ============================================= */
+            </div>
 
-        tabs.forEach(tab => {
+        </section>
 
-            tab.addEventListener(
-                "click",
-                () => {
+    </div>
 
-                    tabs.forEach(button => {
-                        button.classList.remove(
-                            "active"
-                        );
-                    });
+    <a href="index.html" class="return-link">
+        ← RETURN TO EVERWYN
+    </a>
 
-                    tab.classList.add(
-                        "active"
-                    );
+</main>
 
-                    const mode =
-                        tab.dataset.mode;
+<script>
 
-                    loginPanel.classList.toggle(
-                        "hidden",
-                        mode !== "login"
-                    );
+/* =====================================
+   SUPABASE CONNECTION
+===================================== */
 
-                    signupPanel.classList.toggle(
-                        "hidden",
-                        mode !== "signup"
-                    );
+const SUPABASE_URL =
+    "https://iajvwhrjutqkqqvbknth.supabase.co";
 
-                    clearMessage();
+const SUPABASE_KEY =
+    "sb_publishable_5zhAgTZggC_EnEc0o834_g_8h9yudIz";
 
-                }
-            );
+/* =====================================
+   ELEMENTS
+===================================== */
 
-        });
+const loginForm =
+    document.getElementById("login-form");
 
+const signupForm =
+    document.getElementById("signup-form");
 
-        /* =============================================
-           MESSAGES
-        ============================================= */
+const loginMessage =
+    document.getElementById("login-message");
 
-        function showMessage(
-            text,
-            type
-        ) {
+const signupMessage =
+    document.getElementById("signup-message");
 
-            message.textContent =
-                text;
+const storySection =
+    document.getElementById("story-section");
 
-            message.className =
-                "message " + type;
+const signupSection =
+    document.getElementById("signup-section");
 
-        }
+function showMessage(element, text, type) {
+    element.textContent = text;
+    element.className = "message " + type;
+}
 
+function clearMessage(element) {
+    element.textContent = "";
+    element.className = "message";
+}
 
-        function clearMessage() {
+/* =====================================
+   SHOW CREATE ACCOUNT
+===================================== */
 
-            message.textContent = "";
+document.getElementById("show-signup")
+    .addEventListener("click", () => {
 
-            message.className =
-                "message";
+        storySection.classList.add("hidden");
+        signupSection.classList.remove("hidden");
 
-        }
+    });
 
-/* =============================================
+document.getElementById("back-to-story")
+    .addEventListener("click", () => {
+
+        signupSection.classList.add("hidden");
+        storySection.classList.remove("hidden");
+        clearMessage(signupMessage);
+
+    });
+
+/* =====================================
    ROUTE PLAYER AFTER LOGIN
-============================================= */
+===================================== */
 
-async function routePlayerAfterLogin(
-    accessToken
-) {
+async function routePlayerAfterLogin(accessToken) {
 
-    const playerResponse =
-        await fetch(
-            SUPABASE_URL +
-            "/rest/v1/rpc/ensure_player_for_profile",
-            {
-                method: "POST",
-
-                headers: {
-                    "apikey":
-                        SUPABASE_KEY,
-
-                    "Authorization":
-                        "Bearer " +
-                        accessToken,
-
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: "{}"
-            }
-        );
-
+    const playerResponse = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/rpc/ensure_player_for_profile",
+        {
+            method: "POST",
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json"
+            },
+            body: "{}"
+        }
+    );
 
     if (!playerResponse.ok) {
-
         throw new Error(
             "Everwyn could not load your player profile."
         );
-
     }
 
-
-    const playerId =
-        await playerResponse.json();
-
+    const playerId = await playerResponse.json();
 
     localStorage.setItem(
         "everwyn_player_id",
         String(playerId)
     );
 
-
-    const characterResponse =
-        await fetch(
-            SUPABASE_URL +
-            "/rest/v1/player_characters" +
-            "?player_id=eq." +
-            encodeURIComponent(playerId) +
-            "&select=id,character_creation_complete",
-            {
-                headers: {
-                    "apikey":
-                        SUPABASE_KEY,
-
-                    "Authorization":
-                        "Bearer " +
-                        accessToken
-                }
+    const characterResponse = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/player_characters" +
+        "?player_id=eq." +
+        encodeURIComponent(playerId) +
+        "&select=id,character_creation_complete",
+        {
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + accessToken
             }
-        );
-
+        }
+    );
 
     if (!characterResponse.ok) {
-
         throw new Error(
             "Everwyn could not check your character."
         );
-
     }
 
+    const characters = await characterResponse.json();
 
-    const characters =
-        await characterResponse.json();
-
-
-    const completedCharacter =
-        characters.find(
-            character =>
-                character.character_creation_complete ===
-                true
-        );
-
+    const completedCharacter = characters.find(
+        character =>
+            character.character_creation_complete === true
+    );
 
     if (completedCharacter) {
+        window.location.href = "world-map.html";
+    } else {
+        window.location.href = "character-creator.html";
+    }
+}
 
-        window.location.href =
-            "world-map.html";
+/* =====================================
+   LOGIN
+===================================== */
 
+loginForm.addEventListener("submit", async event => {
+
+    event.preventDefault();
+    clearMessage(loginMessage);
+
+    const email =
+        document.getElementById("login-email")
+            .value.trim();
+
+    const password =
+        document.getElementById("login-password")
+            .value;
+
+    const button =
+        document.getElementById("login-button");
+
+    button.disabled = true;
+    button.textContent = "ENTERING EVERWYN...";
+
+    try {
+
+        const response = await fetch(
+            SUPABASE_URL +
+            "/auth/v1/token?grant_type=password",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.msg ||
+                data.error_description ||
+                data.message ||
+                "Unable to log in."
+            );
+        }
+
+        localStorage.setItem(
+            "everwyn_access_token",
+            data.access_token
+        );
+
+        localStorage.setItem(
+            "everwyn_refresh_token",
+            data.refresh_token
+        );
+
+        localStorage.setItem(
+            "everwyn_user_id",
+            data.user.id
+        );
+
+        showMessage(
+            loginMessage,
+            "Welcome back! Entering Everwyn...",
+            "success"
+        );
+
+        await routePlayerAfterLogin(
+            data.access_token
+        );
+
+    } catch (error) {
+
+        showMessage(
+            loginMessage,
+            error.message,
+            "error"
+        );
+
+        button.disabled = false;
+        button.textContent = "✦ ENTER EVERWYN ✦";
+    }
+});
+
+/* =====================================
+   CREATE ACCOUNT
+===================================== */
+
+signupForm.addEventListener("submit", async event => {
+
+    event.preventDefault();
+    clearMessage(signupMessage);
+
+    const email =
+        document.getElementById("signup-email")
+            .value.trim();
+
+    const password =
+        document.getElementById("signup-password")
+            .value;
+
+    const confirmPassword =
+        document.getElementById(
+            "signup-confirm-password"
+        ).value;
+
+    if (password !== confirmPassword) {
+
+        showMessage(
+            signupMessage,
+            "Your passwords do not match.",
+            "error"
+        );
+
+        return;
     }
 
-    else {
+    const button =
+        document.getElementById("signup-button");
 
-        window.location.href =
-            "character-creator.html";
+    button.disabled = true;
+    button.textContent = "CREATING ACCOUNT...";
 
+    try {
+
+        const response = await fetch(
+            SUPABASE_URL + "/auth/v1/signup",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.msg ||
+                data.error_description ||
+                data.message ||
+                "Unable to create your account."
+            );
+        }
+
+        if (data.access_token && data.refresh_token) {
+            showMessage(
+                signupMessage,
+                "Your account was created! You can now log in.",
+                "success"
+            );
+        } else {
+            showMessage(
+                signupMessage,
+                "Your account was created. Check your email and confirm your address, then return here to log in.",
+                "success"
+            );
+        }
+
+        signupForm.reset();
+
+    } catch (error) {
+
+        showMessage(
+            signupMessage,
+            error.message,
+            "error"
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "✦ CREATE ACCOUNT ✦";
+    }
+});
+
+/* =====================================
+   PASSWORD RECOVERY
+===================================== */
+
+document.getElementById(
+    "forgot-password-button"
+).addEventListener("click", async () => {
+
+    const email =
+        document.getElementById("login-email")
+            .value.trim();
+
+    if (!email) {
+        showMessage(
+            loginMessage,
+            "Enter your email address first, then select Forgot Password.",
+            "error"
+        );
+        return;
     }
 
-}
-        /* =============================================
-           LOG IN
-        ============================================= */
+    const button =
+        document.getElementById(
+            "forgot-password-button"
+        );
 
-        document
-            .getElementById(
-                "login-form"
-            )
-            .addEventListener(
-                "submit",
-                async event => {
+    button.disabled = true;
+    clearMessage(loginMessage);
 
-                    event.preventDefault();
+    try {
 
-                    clearMessage();
+        const response = await fetch(
+            SUPABASE_URL + "/auth/v1/recover",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email
+                })
+            }
+        );
 
-
-                    const email =
-                        document
-                            .getElementById(
-                                "login-email"
-                            )
-                            .value
-                            .trim();
-
-                    const password =
-                        document
-                            .getElementById(
-                                "login-password"
-                            )
-                            .value;
-
-                    const button =
-                        document.getElementById(
-                            "login-button"
-                        );
-
-
-                    button.disabled =
-                        true;
-
-                    button.textContent =
-                        "ENTERING...";
-
-
-                    try {
-
-                        const response =
-                            await fetch(
-
-                                SUPABASE_URL +
-                                "/auth/v1/token?grant_type=password",
-
-                                {
-                                    method:
-                                        "POST",
-
-                                    headers: {
-
-                                        "apikey":
-                                            SUPABASE_KEY,
-
-                                        "Content-Type":
-                                            "application/json"
-
-                                    },
-
-                                    body:
-                                        JSON.stringify({
-                                            email,
-                                            password
-                                        })
-                                }
-
-                            );
-
-
-                        const data =
-                            await response.json();
-
-
-                        if (!response.ok) {
-
-                            throw new Error(
-                                data.msg ||
-                                data.error_description ||
-                                data.message ||
-                                "Unable to log in."
-                            );
-
-                        }
-
-
-                        /* -----------------------------
-                           SAVE SESSION
-                        ----------------------------- */
-
-                        localStorage.setItem(
-                            "everwyn_access_token",
-                            data.access_token
-                        );
-
-                        localStorage.setItem(
-                            "everwyn_refresh_token",
-                            data.refresh_token
-                        );
-
-                        localStorage.setItem(
-                            "everwyn_user_id",
-                            data.user.id
-                        );
-
-
-                        showMessage(
-                            "Welcome back. Entering Everwyn...",
-                            "success"
-                        );
-
-
-                       await routePlayerAfterLogin(
-    data.access_token
-);
-}
-                    catch (error) {
-
-                        showMessage(
-                            error.message,
-                            "error"
-                        );
-
-                        button.disabled =
-                            false;
-
-                        button.textContent =
-                            "ENTER EVERWYN";
-
-                    }
-
-                }
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(
+                data.msg ||
+                data.message ||
+                "Unable to request password recovery."
             );
+        }
 
+        showMessage(
+            loginMessage,
+            "If an account exists for this email, a password recovery message will be sent. Follow the instructions in that email.",
+            "success"
+        );
 
-        /* =============================================
-           CREATE ACCOUNT
-        ============================================= */
+    } catch (error) {
 
-        document
-            .getElementById(
-                "signup-form"
-            )
-            .addEventListener(
-                "submit",
-                async event => {
+        showMessage(
+            loginMessage,
+            error.message,
+            "error"
+        );
 
-                    event.preventDefault();
+    } finally {
+        button.disabled = false;
+    }
 
-                    clearMessage();
+});
 
-
-                    const email =
-                        document
-                            .getElementById(
-                                "signup-email"
-                            )
-                            .value
-                            .trim();
-
-                    const password =
-                        document
-                            .getElementById(
-                                "signup-password"
-                            )
-                            .value;
-
-                    const confirmPassword =
-                        document
-                            .getElementById(
-                                "signup-confirm-password"
-                            )
-                            .value;
-
-
-                    if (
-                        password !==
-                        confirmPassword
-                    ) {
-
-                        showMessage(
-                            "Your passwords do not match.",
-                            "error"
-                        );
-
-                        return;
-
-                    }
-
-
-                    const button =
-                        document.getElementById(
-                            "signup-button"
-                        );
-
-
-                    button.disabled =
-                        true;
-
-                    button.textContent =
-                        "CREATING ACCOUNT...";
-
-
-                    try {
-
-                        const response =
-                            await fetch(
-
-                                SUPABASE_URL +
-                                "/auth/v1/signup",
-
-                                {
-                                    method:
-                                        "POST",
-
-                                    headers: {
-
-                                        "apikey":
-                                            SUPABASE_KEY,
-
-                                        "Content-Type":
-                                            "application/json"
-
-                                    },
-
-                                    body:
-                                        JSON.stringify({
-                                            email,
-                                            password
-                                        })
-                                }
-
-                            );
-
-
-                        const data =
-                            await response.json();
-
-
-                        if (!response.ok) {
-
-                            throw new Error(
-                                data.msg ||
-                                data.error_description ||
-                                data.message ||
-                                "Unable to create your account."
-                            );
-
-                        }
-
-
-                        showMessage(
-                            "Your Everwyn account was created. Check your email and confirm your address, then return here to log in.",
-                            "success"
-                        );
-
-
-                        document
-                            .getElementById(
-                                "signup-form"
-                            )
-                            .reset();
-
-
-                        button.disabled =
-                            false;
-
-                        button.textContent =
-                            "CREATE ACCOUNT";
-
-                    }
-
-                    catch (error) {
-
-                        showMessage(
-                            error.message,
-                            "error"
-                        );
-
-                        button.disabled =
-                            false;
-
-                        button.textContent =
-                            "CREATE ACCOUNT";
-
-                    }
-
-                }
-            );
-
-    </script>
+</script>
 
 </body>
 </html>
