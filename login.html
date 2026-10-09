@@ -712,10 +712,9 @@ async function routePlayer(accessToken) {
     character =>
       character.character_creation_complete === true
   );
-
-  window.location.href = completed
-    ? "world-map.html"
-    : "character-creator.html";
+window.location.href = completed
+  ? "game.html"
+  : "character-creator.html";
 }
 
 /* LOG IN */
