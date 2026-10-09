@@ -8,54 +8,107 @@
 
 <title>Features | Everwyn Online</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 
 * {
     box-sizing: border-box;
 }
 
-html {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     margin: 0;
-    padding: 0;
     background: #14111e;
-    min-height: 100vh;
+    color: #ffe5c7;
 }
 
-/* FEATURES ARTWORK */
+/* NAVIGATION */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 25px 5%;
+    background: #161a30;
+    border-bottom: 1px solid rgba(231,188,141,0.3);
+}
+
+.brand {
+    color: #ffe5c7;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.navigation a {
+    color: #fff4e8;
+    text-decoration: none;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    color: #f4c99f;
+}
+
+/* FEATURES ILLUSTRATION */
 
 .features-image {
     display: block;
     width: 100%;
+    max-width: 1800px;
     height: auto;
     margin: 0 auto;
 }
 
-/* ACCESSIBLE NAVIGATION */
+/* FOOTER */
 
-.page-navigation {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 24px;
-    background: #14111e;
-}
-
-.page-navigation a {
-    color: #f5d6b1;
-    text-decoration: none;
-    font-family: Georgia, serif;
-    font-size: 13px;
+footer {
+    padding: 25px;
+    background: #111625;
+    color: #f5ddc5;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
     letter-spacing: 2px;
 }
 
-.page-navigation a:hover {
-    color: white;
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .site-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .navigation {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .navigation a {
+        font-size: 9px;
+    }
 }
 
 </style>
@@ -63,22 +116,35 @@ body {
 
 <body>
 
+<header class="site-header">
+
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
+
+    <nav class="navigation" aria-label="Main navigation">
+        <a href="world.html">WORLD</a>
+        <a href="features.html" class="active" aria-current="page">FEATURES</a>
+        <a href="community.html">COMMUNITY</a>
+        <a href="about.html">ABOUT</a>
+    </nav>
+
+</header>
+
 <main>
 
     <img
         src="assets/features/everwyn-features.png"
-        alt="Everwyn Online Features: character creation, fantasy species, homes, businesses, relationships, farming, exploration, and activities."
+        alt="Everwyn Online features including character creation, fantasy species, homes, businesses, relationships, farming, exploration, and activities."
         class="features-image"
     >
 
 </main>
 
-<nav class="page-navigation" aria-label="Website navigation">
-    <a href="index.html">WELCOME</a>
-    <a href="world.html">WORLD</a>
-    <a href="community.html">COMMUNITY</a>
-    <a href="about.html">ABOUT</a>
-</nav>
+<footer>
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
 
 </body>
 </html>
