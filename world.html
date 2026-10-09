@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore the World | Everwyn Online</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: #171a30;
+    color: #fff4e8;
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+/* NAVIGATION */
+
+.site-header {
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    background: #161a30;
+    border-bottom: 1px solid rgba(231,188,141,0.3);
+}
+
+.brand {
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffe5c7;
+}
+
+.brand span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.navigation a {
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: #fff4e8;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    color: #f4c99f;
+}
+
+/* WORLD PAGE */
+
+.world-section {
+    padding: 95px 5% 110px;
+    background:
+        radial-gradient(ellipse at top, rgba(102,72,107,0.35), transparent 65%),
+        linear-gradient(180deg, #171a30, #25223b 50%, #121827);
+}
+
+.container {
+    max-width: 1350px;
+    margin: auto;
+}
+
+.intro {
+    max-width: 850px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.kicker {
+    font-family: "Cinzel", serif;
+    color: #eac49e;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+
+h1 {
+    color: #ffe4c8;
+    font-size: clamp(43px, 6vw, 80px);
+    font-weight: 500;
+    margin: 18px 0 20px;
+}
+
+.intro p.description {
+    font-size: clamp(19px, 2vw, 25px);
+    line-height: 1.65;
+    color: #f4e7dd;
+}
+
+/* ISLAND MAP */
+
+.map-frame {
+    max-width: 1280px;
+    margin: auto;
+    padding: 8px;
+    border: 1px solid rgba(231,186,134,0.75);
+    border-radius: 17px;
+    background: linear-gradient(135deg, #e8c59e, #76566c, #d6b28a);
+    box-shadow: 0 25px 75px rgba(0,0,0,0.55);
+}
+
+.map-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.map-caption {
+    text-align: center;
+    margin: 22px auto 75px;
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    line-height: 2;
+    color: #e2c7b1;
+}
+
+/* REGIONS */
+
+.regions-heading {
+    max-width: 750px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+
+.regions-heading h2 {
+    color: #ffe1c1;
+    font-size: clamp(34px, 4vw, 54px);
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.regions-heading p {
+    font-size: 21px;
+    line-height: 1.6;
+    color: #e7d4c9;
+}
+
+.regions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.region-card {
+    padding: 31px 28px;
+    border: 1px solid rgba(225,184,145,0.4);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(64,52,80,0.92), rgba(22,28,48,0.96));
+    box-shadow: 0 12px 35px rgba(0,0,0,0.22);
+}
+
+.region-symbol {
+    font-size: 30px;
+    color: #f3cfa5;
+    margin-bottom: 15px;
+}
+
+.region-card h3 {
+    font-family: "Cinzel", serif;
+    font-size: 17px;
+    color: #f6d9b6;
+    margin: 0 0 14px;
+}
+
+.region-card p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #f1e5dc;
+}
+
+.district-label {
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #e9bb94;
+    margin: 20px 0 12px;
+}
+
+.district-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.district-list li {
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 18px;
+}
+
+.district-list li:last-child {
+    border-bottom: none;
+}
+
+/* CLOSING */
+
+.closing {
+    max-width: 780px;
+    margin: 80px auto 0;
+    text-align: center;
+}
+
+.closing h2 {
+    color: #ffe0c1;
+    font-size: clamp(35px, 5vw, 58px);
+    font-weight: 500;
+}
+
+.closing p {
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 24px;
+    background: #111625;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #f5ddc5;
+}
+
+@media (max-width: 1000px) {
+    .regions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .navigation {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .navigation a {
+        font-size: 9px;
+    }
+
+    .world-section {
+        padding: 75px 18px 85px;
+    }
+
+    .regions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .region-card {
+        padding: 25px;
+    }
+
+    .map-frame {
+        padding: 4px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        Everwyn
+        <span>ONLINE</span>
+    </a>
+
+    <nav class="navigation" aria-label="Main navigation">
+        <a href="world.html" class="active" aria-current="page">WORLD</a>
+        <a href="features.html">FEATURES</a>
+        <a href="community.html">COMMUNITY</a>
+        <a href="about.html">ABOUT</a>
+    </nav>
+</header>
+
+<main class="world-section">
+<div class="container">
+
+    <div class="intro">
+        <div class="kicker">✦ DISCOVER THE WORLD ✦</div>
+        <h1>The World of Everwyn</h1>
+        <p class="description">
+            Beyond the ordinary lies a world where modern life and ancient magic exist side by side.
+            <br><br>
+            Discover six extraordinary regions, each with its own communities, landscapes,
+            opportunities, and secrets. From the illuminated skyline of Lumen City to the
+            enchanted depths of Moonwood Forest, every corner of Everwyn holds a new possibility.
+            <br><br>
+            Here, every district has a story — and yours is waiting to begin.
+        </p>
+    </div>
+
+    <div class="map-frame">
+        <img
+            src="assets/maps/everwyn-island-map.webp"
+            alt="Official map of Everwyn's starting island showing its six regions"
+            width="1536"
+            height="1024"
+        >
+    </div>
+
+    <p class="map-caption">
+        ✦ THE STARTING ISLAND OF EVERWYN ✦
+        <br>
+        SIX REGIONS · TWENTY-FIVE DISTRICTS
+    </p>
+
+    <div class="regions-heading">
+        <h2>Discover the Six Regions</h2>
+        <p>
+            Every region offers a different way to experience life in Everwyn.
+            Explore the places that make this world extraordinary.
+        </p>
+    </div>
+
+    <div class="regions-grid">
+
+        <article class="region-card">
+            <div class="region-symbol">✧</div>
+            <h3>Lumen City</h3>
+            <p>
+                Where ambition meets enchantment. Experience a vibrant metropolis
+                filled with illuminated streets, modern residences, shopping,
+                entertainment, and unforgettable nightlife.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Moonlight District</li>
+                <li>Lumen Heights</li>
+                <li>Starlight Square</li>
+                <li>Goldencrest</li>
+                <li>Nightfall Quarter</li>
+            </ul>
+        </article>
+
+        <article class="region-card">
+            <div class="region-symbol">❀</div>
+            <h3>Willowmere Farmlands</h3>
+            <p>
+                A life rooted in possibility. Discover golden fields, charming
+                farmhouses, flourishing gardens, and countryside communities
+                where nature and everyday life thrive.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Cloverfield Village</li>
+                <li>Harvest Hollow</li>
+                <li>Honeybrook Meadows</li>
+                <li>Briarfield Ranches</li>
+            </ul>
+        </article>
+
+        <article class="region-card">
+            <div class="region-symbol">✿</div>
+            <h3>Silverleaf Countryside</h3>
+            <p>
+                Elegance in every season. Wander through flowering gardens,
+                picturesque villages, graceful estates, and tranquil hillsides
+                where peaceful countryside living meets timeless beauty.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Silverleaf Estates</li>
+                <li>Rosewater Gardens</li>
+                <li>Whispering Hills</li>
+                <li>Pearlbrook Village</li>
+            </ul>
+        </article>
+
+        <article class="region-card">
+            <div class="region-symbol">☾</div>
+            <h3>Moonwood Forest</h3>
+            <p>
+                Where ancient magic awakens. Journey beneath luminous canopies,
+                follow hidden trails, encounter enchanted creatures, and discover
+                the mysteries concealed within ancient woods.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Moonshade Grove</li>
+                <li>Whisperwood</li>
+                <li>Starlit Glade</li>
+                <li>Elderroot Wilds</li>
+            </ul>
+        </article>
+
+        <article class="region-card">
+            <div class="region-symbol">≈</div>
+            <h3>Azure Coast</h3>
+            <p>
+                Where the ocean holds its secrets. Explore sunlit beaches,
+                lively harbors, coastal communities, sparkling lagoons,
+                and mysterious wonders beneath the turquoise waves.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Azure Bay</li>
+                <li>Coralhaven</li>
+                <li>Seabreeze Harbor</li>
+                <li>Pearlwater Cove</li>
+            </ul>
+        </article>
+
+        <article class="region-card">
+            <div class="region-symbol">✦</div>
+            <h3>Arcana District</h3>
+            <p>
+                Where the extraordinary becomes everyday. Enter a magical region
+                of enchanted marketplaces, alchemical workshops, ancient
+                knowledge, and supernatural craftsmanship.
+            </p>
+            <div class="district-label">DISCOVER ITS DISTRICTS</div>
+            <ul class="district-list">
+                <li>Mystic Market</li>
+                <li>Runestone Quarter</li>
+                <li>Celestial Court</li>
+                <li>Alchemist's Row</li>
+            </ul>
+        </article>
+
+    </div>
+
+    <div class="closing">
+        <h2>Your Adventure Awaits</h2>
+        <p>
+            A world of possibilities is waiting. Create your character,
+            discover extraordinary places, build meaningful connections,
+            and begin writing your own story in Everwyn.
+        </p>
+    </div>
+
+</div>
+</main>
+
+<footer>
+    ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
+</footer>
+
+</body>
+</html>
