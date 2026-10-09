@@ -1,41 +1,59 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171a30">
+
 <title>Community | Everwyn Online</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+
+/* GENERAL */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     margin: 0;
-    background: #171a30;
-    color: #fff0e4;
+    min-height: 100vh;
+    color: #fff1e4;
     font-family: "Cormorant Garamond", Georgia, serif;
+    background-color: #171a30;
 }
+
+/* HEADER */
 
 header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
     gap: 20px;
     padding: 25px 5%;
     background: #161a30;
-    border-bottom: 1px solid #745c70;
+    border-bottom: 1px solid rgba(234,196,158,.4);
 }
 
 .brand {
-    color: #ffe5c7;
-    text-decoration: none;
     font-family: "Cinzel", serif;
     font-size: 25px;
     letter-spacing: 3px;
     text-align: center;
+    text-decoration: none;
+    color: #ffe5c7;
 }
 
 .brand span {
@@ -46,14 +64,15 @@ header {
 
 nav {
     display: flex;
-    gap: 25px;
     flex-wrap: wrap;
+    gap: 25px;
 }
 
 nav a {
     color: #fff0e4;
     text-decoration: none;
-    font: 11px "Cinzel", serif;
+    font-family: "Cinzel", serif;
+    font-size: 11px;
     letter-spacing: 2px;
 }
 
@@ -62,183 +81,389 @@ nav a.active {
     color: #f4c99f;
 }
 
-main {
-    min-height: 85vh;
-    padding: 100px 20px;
+/* COMMUNITY BACKGROUND */
+
+.community-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 90px 20px 110px;
+
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(19,18,39,.42) 0%,
+            rgba(24,18,45,.52) 45%,
+            rgba(17,18,36,.68) 100%
+        ),
+        url("assets/backgrounds/everwyn-community.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* INTRO */
+
+.intro {
+    max-width: 850px;
+    margin: 0 auto 55px;
     text-align: center;
-    background:
-        radial-gradient(ellipse at top, #66436a55, transparent 60%),
-        linear-gradient(#171a30, #30223c, #151827);
+    text-shadow: 0 3px 12px rgba(0,0,0,.75);
 }
 
-.eyebrow {
-    font: 12px "Cinzel", serif;
+.kicker {
+    font-family: "Cinzel", serif;
+    font-size: 12px;
     letter-spacing: 4px;
-    color: #e9c39d;
+    color: #ffe1b6;
 }
 
-h1 {
-    font-size: clamp(48px, 8vw, 88px);
-    font-weight: 500;
-    color: #ffe0c1;
+.intro h1 {
     margin: 20px 0;
+    font-size: clamp(48px, 7vw, 82px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: #ffe6c7;
 }
 
-.description {
-    max-width: 720px;
-    margin: 0 auto 60px;
-    font-size: 25px;
-    line-height: 1.6;
+.intro p {
+    font-size: clamp(21px, 2.5vw, 27px);
+    line-height: 1.55;
+    color: #fff3e8;
 }
+
+/* DECORATION */
+
+.ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto 50px;
+    color: #ffe0b2;
+    font-size: 24px;
+}
+
+.ornament::before,
+.ornament::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffe0b2
+    );
+}
+
+.ornament::after {
+    transform: rotate(180deg);
+}
+
+/* SOCIAL PANELS */
 
 .social-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 850px;
-    gap: 25px;
-    margin: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
 .social-card {
-    display: block;
-    padding: 45px 25px;
-    background: linear-gradient(145deg, #49334f, #20243d);
-    border: 1px solid #ac8293;
-    border-radius: 20px;
-    text-decoration: none;
-    color: #fff0e4;
-    transition: transform .3s, border-color .3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 45px 35px;
+    border: 2px solid #e9bf86;
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(50,36,75,.89),
+            rgba(20,22,45,.91)
+        );
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.4),
+        0 0 25px rgba(242,190,135,.12);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    text-align: center;
 }
 
-.social-card:hover {
-    transform: translateY(-6px);
-    border-color: #ffe0c1;
+.social-card::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(255,216,163,.45);
+    border-radius: 11px;
+    pointer-events: none;
 }
 
-.social-icon {
-    font-size: 44px;
-    color: #f6cda8;
+.card-symbol {
+    font-size: 35px;
+    color: #f6cfa1;
+    margin-bottom: 15px;
 }
 
 .social-card h2 {
-    font: 22px "Cinzel", serif;
-    color: #ffe0c1;
+    font-family: "Cinzel", serif;
+    font-size: 27px;
+    font-weight: 500;
+    color: #ffe3bf;
+    margin: 0 0 12px;
+}
+
+.username {
+    color: #f2c9dc;
+    font-size: 22px;
+    margin-bottom: 20px;
 }
 
 .social-card p {
-    font-size: 21px;
+    color: #f5e5e4;
+    font-size: 23px;
     line-height: 1.5;
+    margin: 0 0 30px;
 }
 
-.social-card .action {
+.social-button {
     display: inline-block;
-    margin-top: 15px;
-    padding: 12px 22px;
-    border: 1px solid #dcb68f;
-    border-radius: 30px;
-    font: 11px "Cinzel", serif;
+    width: 100%;
+    margin-top: auto;
+    padding: 16px 20px;
+    border: 1px solid #ffe0a6;
+    border-radius: 7px;
+
+    background: linear-gradient(
+        180deg,
+        #f9deb2,
+        #ddb17a,
+        #c89466
+    );
+
+    color: #34243d;
+    font-family: "Cinzel", serif;
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: 1px;
+    text-decoration: none;
+
+    transition: transform .2s, filter .2s;
 }
+
+.social-button:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+}
+
+/* CLOSING */
 
 .closing {
+    max-width: 800px;
     margin: 70px auto 0;
-    font-size: 25px;
-    color: #f5d4b8;
+    text-align: center;
+    color: #fff0dd;
+    font-size: 27px;
     font-style: italic;
+    text-shadow: 0 3px 12px rgba(0,0,0,.8);
 }
+
+/* FOOTER */
 
 footer {
     background: #111625;
     padding: 25px;
     text-align: center;
     color: #eac49e;
-    font: 10px "Cinzel", serif;
+    font-family: "Cinzel", serif;
+    font-size: 10px;
     letter-spacing: 2px;
 }
 
+/* MOBILE */
+
 @media (max-width: 700px) {
-    header { justify-content: center; }
-    nav { justify-content: center; gap: 15px; }
-    nav a { font-size: 9px; }
-    main { padding: 70px 18px; }
-    .social-grid { grid-template-columns: 1fr; }
+
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    nav a {
+        font-size: 9px;
+    }
+
+    .community-page {
+        padding: 70px 17px 85px;
+        background-attachment: scroll;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+    }
+
+    .social-card {
+        padding: 35px 25px;
+    }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .social-button {
+        transition: none;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- NAVIGATION -->
+
 <header>
+
     <a href="index.html" class="brand">
         Everwyn
         <span>ONLINE</span>
     </a>
 
     <nav aria-label="Main navigation">
+
         <a href="world.html">WORLD</a>
+
         <a href="features.html">FEATURES</a>
-        <a href="community.html" class="active">COMMUNITY</a>
+
+        <a href="community.html"
+           class="active"
+           aria-current="page">COMMUNITY</a>
+
         <a href="about.html">ABOUT</a>
+
     </nav>
+
 </header>
 
-<main>
-    <div class="eyebrow">✦ BEYOND THE WORLD ✦</div>
+<!-- COMMUNITY PAGE -->
 
-    <h1>Join Our Community</h1>
+<main class="community-page">
 
-    <p class="description">
-        The magic of Everwyn is just beginning.
-        Follow our journey as we bring a world of
-        imagination, adventure, and endless
-        possibilities to life.
-        <br><br>
-        Discover exclusive sneak peeks,
-        development updates, character reveals,
-        and everything coming to Everwyn Online.
-    </p>
+    <section class="intro">
 
-    <div class="social-grid">
+        <div class="kicker">
+            ✦ CONNECT BEYOND THE WORLD ✦
+        </div>
 
-        <a class="social-card"
-           href="https://www.tiktok.com/@everwyn.online"
-           target="_blank"
-           rel="noopener noreferrer">
+        <h1>Join Our Community</h1>
 
-            <div class="social-icon">✦</div>
-            <h2>TikTok</h2>
-            <p>@everwyn.online</p>
-            <p>
-                Watch the magic unfold through
-                cinematic previews, character
-                reveals, and behind-the-scenes
-                development.
-            </p>
-            <span class="action">FOLLOW ON TIKTOK ↗</span>
-        </a>
+        <p>
+            Every extraordinary story
+            is better when shared.
+            <br><br>
+            Follow the journey of Everwyn Online
+            as our magical world comes to life.
+            Discover exclusive previews,
+            creative reveals, announcements,
+            and the stories waiting to unfold.
+        </p>
 
-        <a class="social-card"
-           href="https://www.instagram.com/everwynonline/"
-           target="_blank"
-           rel="noopener noreferrer">
+    </section>
 
-            <div class="social-icon">♡</div>
-            <h2>Instagram</h2>
-            <p>@everwynonline</p>
-            <p>
-                Explore artwork, worldbuilding,
-                announcements, and beautiful
-                glimpses into the future of
-                Everwyn.
-            </p>
-            <span class="action">FOLLOW ON INSTAGRAM ↗</span>
-        </a>
-
+    <div class="ornament" aria-hidden="true">
+        ✧
     </div>
 
-    <p class="closing">
+    <!-- SOCIAL LINKS -->
+
+    <section class="social-grid"
+             aria-label="Official Everwyn social media">
+
+        <!-- INSTAGRAM -->
+
+        <article class="social-card">
+
+            <div class="card-symbol">♡</div>
+
+            <h2>Instagram</h2>
+
+            <div class="username">
+                @everwynonline
+            </div>
+
+            <p>
+                Discover artwork,
+                character reveals,
+                worldbuilding inspiration,
+                announcements,
+                and beautiful glimpses
+                into the future of Everwyn.
+            </p>
+
+            <a
+                class="social-button"
+                href="https://www.instagram.com/everwynonline/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                FOLLOW ON INSTAGRAM ↗
+            </a>
+
+        </article>
+
+        <!-- TIKTOK -->
+
+        <article class="social-card">
+
+            <div class="card-symbol">✦</div>
+
+            <h2>TikTok</h2>
+
+            <div class="username">
+                @everwyn.online
+            </div>
+
+            <p>
+                Watch the magic unfold
+                through cinematic previews,
+                behind-the-scenes updates,
+                character customization,
+                and the development journey
+                of Everwyn Online.
+            </p>
+
+            <a
+                class="social-button"
+                href="https://www.tiktok.com/@everwyn.online"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                FOLLOW ON TIKTOK ↗
+            </a>
+
+        </article>
+
+    </section>
+
+    <div class="closing">
         ✧ Every extraordinary story begins somewhere. ✧
-    </p>
+    </div>
+
 </main>
 
 <footer>
