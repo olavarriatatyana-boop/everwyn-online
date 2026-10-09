@@ -92,7 +92,7 @@ body {
 }
 
 /* =========================================
-   NAVIGATION
+   TOP NAVIGATION
 ========================================= */
 
 .navigation {
@@ -112,7 +112,6 @@ body {
     letter-spacing: 2px;
 
     text-shadow: 0 2px 8px rgba(0,0,0,0.95);
-
     transition: color 0.3s ease;
 }
 
@@ -120,32 +119,8 @@ body {
     color: #f4c99f;
 }
 
-.header-login {
-    border: 1px solid #d8ae83;
-    padding: 12px 25px;
-    border-radius: 30px;
-
-    color: #fff4e8;
-    text-decoration: none;
-
-    font-family: "Cinzel", serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-
-    background: rgba(14,18,36,0.65);
-
-    transition:
-        background 0.3s ease,
-        transform 0.3s ease;
-}
-
-.header-login:hover {
-    background: rgba(65,43,69,0.85);
-    transform: translateY(-2px);
-}
-
 /* =========================================
-   WELCOME SCREEN
+   MAIN WELCOME SCREEN
 ========================================= */
 
 .landing {
@@ -167,7 +142,6 @@ body {
 .sigil {
     font-size: 43px;
     color: #ffdcac;
-
     text-shadow: 0 0 25px rgba(245,183,124,0.85);
 }
 
@@ -219,7 +193,7 @@ h1 {
 }
 
 /* =========================================
-   BUTTONS
+   ENTER EVERWYN BUTTON
 ========================================= */
 
 .hero-buttons {
@@ -568,10 +542,6 @@ h1 {
         font-size: 9px;
     }
 
-    .header-login {
-        padding: 10px 20px;
-    }
-
     .landing {
         min-height: auto;
         padding: 85px 15px 110px;
@@ -633,8 +603,7 @@ h1 {
         animation: none;
     }
 
-    .hero-button,
-    .header-login {
+    .hero-button {
         transition: none;
     }
 }
@@ -648,7 +617,10 @@ h1 {
 
 <div class="world-background" aria-hidden="true"></div>
 
-<!-- WEBSITE HEADER -->
+<!-- =========================================
+     WEBSITE HEADER
+     HOME AND LOG IN REMOVED
+========================================= -->
 
 <header class="site-header">
 
@@ -658,8 +630,6 @@ h1 {
     </a>
 
     <nav class="navigation" aria-label="Main navigation">
-
-        <a href="#welcome">HOME</a>
 
         <a href="#world">WORLD</a>
 
@@ -671,16 +641,12 @@ h1 {
 
     </nav>
 
-    <a href="login.html" class="header-login">
-        ✦ LOG IN
-    </a>
-
 </header>
 
 <main>
 
 <!-- =========================================
-     WELCOME SCREEN
+     MAIN WELCOME SCREEN
 ========================================= -->
 
 <section class="landing" id="welcome">
@@ -702,6 +668,8 @@ h1 {
         <p class="subtitle">
             YOUR STORY BEGINS BEYOND THE ORDINARY
         </p>
+
+        <!-- KEEP THIS ENTER EVERWYN BUTTON -->
 
         <div class="hero-buttons">
 
@@ -979,7 +947,7 @@ h1 {
 
     </div>
 
-    <!-- FINAL WORLD INVITATION -->
+    <!-- WORLD SECTION INVITATION -->
 
     <div class="world-invitation">
 
@@ -993,8 +961,9 @@ h1 {
             your own story in Everwyn.
         </p>
 
-        <a href="login.html"
-           class="hero-button enter-button">
+        <a
+            href="login.html"
+            class="hero-button enter-button">
             ✦ ENTER EVERWYN ✦
         </a>
 
