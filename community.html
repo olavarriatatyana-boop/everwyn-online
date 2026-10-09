@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#171a30">
@@ -16,7 +17,9 @@
 
 <style>
 
-/* GENERAL */
+/* =========================================
+   GENERAL STYLING
+========================================= */
 
 * {
     box-sizing: border-box;
@@ -34,7 +37,9 @@ body {
     background-color: #171a30;
 }
 
-/* HEADER */
+/* =========================================
+   NAVIGATION
+========================================= */
 
 header {
     display: flex;
@@ -42,17 +47,23 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
+
     padding: 25px 5%;
+
     background: #161a30;
-    border-bottom: 1px solid rgba(234,196,158,.4);
+
+    border-bottom:
+        1px solid rgba(234,196,158,.4);
 }
 
 .brand {
     font-family: "Cinzel", serif;
     font-size: 25px;
     letter-spacing: 3px;
+
     text-align: center;
     text-decoration: none;
+
     color: #ffe5c7;
 }
 
@@ -71,9 +82,12 @@ nav {
 nav a {
     color: #fff0e4;
     text-decoration: none;
+
     font-family: "Cinzel", serif;
     font-size: 11px;
     letter-spacing: 2px;
+
+    transition: color .3s ease;
 }
 
 nav a:hover,
@@ -81,19 +95,23 @@ nav a.active {
     color: #f4c99f;
 }
 
-/* COMMUNITY BACKGROUND */
+/* =========================================
+   LUMEN CITY BACKGROUND
+========================================= */
 
 .community-page {
     position: relative;
+
     min-height: 100vh;
-    padding: 90px 20px 110px;
+
+    padding: 80px 20px 110px;
 
     background-image:
         linear-gradient(
             180deg,
-            rgba(19,18,39,.42) 0%,
-            rgba(24,18,45,.52) 45%,
-            rgba(17,18,36,.68) 100%
+            rgba(19,18,39,.15) 0%,
+            rgba(24,18,45,.22) 50%,
+            rgba(17,18,36,.45) 100%
         ),
         url("assets/backgrounds/everwyn-community.png");
 
@@ -103,89 +121,177 @@ nav a.active {
     background-attachment: fixed;
 }
 
-/* INTRO */
+/* =========================================
+   INTRODUCTION PANEL
+========================================= */
 
 .intro {
+    position: relative;
+
     max-width: 850px;
-    margin: 0 auto 55px;
+    margin: 0 auto 45px;
+
+    padding: 38px 45px;
+
     text-align: center;
-    text-shadow: 0 3px 12px rgba(0,0,0,.75);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28,22,53,.93),
+            rgba(48,34,70,.90)
+        );
+
+    border: 2px solid #e9bf86;
+    border-radius: 20px;
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.4),
+        0 0 25px rgba(240,190,140,.15);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    text-shadow:
+        0 2px 5px rgba(0,0,0,.5);
+}
+
+/* INNER GOLD BORDER */
+
+.intro::before {
+    content: "";
+
+    position: absolute;
+    inset: 8px;
+
+    border:
+        1px solid rgba(255,216,163,.45);
+
+    border-radius: 12px;
+
+    pointer-events: none;
+}
+
+/* INTRO DECORATION */
+
+.intro-symbol {
+    font-size: 29px;
+    color: #f4c99f;
+
+    margin-bottom: 12px;
 }
 
 .kicker {
     font-family: "Cinzel", serif;
-    font-size: 12px;
+
+    font-size: 11px;
     letter-spacing: 4px;
-    color: #ffe1b6;
+
+    color: #f4c99f;
 }
+
+/* INTRO TITLE */
 
 .intro h1 {
     margin: 20px 0;
-    font-size: clamp(48px, 7vw, 82px);
+
+    font-size: clamp(42px, 6vw, 72px);
     font-weight: 500;
-    line-height: 1.1;
-    color: #ffe6c7;
+    line-height: 1.2;
+
+    color: #ffe3b8;
 }
+
+/* INTRO PARAGRAPH */
 
 .intro p {
-    font-size: clamp(21px, 2.5vw, 27px);
-    line-height: 1.55;
-    color: #fff3e8;
+    max-width: 700px;
+    margin: 0 auto;
+
+    font-size: clamp(21px, 2.2vw, 25px);
+    line-height: 1.65;
+
+    color: #fff5ed;
 }
 
-/* DECORATION */
+/* =========================================
+   DECORATIVE DIVIDER
+========================================= */
 
 .ornament {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 15px;
+
     max-width: 500px;
-    margin: 0 auto 50px;
+
+    margin: 0 auto 45px;
+
     color: #ffe0b2;
     font-size: 24px;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.8);
 }
 
 .ornament::before,
 .ornament::after {
     content: "";
+
     flex: 1;
     height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #ffe0b2
-    );
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ffe0b2
+        );
 }
 
 .ornament::after {
     transform: rotate(180deg);
 }
 
-/* SOCIAL PANELS */
+/* =========================================
+   SOCIAL MEDIA GRID
+========================================= */
 
 .social-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
     gap: 30px;
+
     max-width: 950px;
     margin: 0 auto;
 }
 
+/* =========================================
+   SOCIAL MEDIA CARDS
+========================================= */
+
 .social-card {
     position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     padding: 45px 35px;
+
     border: 2px solid #e9bf86;
     border-radius: 18px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(50,36,75,.89),
-            rgba(20,22,45,.91)
+            rgba(40,30,69,.94),
+            rgba(20,22,45,.95)
         );
 
     box-shadow:
@@ -198,65 +304,103 @@ nav a.active {
     text-align: center;
 }
 
+/* INNER FRAME */
+
 .social-card::before {
     content: "";
+
     position: absolute;
     inset: 7px;
-    border: 1px solid rgba(255,216,163,.45);
+
+    border:
+        1px solid rgba(255,216,163,.45);
+
     border-radius: 11px;
+
     pointer-events: none;
 }
 
+/* SOCIAL ICON */
+
 .card-symbol {
     font-size: 35px;
+
     color: #f6cfa1;
+
     margin-bottom: 15px;
 }
 
+/* SOCIAL TITLES */
+
 .social-card h2 {
     font-family: "Cinzel", serif;
+
     font-size: 27px;
     font-weight: 500;
+
     color: #ffe3bf;
+
     margin: 0 0 12px;
 }
 
+/* USERNAMES */
+
 .username {
     color: #f2c9dc;
+
     font-size: 22px;
+
     margin-bottom: 20px;
 }
 
+/* SOCIAL DESCRIPTION */
+
 .social-card p {
-    color: #f5e5e4;
+    color: #fff0e8;
+
     font-size: 23px;
     line-height: 1.5;
+
     margin: 0 0 30px;
 }
 
+/* =========================================
+   SOCIAL MEDIA BUTTONS
+========================================= */
+
 .social-button {
     display: inline-block;
+
     width: 100%;
+
     margin-top: auto;
+
     padding: 16px 20px;
+
     border: 1px solid #ffe0a6;
     border-radius: 7px;
 
-    background: linear-gradient(
-        180deg,
-        #f9deb2,
-        #ddb17a,
-        #c89466
-    );
+    background:
+        linear-gradient(
+            180deg,
+            #f9deb2,
+            #ddb17a,
+            #c89466
+        );
 
     color: #34243d;
+
     font-family: "Cinzel", serif;
+
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
+
     text-decoration: none;
 
-    transition: transform .2s, filter .2s;
+    transition:
+        transform .2s,
+        filter .2s;
 }
 
 .social-button:hover {
@@ -264,31 +408,53 @@ nav a.active {
     filter: brightness(1.1);
 }
 
-/* CLOSING */
+.social-button:focus-visible {
+    outline: 3px solid #fff0d0;
+    outline-offset: 4px;
+}
+
+/* =========================================
+   CLOSING MESSAGE
+========================================= */
 
 .closing {
     max-width: 800px;
+
     margin: 70px auto 0;
+
     text-align: center;
+
     color: #fff0dd;
+
     font-size: 27px;
     font-style: italic;
-    text-shadow: 0 3px 12px rgba(0,0,0,.8);
+
+    text-shadow:
+        0 3px 12px rgba(0,0,0,.9);
 }
 
-/* FOOTER */
+/* =========================================
+   FOOTER
+========================================= */
 
 footer {
     background: #111625;
+
     padding: 25px;
+
     text-align: center;
+
     color: #eac49e;
+
     font-family: "Cinzel", serif;
+
     font-size: 10px;
     letter-spacing: 2px;
 }
 
-/* MOBILE */
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
 
 @media (max-width: 700px) {
 
@@ -306,8 +472,22 @@ footer {
     }
 
     .community-page {
-        padding: 70px 17px 85px;
+        padding: 55px 17px 85px;
+
         background-attachment: scroll;
+    }
+
+    .intro {
+        padding: 32px 24px;
+        margin-bottom: 35px;
+    }
+
+    .intro h1 {
+        font-size: 42px;
+    }
+
+    .intro p {
+        font-size: 21px;
     }
 
     .social-grid {
@@ -318,9 +498,14 @@ footer {
     .social-card {
         padding: 35px 25px;
     }
+
+    .closing {
+        font-size: 23px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     html {
         scroll-behavior: auto;
     }
@@ -331,11 +516,14 @@ footer {
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
+<!-- =====================================
+     HEADER
+===================================== -->
 
 <header>
 
@@ -346,61 +534,93 @@ footer {
 
     <nav aria-label="Main navigation">
 
-        <a href="world.html">WORLD</a>
+        <a href="world.html">
+            WORLD
+        </a>
 
-        <a href="features.html">FEATURES</a>
+        <a href="features.html">
+            FEATURES
+        </a>
 
-        <a href="community.html"
-           class="active"
-           aria-current="page">COMMUNITY</a>
+        <a
+            href="community.html"
+            class="active"
+            aria-current="page"
+        >
+            COMMUNITY
+        </a>
 
-        <a href="about.html">ABOUT</a>
+        <a href="about.html">
+            ABOUT
+        </a>
 
     </nav>
 
 </header>
 
-<!-- COMMUNITY PAGE -->
+<!-- =====================================
+     COMMUNITY PAGE
+===================================== -->
 
 <main class="community-page">
 
+    <!-- INTRODUCTION -->
+
     <section class="intro">
 
-        <div class="kicker">
-            ✦ CONNECT BEYOND THE WORLD ✦
+        <div class="intro-symbol">
+            ✧ ✦ ✧
         </div>
 
-        <h1>Join Our Community</h1>
+        <div class="kicker">
+            CONNECT BEYOND THE WORLD
+        </div>
+
+        <h1>
+            Join Our Community
+        </h1>
 
         <p>
             Every extraordinary story
             is better when shared.
             <br><br>
-            Follow the journey of Everwyn Online
-            as our magical world comes to life.
+            Follow the journey of
+            Everwyn Online as our magical
+            world comes to life.
             Discover exclusive previews,
-            creative reveals, announcements,
-            and the stories waiting to unfold.
+            creative reveals, and
+            exciting announcements.
         </p>
 
     </section>
 
-    <div class="ornament" aria-hidden="true">
+    <!-- DECORATIVE DIVIDER -->
+
+    <div
+        class="ornament"
+        aria-hidden="true"
+    >
         ✧
     </div>
 
-    <!-- SOCIAL LINKS -->
+    <!-- SOCIAL MEDIA -->
 
-    <section class="social-grid"
-             aria-label="Official Everwyn social media">
+    <section
+        class="social-grid"
+        aria-label="Official Everwyn social media"
+    >
 
         <!-- INSTAGRAM -->
 
         <article class="social-card">
 
-            <div class="card-symbol">♡</div>
+            <div class="card-symbol">
+                ♡
+            </div>
 
-            <h2>Instagram</h2>
+            <h2>
+                Instagram
+            </h2>
 
             <div class="username">
                 @everwynonline
@@ -430,9 +650,13 @@ footer {
 
         <article class="social-card">
 
-            <div class="card-symbol">✦</div>
+            <div class="card-symbol">
+                ✦
+            </div>
 
-            <h2>TikTok</h2>
+            <h2>
+                TikTok
+            </h2>
 
             <div class="username">
                 @everwyn.online
@@ -460,11 +684,18 @@ footer {
 
     </section>
 
+    <!-- CLOSING -->
+
     <div class="closing">
-        ✧ Every extraordinary story begins somewhere. ✧
+        ✧ Every extraordinary story
+        begins somewhere. ✧
     </div>
 
 </main>
+
+<!-- =====================================
+     FOOTER
+===================================== -->
 
 <footer>
     ✦ EXPLORE · CREATE · CONNECT · BELONG ✦
