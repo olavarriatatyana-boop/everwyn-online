@@ -2425,19 +2425,6 @@ document.getElementById(
     }
 );
 
-
-document.getElementById(
-    "mapButton"
-).addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            "world-map.html";
-    }
-);
-
-
 document.getElementById(
     "walletButton"
 ).addEventListener(
@@ -2555,26 +2542,6 @@ document.querySelectorAll(
         );
     }
 );
-
-
-document.querySelectorAll(
-    ".nav-button[data-panel]"
-).forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                openBottomPanel(
-                    button.dataset.panel
-                );
-            }
-        );
-    }
-);
-
-
 /* ==========================================
    START
 ========================================== */
